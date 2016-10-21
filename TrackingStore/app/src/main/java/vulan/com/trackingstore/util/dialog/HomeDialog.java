@@ -29,6 +29,12 @@ public class HomeDialog extends Dialog {
         super(context);
         mContext = context;
         mView = View.inflate(mContext, R.layout.layout_slide_up, null);
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         findView(mView);
         init(food, drawerRightItem);
     }

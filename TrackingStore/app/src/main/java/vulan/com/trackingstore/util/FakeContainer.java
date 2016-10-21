@@ -30,6 +30,6 @@ public class FakeContainer {
     }
 
     public static DrawerRightItem getRightItem() {
-        return new DrawerRightItem("BBQ", "20m");
+        return new DrawerRightItem("Lotteria 139 Cau Giay Street", "20m");
     }
 }

@@ -1,100 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="7">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/layout_slide"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/red_transparent"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="5">
-
-        <TextView
-            android:id="@+id/text_location"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Lotteria 139 Cau Giay Street"
-            android:textColor="@color/white"
-            android:textSize="@dimen/common_text_size_15" />
-
-        <TextView
-            android:id="@+id/text_meter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="20m"
-            android:textColor="@color/white"
-            android:textSize="@dimen/common_text_size_15" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="7">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/image_food"
-                android:layout_width="@dimen/common_size_80"
-                android:layout_height="@dimen/common_size_80" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/red_transparent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
             <TextView
-                android:id="@+id/text_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/text_location"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/common_size_8"
+                android:layout_weight="3"
                 android:gravity="center"
-                android:text="name"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_text_size_15" />
+
+            <TextView
+                android:id="@+id/text_meter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="20m"
+                android:textColor="@color/white"
                 android:textSize="@dimen/common_text_size_15" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_content"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:maxLines="5"
-            android:text="20m" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_go_to_restaurant"
-            android:layout_width="@dimen/common_size_150"
-            android:layout_height="@dimen/common_size_40"
-            android:layout_gravity="center"
-            android:clickable="true"
-            app:cardCornerRadius="@dimen/common_size_15">
-
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/go_to_restaurant" />
-        </android.support.v7.widget.CardView>
+                android:layout_marginLeft="@dimen/common_size_8"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/image_food"
+                    android:layout_width="@dimen/common_size_150"
+                    android:layout_height="@dimen/common_size_150"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/common_text_size_15" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/text_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="5"
+                android:text="20m" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_go_to_restaurant"
+                android:layout_width="@dimen/common_size_150"
+                android:layout_height="@dimen/common_size_40"
+                android:layout_gravity="center"
+                android:clickable="true"
+                app:cardCornerRadius="@dimen/common_size_15">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/go_to_restaurant" />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-</LinearLayout>
+</RelativeLayout>
