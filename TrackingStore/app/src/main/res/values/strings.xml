@@ -4,4 +4,6 @@
     <string name="search_detail">Search detail</string>
     <string name="search">Search</string>
     <string name="home_page">Home page</string>
+    <string name="setting">Setting</string>
+    <string name="go_to_restaurant">Go to this restaurant</string>
 </resources>

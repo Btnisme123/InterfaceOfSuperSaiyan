@@ -30,5 +30,6 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void findView(View view) {
+
     }
 }
