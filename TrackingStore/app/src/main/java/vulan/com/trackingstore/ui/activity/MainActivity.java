@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerLeftItemList = new ArrayList<>();
         mDrawerRightItemList = new ArrayList<>();
         mDrawerRightItemList = FakeContainer.getRightItems();
+        mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.home_page), R.drawable.ic_home));
         mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.restaurant_list), R.drawable.ic_list));
         mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.search_detail), R.drawable.ic_search_detail));
         mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.search), R.drawable.ic_search));
-        mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.home_page), R.drawable.ic_home));
         mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.setting), R.drawable.ic_setting));
         mRecyclerLeftDrawerAdapter = new RecyclerLeftDrawerAdapter(this, mDrawerLeftItemList);
         mLeftRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));

@@ -47,7 +47,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/common_size_10"
             android:layout_marginTop="@dimen/common_size_10"
-            android:background="@drawable/mc_donald" />
+            android:background="@drawable/ic_list_white" />
 
         <Button
             android:id="@+id/button_menu_right"
@@ -57,7 +57,7 @@
             android:layout_gravity="end"
             android:layout_marginRight="@dimen/common_size_10"
             android:layout_marginTop="@dimen/common_size_10"
-            android:background="@drawable/mc_donald" />
+            android:background="@drawable/ic_home_white" />
 
         <Button
             android:id="@+id/button_icon"
