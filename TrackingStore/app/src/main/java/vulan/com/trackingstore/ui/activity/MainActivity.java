@@ -1,18 +1,47 @@
 package vulan.com.trackingstore.ui.activity;
 
 
-import vulan.com.trackingstore.ui.base.BaseActivity;
-import vulan.com.trackingstore.ui.base.BaseFragment;
-import vulan.com.trackingstore.ui.fragment.HomeFragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.widget.LinearLayout;
 
-public class MainActivity extends BaseActivity {
+import vulan.com.trackingstore.R;
+
+public class MainActivity extends AppCompatActivity {
+
+    NavigationView mNavigationView;
+    Toolbar mToolbar;
+    LinearLayout mLayoutSlideUp;
 
     @Override
-    protected BaseFragment getFragment() {
-        return new HomeFragment();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        findView();
     }
 
+    private void findView() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mLayoutSlideUp= (LinearLayout) findViewById(R.id.layout_slide_up);
+    }
+
+    public void init(){
+        //mLayoutSlideUp.setV
+    }
     @Override
-    protected void onCreateContentView() {
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

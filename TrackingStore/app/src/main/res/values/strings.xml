@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">TrackingStore</string>
+    <string name="app_name">TiFo</string>
+    <string name="restaurant_list">Restaurent list</string>
+    <string name="search_detail">Search detail</string>
+    <string name="search">Search</string>
+    <string name="home_page">Home page</string>
 </resources>
