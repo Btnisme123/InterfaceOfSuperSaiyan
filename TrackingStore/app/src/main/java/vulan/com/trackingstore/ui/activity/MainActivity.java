@@ -15,8 +15,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+<<<<<<< HEAD
+import vulan.com.trackingstore.ui.base.BaseActivity;
+import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.ui.fragment.HomeFragment;
+import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
+=======
 import java.util.ArrayList;
 import java.util.List;
+>>>>>>> ef01a6a346c5d9aaa147ced81d382da0744f9b18
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
@@ -40,14 +47,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
 
     @Override
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findView();
         init();
     }
+    protected BaseFragment getFragment() {
+        return new RestaurantFragment();
+    }
 
     private void findView() {
+<<<<<<< HEAD
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+       // mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        //mLayoutSlideUp= (LinearLayout) findViewById(R.id.layout_slide_up);
+=======
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftRecyclerDrawer = (RecyclerView) findViewById(R.id.left_recycler_navigation_drawer);
         mRightRecyclerDrawer = (RecyclerView) findViewById(R.id.right_recycler_navigation_drawer);
@@ -57,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonMenuLeft.setOnClickListener(this);
         mButtonMenuRight.setOnClickListener(this);
         mButtonIcon.setOnClickListener(this);
+>>>>>>> ef01a6a346c5d9aaa147ced81d382da0744f9b18
     }
 
     public void init() {
