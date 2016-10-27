@@ -10,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 
+import vulan.com.trackingstore.ui.base.BaseActivity;
+import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.ui.fragment.HomeFragment;
+import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
+
 import vulan.com.trackingstore.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,17 +24,21 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout mLayoutSlideUp;
 
     @Override
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findView();
     }
+    protected BaseFragment getFragment() {
+        return new RestaurantFragment();
+    }
 
     private void findView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        mLayoutSlideUp= (LinearLayout) findViewById(R.id.layout_slide_up);
+       // mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        //mLayoutSlideUp= (LinearLayout) findViewById(R.id.layout_slide_up);
     }
 
     public void init(){
