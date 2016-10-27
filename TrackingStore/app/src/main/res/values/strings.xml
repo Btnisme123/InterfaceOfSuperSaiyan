@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TrackingStore</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="describe_kfc">KFC là cụm từ viết tắt của Kentucky Fried Chicken - Gà Rán Kentucky.KFC chuyên về các sản phẩm gà rán và nướng, với các món ăn kèm theo và các loại sandwiches chế biến từ thịt gà tươi.</string>
 </resources>
