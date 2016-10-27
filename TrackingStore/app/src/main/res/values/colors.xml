@@ -7,4 +7,6 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#f22800</color>
     <color name="red_transparent">#80f22800</color>
+    <color name="raised_button_normal_color">#FFFFFF</color>
+    <color name="raised_button_highlight_color">#88f1ecec</color>
 </resources>

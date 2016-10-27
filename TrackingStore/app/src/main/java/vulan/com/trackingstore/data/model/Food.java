@@ -10,6 +10,7 @@ public class Food {
     private String mName;
     private String mContent;
     private int mSaleoffPercentage;
+    private int mPrice;
 
     public Food(int mImageFood, String mName, String mContent,int mSaleoffPercentage) {
         this.mImageFood = mImageFood;
@@ -48,5 +49,13 @@ public class Food {
 
     public void setSaleoffPercentage(int mSaleoffPercentage) {
         this.mSaleoffPercentage = mSaleoffPercentage;
+    }
+
+    public int getPrice() {
+        return mPrice;
+    }
+
+    public void setPrice(int mPrice) {
+        this.mPrice = mPrice;
     }
 }
