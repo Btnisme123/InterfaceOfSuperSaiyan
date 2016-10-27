@@ -26,6 +26,7 @@
     <dimen name="common_size_60">60dp</dimen>
     <dimen name="common_size_80">80dp</dimen>
     <dimen name="common_size_200">200dp</dimen>
+    <dimen name="common_size_500">500dp</dimen>
     <!--Common text size-->
     <dimen name="common_text_size_10">10sp</dimen>
     <dimen name="common_text_size_11">11sp</dimen>
