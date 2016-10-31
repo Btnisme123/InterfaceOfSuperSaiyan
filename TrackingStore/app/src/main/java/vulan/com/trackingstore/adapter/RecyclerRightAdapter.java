@@ -44,6 +44,14 @@ public class RecyclerRightAdapter extends RecyclerView.Adapter<RecyclerRightAdap
         DrawerRightItem item = mNavigationDrawerLeftItems.get(position);
         holder.mTextMeter.setText(item.getMeter());
         holder.mTextTitle.setText(item.getTitle());
+        holder.mTextTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mOnRecyclerItemInteractListener!=null){
+                    mOnRecyclerItemInteractListener.onItemClick(position);
+                }
+            }
+        });
     }
 
     @Override

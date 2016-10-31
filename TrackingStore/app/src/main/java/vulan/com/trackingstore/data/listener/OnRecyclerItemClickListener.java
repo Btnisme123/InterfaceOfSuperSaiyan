@@ -5,5 +5,5 @@ package vulan.com.trackingstore.data.listener;
  */
 
 public interface OnRecyclerItemClickListener {
-    void onItemClick();
+    void onItemClick(int position);
 }

@@ -2,6 +2,10 @@ package vulan.com.trackingstore.ui.activity;
 
 
 import android.app.Dialog;
+import android.app.FragmentTransaction;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
@@ -9,21 +13,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-<<<<<<< HEAD
+import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
 import vulan.com.trackingstore.ui.base.BaseActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.HomeFragment;
 import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
-=======
+
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> ef01a6a346c5d9aaa147ced81d382da0744f9b18
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
@@ -35,7 +41,7 @@ import vulan.com.trackingstore.util.FakeContainer;
 import vulan.com.trackingstore.util.dialog.HomeDialog;
 import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRecyclerItemClickListener {
 
     LinearLayout mLayoutSlideUp;
     private RecyclerView mLeftRecyclerDrawer, mRightRecyclerDrawer;
@@ -45,6 +51,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<DrawerRightItem> mDrawerRightItemList;
     private Button mButtonMenuLeft, mButtonMenuRight, mButtonIcon;
     private DrawerLayout mDrawerLayout;
+    private FrameLayout mContainerLayout;
+
+    private static final int HOME = 0;
+    private static final int RESTAURANT = 1;
+    private static final int SEARCH_DETAILS = 2;
+    private static final int SEARCH = 3;
+    private static final int SETTINGS = 4;
 
     @Override
 
@@ -53,28 +66,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findView();
         init();
+        replaceFragment(new HomeFragment(),"home fragment");
     }
+
     protected BaseFragment getFragment() {
         return new RestaurantFragment();
     }
 
     private void findView() {
-<<<<<<< HEAD
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-       // mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        //mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(mToolbar);
+        // mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         //mLayoutSlideUp= (LinearLayout) findViewById(R.id.layout_slide_up);
-=======
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftRecyclerDrawer = (RecyclerView) findViewById(R.id.left_recycler_navigation_drawer);
         mRightRecyclerDrawer = (RecyclerView) findViewById(R.id.right_recycler_navigation_drawer);
         mButtonMenuLeft = (Button) findViewById(R.id.button_menu_left);
         mButtonMenuRight = (Button) findViewById(R.id.button_menu_right);
-        mButtonIcon = (Button) findViewById(R.id.button_icon);
+        mContainerLayout= (FrameLayout) findViewById(R.id.fragment_container);
         mButtonMenuLeft.setOnClickListener(this);
         mButtonMenuRight.setOnClickListener(this);
-        mButtonIcon.setOnClickListener(this);
->>>>>>> ef01a6a346c5d9aaa147ced81d382da0744f9b18
     }
 
     public void init() {
@@ -94,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRightRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
         mRightRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
         mRightRecyclerDrawer.setAdapter(mRecyclerRightDrawerAdapter);
+        mRecyclerRightDrawerAdapter.setOnClick(this);
     }
 
     @Override
@@ -115,16 +127,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mDrawerLayout.openDrawer(GravityCompat.END);
                 break;
             case R.id.button_icon:
-                Food food = FakeContainer.getFood();
-                DrawerRightItem item = FakeContainer.getRightItem();
-                Dialog homeDialog = new HomeDialog(this, food, item);
-                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(homeDialog.getWindow().getAttributes());
-                layoutParams.width = 500;
-                layoutParams.height = 500;
-                homeDialog.getWindow().setAttributes(layoutParams);
-                homeDialog.show();
+
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this,"123",Toast.LENGTH_LONG).show();
+//        switch (position) {
+//            case HOME:
+//                replaceFragment(new HomeFragment(),HomeFragment.TAG_HOME_FRAGMENT);
+//                break;
+//            case RESTAURANT:
+//                replaceFragment(new RestaurantFragment(),RestaurantFragment.TAG_RESTAURANT_FRAGMENT);
+//                Toast.makeText(this,"123",Toast.LENGTH_LONG).show();
+//                break;
+
+ //       }
+    }
+
+    public void addFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, getFragment()).commit();
+    }
+
+    public void replaceFragment(BaseFragment fragment, String tag) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.animator.fragment_slide_right_enter, R.animator.fragment_slide_left_exit,
+                R.animator.fragment_slide_left_enter, R.animator.fragment_slide_right_exit)
+                .replace(R.id.fragment_container, fragment, tag)
+                .addToBackStack("").commit();
+    }
+
+    public void popFragment() {
+        getFragmentManager().popBackStack();
+    }
+
+    protected BaseFragment getCurrentFragment() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            return (BaseFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
+        }
+        return null;
     }
 }

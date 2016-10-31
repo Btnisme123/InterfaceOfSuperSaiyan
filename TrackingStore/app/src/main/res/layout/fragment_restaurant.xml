@@ -12,28 +12,28 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:background="#70000000" />
+        android:background="#6e000000" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/logo_restaurant"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="@dimen/common_size_100"
+        android:layout_height="@dimen/common_size_100"
+        android:layout_marginLeft="@dimen/common_size_20"
+        android:layout_marginTop="@dimen/common_size_100"
         android:src="@drawable/kfc_logo" />
 
     <TextView
         android:id="@+id/tv_name_restaurant"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/common_size_30"
         android:layout_alignTop="@+id/logo_restaurant"
         android:layout_toRightOf="@id/logo_restaurant"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="@dimen/common_size_10"
+        android:paddingRight="@dimen/common_size_10"
         android:text="KFC INDOCHINA"
         android:textColor="#ffffff"
-        android:textSize="25sp" />
+        android:textSize="@dimen/common_text_size_25" />
 
     <TextView
         android:layout_width="match_parent"
@@ -42,20 +42,20 @@
         android:layout_toRightOf="@id/logo_restaurant"
         android:ellipsize="end"
         android:maxLines="4"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
+        android:paddingBottom="@dimen/common_size_5"
+        android:paddingLeft="@dimen/common_size_10"
+        android:paddingRight="@dimen/common_size_10"
+        android:paddingTop="@dimen/common_size_5"
         android:text="@string/describe_kfc"
         android:textColor="#9f9b9b" />
 
     <View
         android:id="@+id/view_line"
-        android:layout_width="360dp"
-        android:layout_height="1dp"
+        android:layout_width="@dimen/common_size_300"
+        android:layout_height="@dimen/common_size_1"
         android:layout_below="@id/logo_restaurant"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/common_size_10"
         android:background="#ccc8c8" />
 
     <ScrollView
@@ -63,9 +63,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/view_line"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
+        android:paddingLeft="@dimen/common_size_5"
+        android:paddingRight="@dimen/common_size_5"
+        android:paddingTop="@dimen/common_size_5"
         android:scrollbars="none">
 
         <RelativeLayout
@@ -85,7 +85,7 @@
                 android:textStyle="italic"
                 android:layout_toRightOf="@id/icon_food"
                 android:gravity="center_vertical"
-                android:padding="2dp"
+                android:padding="@dimen/common_size_2"
                 android:textSize="@dimen/restaurant_item_text_size" />
             <ImageView
                 android:id="@+id/banner_food"
@@ -110,7 +110,7 @@
                 android:layout_below="@+id/banner_food"
                 android:layout_toRightOf="@id/icon_drink"
                 android:gravity="center_vertical"
-                android:padding="2dp"
+                android:padding="@dimen/common_size_2"
                 android:textSize="@dimen/restaurant_item_text_size" />
 
             <ImageView
@@ -134,7 +134,7 @@
                 android:layout_below="@id/banner_drink"
                 android:layout_toRightOf="@id/icon_drink"
                 android:gravity="center_vertical"
-                android:padding="2dp"
+                android:padding="@dimen/common_size_2"
                 android:textSize="@dimen/restaurant_item_text_size" />
 
             <ImageView
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/restaurant_banner_size"
                 android:layout_below="@id/icon_other"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/common_size_5"
                 android:background="@mipmap/ic_launcher" />
 
 
