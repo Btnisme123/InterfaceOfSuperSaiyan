@@ -6,23 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="#56e7e7e7"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    <Button
+    style="@style/AppTheme">
+
+    <ImageView
         android:id="@+id/button_menu_left"
         android:layout_width="@dimen/common_size_40"
         android:layout_height="@dimen/common_size_40"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/common_size_10"
-        android:layout_marginTop="@dimen/common_size_10"
-        android:background="@drawable/ic_list_black" />
+        android:src="@drawable/ic_list_black"
+        android:padding="@dimen/common_size_10" />
 
-    <Button
+    <ImageView
         android:id="@+id/button_menu_right"
         android:layout_width="@dimen/common_size_40"
         android:layout_height="@dimen/common_size_40"
-        android:layout_alignParentRight="true"
         android:layout_gravity="end"
-        android:layout_marginRight="@dimen/common_size_10"
-        android:layout_marginTop="@dimen/common_size_10"
-        android:background="@drawable/ic_home_black" />
+        android:padding="@dimen/common_size_10"
+        android:src="@drawable/ic_home_black" />
 </android.support.v7.widget.Toolbar>

@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerRightAdapter mRecyclerRightDrawerAdapter;
     private List<DrawerLeftItem> mDrawerLeftItemList;
     private List<DrawerRightItem> mDrawerRightItemList;
-    private Button mButtonMenuLeft, mButtonMenuRight, mButtonIcon;
+    private ImageView mButtonMenuLeft, mButtonMenuRight;
     private DrawerLayout mDrawerLayout;
     private FrameLayout mContainerLayout;
 
@@ -69,12 +70,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftRecyclerDrawer = (RecyclerView) findViewById(R.id.left_recycler_navigation_drawer);
         mRightRecyclerDrawer = (RecyclerView) findViewById(R.id.right_recycler_navigation_drawer);
-        mButtonMenuLeft = (Button) findViewById(R.id.button_menu_left);
-        mButtonMenuRight = (Button) findViewById(R.id.button_menu_right);
+        mButtonMenuLeft = (ImageView) findViewById(R.id.button_menu_left);
+        mButtonMenuRight = (ImageView) findViewById(R.id.button_menu_right);
         mContainerLayout = (FrameLayout) findViewById(R.id.fragment_container);
         mButtonMenuLeft.setOnClickListener(this);
         mButtonMenuRight.setOnClickListener(this);
-        mButtonIcon.setOnClickListener(this);
     }
 
     public void init() {

@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.ActionBarOverlayLayout;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -63,9 +64,9 @@ public class HomeDialog extends Dialog {
         layoutParams.copyFrom(this.getWindow().getAttributes());
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        this.getWindow().setWindowAnimations(R.style.DialogAnimation);
-        this.getWindow().setAttributes(layoutParams);
-
+        //getWindow().setWindowAnimations(R.style.DialogAnimation);
+        getWindow().setAttributes(layoutParams);
+        getWindow().setGravity(Gravity.BOTTOM);
     }
 
     private void init(Food food, DrawerRightItem item) {

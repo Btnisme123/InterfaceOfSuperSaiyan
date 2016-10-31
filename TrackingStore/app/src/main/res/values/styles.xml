@@ -9,9 +9,14 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="actionMenuTextColor">@color/white</item>
+        <item name="contentInsetStart">0dp</item>
     </style>
 
-    <style name="DialogAnimation" parent="@android:style/Theme.Dialog">
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@animator/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@animator/slide_down_dialog</item>
+    </style>
+    <style name="DialogAnimati1n">
         <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
         <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
