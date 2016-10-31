@@ -42,14 +42,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void addFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.fragmentContainer, getFragment()).commit();
+        transaction.add(R.id.fragment_container, getFragment()).commit();
     }
 
     public void replaceFragment(BaseFragment fragment, String tag) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.animator.fragment_slide_right_enter, R.animator.fragment_slide_left_exit,
                 R.animator.fragment_slide_left_enter, R.animator.fragment_slide_right_exit)
-                .replace(R.id.fragmentContainer, fragment, tag)
+                .replace(R.id.fragment_container, fragment, tag)
                 .addToBackStack("").commit();
     }
 
@@ -63,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected BaseFragment getCurrentFragment() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
-            return (BaseFragment) getFragmentManager().findFragmentById(R.id.fragmentContainer);
+            return (BaseFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
         }
         return null;
     }

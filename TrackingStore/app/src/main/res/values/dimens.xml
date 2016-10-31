@@ -15,6 +15,7 @@
     <dimen name="common_size_10">10dp</dimen>
     <dimen name="common_size_15">15dp</dimen>
     <dimen name="common_size_20">20dp</dimen>
+    <dimen name="common_size_25">25dp</dimen>
     <dimen name="common_size_30">30dp</dimen>
     <dimen name="common_size_35">35dp</dimen>
     <dimen name="common_size_40">40dp</dimen>
@@ -43,6 +44,7 @@
     <dimen name="common_text_size_22">22sp</dimen>
     <dimen name="common_text_size_23">23sp</dimen>
     <dimen name="common_text_size_24">24sp</dimen>
+    <dimen name="common_text_size_25">25sp</dimen>
     <dimen name="common_text_size_30">30sp</dimen>
     <dimen name="comon_size_300dp">300dp</dimen>
     <dimen name="common_size_300">300dp</dimen>

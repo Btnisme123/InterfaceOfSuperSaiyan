@@ -2,16 +2,24 @@ package vulan.com.trackingstore.util.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.widget.ActionBarOverlayLayout;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.data.model.Food;
+
+import static android.R.attr.height;
+import static android.R.attr.width;
 
 /**
  * Created by VULAN on 10/21/2016.
@@ -28,7 +36,7 @@ public class HomeDialog extends Dialog {
     public HomeDialog(Context context, Food food, DrawerRightItem drawerRightItem) {
         super(context);
         mContext = context;
-        mView = View.inflate(mContext, R.layout.layout_slide_up, null);
+        mView = View.inflate(mContext, R.layout.dialog_slide_up, null);
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +52,20 @@ public class HomeDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setCanceledOnTouchOutside(true);
+
         setContentView(mView);
+        //set background color
+        Drawable d = new ColorDrawable(Color.WHITE);
+        d.setAlpha(200);
+        this.getWindow().setBackgroundDrawable(d);
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(this.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        this.getWindow().setWindowAnimations(R.style.DialogAnimation);
+        this.getWindow().setAttributes(layoutParams);
+
     }
 
     private void init(Food food, DrawerRightItem item) {
