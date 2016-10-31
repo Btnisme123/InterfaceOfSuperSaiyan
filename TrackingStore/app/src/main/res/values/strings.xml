@@ -10,4 +10,5 @@
     <string name="describe_kfc">KFC là cụm từ viết tắt của Kentucky Fried Chicken - Gà Rán Kentucky.KFC chuyên về các sản phẩm gà rán và nướng, với các món ăn kèm theo và các loại sandwiches chế biến từ thịt gà tươi.</string>
     <string name="setting">Setting</string>
     <string name="go_to_restaurant">Go to this restaurant</string>
+    <string name="restaurant_fragment">Restaurant_fragment</string>
 </resources>

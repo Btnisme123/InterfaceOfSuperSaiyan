@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +21,7 @@ import java.util.List;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
 import vulan.com.trackingstore.adapter.RecyclerRightAdapter;
+import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
 import vulan.com.trackingstore.data.model.DrawerLeftItem;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.ui.base.BaseFragment;
@@ -30,7 +30,7 @@ import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
 import vulan.com.trackingstore.util.FakeContainer;
 import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRecyclerItemClickListener {
 
     LinearLayout mLayoutSlideUp;
     private RecyclerView mLeftRecyclerDrawer, mRightRecyclerDrawer;
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRightRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
         mRightRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
         mRightRecyclerDrawer.setAdapter(mRecyclerRightDrawerAdapter);
+        mRecyclerLeftDrawerAdapter.setOnClick(this);
     }
 
     @Override
@@ -142,5 +143,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return (BaseFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
         }
         return null;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        switch (position) {
+            case RESTAURANT:
+                replaceFragment(new RestaurantFragment(), getString(R.string.restaurant_fragment));
+                break;
+        }
     }
 }

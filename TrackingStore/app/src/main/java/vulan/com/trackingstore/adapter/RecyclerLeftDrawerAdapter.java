@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,6 +46,13 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
         DrawerLeftItem item = mNavigationDrawerLeftItems.get(position);
         holder.mImageIcon.setImageResource(item.getImageDrawble());
         holder.mTextTitle.setText(item.getTitle());
+        holder.mlinearDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnRecyclerItemInteractListener.onItemClick(position);
+                Toast.makeText(mContext,""+position,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
