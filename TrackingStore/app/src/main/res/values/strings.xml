@@ -11,4 +11,6 @@
     <string name="setting">Setting</string>
     <string name="go_to_restaurant">Go to this restaurant</string>
     <string name="restaurant_fragment">Restaurant_fragment</string>
+    <string name="food">FOODS</string>
+    <string name="food_fragment">food fragment</string>
 </resources>

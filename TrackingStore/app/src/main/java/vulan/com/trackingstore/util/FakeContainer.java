@@ -32,4 +32,15 @@ public class FakeContainer {
     public static DrawerRightItem getRightItem() {
         return new DrawerRightItem("Lotteria 139 Cau Giay Street", "20m");
     }
+
+    public static List<Food> getListFood() {
+        List<Food> foodList = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            if(i%2==0){
+                foodList.add(new Food(R.drawable.ic_chicken, "Nem chua", 20, 14));
+            }
+            foodList.add(new Food(R.drawable.nemran, "Nem rán ", 20, 14));
+        }
+        return foodList;
+    }
 }

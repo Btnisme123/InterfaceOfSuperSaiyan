@@ -21,16 +21,18 @@ import java.util.List;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
 import vulan.com.trackingstore.adapter.RecyclerRightAdapter;
-import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
+import vulan.com.trackingstore.data.listener.OnLeftItemClickListener;
+import vulan.com.trackingstore.data.listener.OnRightItemCLickListener;
 import vulan.com.trackingstore.data.model.DrawerLeftItem;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.ui.fragment.FoodFragment;
 import vulan.com.trackingstore.ui.fragment.HomeFragment;
 import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
 import vulan.com.trackingstore.util.FakeContainer;
 import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnRecyclerItemClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnLeftItemClickListener, OnRightItemCLickListener {
 
     LinearLayout mLayoutSlideUp;
     private RecyclerView mLeftRecyclerDrawer, mRightRecyclerDrawer;
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRightRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
         mRightRecyclerDrawer.setAdapter(mRecyclerRightDrawerAdapter);
         mRecyclerLeftDrawerAdapter.setOnClick(this);
+        mRecyclerRightDrawerAdapter.setOnClick(this);
     }
 
     @Override
@@ -146,10 +149,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onLeftItemClick(int position) {
         switch (position) {
             case RESTAURANT:
                 replaceFragment(new RestaurantFragment(), getString(R.string.restaurant_fragment));
+                break;
+        }
+    }
+
+    @Override
+    public void onRightItemClick(int position) {
+        switch (position) {
+            case 1:
+                replaceFragment(new FoodFragment(), getString(R.string.food_fragment));
                 break;
         }
     }
