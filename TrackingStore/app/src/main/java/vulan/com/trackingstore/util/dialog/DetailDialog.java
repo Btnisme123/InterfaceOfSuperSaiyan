@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.widget.ActionBarOverlayLayout;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
@@ -19,25 +18,21 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.data.model.Food;
 
-import static android.R.attr.height;
-import static android.R.attr.width;
-
 /**
- * Created by VULAN on 10/21/2016.
+ * Created by vulan on 03/11/2016.
  */
 
-public class HomeDialog extends Dialog {
-
+public class DetailDialog extends Dialog {
     private Context mContext;
     private View mView;
     private TextView mTextTitle, mTextName, mTextMeter, mTextContent;
     private ImageView mImage;
     private CardView mCardview;
 
-    public HomeDialog(Context context, Food food, DrawerRightItem drawerRightItem) {
+    public DetailDialog(Context context, Food food, DrawerRightItem drawerRightItem) {
         super(context);
         mContext = context;
-        mView = View.inflate(mContext, R.layout.dialog_detail, null);
+        mView = View.inflate(mContext, R.layout.dialog_slide_up, null);
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +59,7 @@ public class HomeDialog extends Dialog {
         layoutParams.copyFrom(this.getWindow().getAttributes());
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        getWindow().setWindowAnimations(R.style.DialogAnimation);
+        //getWindow().setWindowAnimations(R.style.DialogAnimation);
         getWindow().setAttributes(layoutParams);
         getWindow().setGravity(Gravity.BOTTOM);
     }

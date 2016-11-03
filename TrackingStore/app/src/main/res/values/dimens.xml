@@ -34,7 +34,11 @@
     <dimen name="common_size_60">60dp</dimen>
     <dimen name="common_size_80">80dp</dimen>
     <dimen name="common_size_200">200dp</dimen>
+    <dimen name="common_size_320">320dp</dimen>
+
     <dimen name="common_size_370">370dp</dimen>
+    <dimen name="common_size_450">450dp</dimen>
+
     <dimen name="common_size_500">500dp</dimen>
     <!--Common text size-->
     <dimen name="common_text_size_10">10sp</dimen>
@@ -55,6 +59,8 @@
     <dimen name="common_text_size_25">25sp</dimen>
     <dimen name="common_text_size_30">30sp</dimen>
     <dimen name="common_text_size_40">40sp</dimen>
+    <dimen name="common_text_size_50">50sp</dimen>
+
     <dimen name="comon_size_300dp">300dp</dimen>
     <dimen name="common_size_300">300dp</dimen>
     <dimen name="common_size_250">250dp</dimen>

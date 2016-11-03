@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //mToolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(mToolbar);
         // mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        //mLayoutSlideUp= (LinearLayout) findViewById(R.id.layout_slide_up);
+        //mLayoutSlideUp= (LinearLayout) findViewById(R.id.dialog_layout_slide_up);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mLeftRecyclerDrawer = (RecyclerView) findViewById(R.id.left_recycler_navigation_drawer);
         mRightRecyclerDrawer = (RecyclerView) findViewById(R.id.right_recycler_navigation_drawer);

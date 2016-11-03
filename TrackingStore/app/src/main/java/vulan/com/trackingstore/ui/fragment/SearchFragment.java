@@ -18,7 +18,8 @@ public class SearchFragment extends BaseFragment {
     protected int getFragmentLayoutId() {
         return 0;
     }
-    private void findViews(View view){
+
+    private void findViews(View view) {
 
     }
 }
