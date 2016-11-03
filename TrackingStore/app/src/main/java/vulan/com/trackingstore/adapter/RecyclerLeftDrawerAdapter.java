@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
+import vulan.com.trackingstore.data.listener.OnLeftItemClickListener;
 import vulan.com.trackingstore.data.model.DrawerLeftItem;
 
 /**
@@ -23,7 +23,7 @@ import vulan.com.trackingstore.data.model.DrawerLeftItem;
 public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeftDrawerAdapter.ItemHolder> {
     private List<DrawerLeftItem> mNavigationDrawerLeftItems;
     private Context mContext;
-    private OnRecyclerItemClickListener mOnRecyclerItemInteractListener;
+    private OnLeftItemClickListener mOnRecyclerItemInteractListener;
 
     public RecyclerLeftDrawerAdapter(Context context, List<DrawerLeftItem> items
     ) {
@@ -31,7 +31,7 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
         mNavigationDrawerLeftItems = items;
     }
 
-    public void setOnClick(OnRecyclerItemClickListener onRecyclerItemInteractListener) {
+    public void setOnClick(OnLeftItemClickListener onRecyclerItemInteractListener) {
         mOnRecyclerItemInteractListener = onRecyclerItemInteractListener;
     }
 
@@ -49,7 +49,7 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
         holder.mlinearDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnRecyclerItemInteractListener.onItemClick(position);
+                mOnRecyclerItemInteractListener.onLeftItemClick(position);
                 Toast.makeText(mContext,""+position,Toast.LENGTH_SHORT).show();
             }
         });

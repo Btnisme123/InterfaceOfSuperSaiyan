@@ -19,6 +19,12 @@ public class Food {
         this.mSaleoffPercentage=mSaleoffPercentage;
     }
 
+    public Food(int mImageFood, String mName, int mPrice,int mSaleoffPercentage) {
+        this.mImageFood = mImageFood;
+        this.mName = mName;
+        this.mPrice = mPrice;
+        this.mSaleoffPercentage=mSaleoffPercentage;
+    }
     public int getImageFood() {
         return mImageFood;
     }

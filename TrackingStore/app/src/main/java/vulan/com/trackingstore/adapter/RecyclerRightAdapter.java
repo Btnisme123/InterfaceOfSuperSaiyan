@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
+import vulan.com.trackingstore.data.listener.OnRightItemCLickListener;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 
 /**
@@ -21,7 +21,7 @@ import vulan.com.trackingstore.data.model.DrawerRightItem;
 public class RecyclerRightAdapter extends RecyclerView.Adapter<RecyclerRightAdapter.ItemHolder> {
     private List<DrawerRightItem> mNavigationDrawerLeftItems;
     private Context mContext;
-    private OnRecyclerItemClickListener mOnRecyclerItemInteractListener;
+    private OnRightItemCLickListener mOnRecyclerItemInteractListener;
 
     public RecyclerRightAdapter(Context context, List<DrawerRightItem> items
     ) {
@@ -29,7 +29,7 @@ public class RecyclerRightAdapter extends RecyclerView.Adapter<RecyclerRightAdap
         mNavigationDrawerLeftItems = items;
     }
 
-    public void setOnClick(OnRecyclerItemClickListener onRecyclerItemInteractListener) {
+    public void setOnClick(OnRightItemCLickListener onRecyclerItemInteractListener) {
         mOnRecyclerItemInteractListener = onRecyclerItemInteractListener;
     }
 
@@ -48,7 +48,7 @@ public class RecyclerRightAdapter extends RecyclerView.Adapter<RecyclerRightAdap
             @Override
             public void onClick(View view) {
                 if(mOnRecyclerItemInteractListener!=null){
-                    mOnRecyclerItemInteractListener.onItemClick(position);
+                    mOnRecyclerItemInteractListener.onRightItemClick(position);
                 }
             }
         });

@@ -20,11 +20,11 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
         outRect.top = mContext.getResources().getDimensionPixelOffset(R.dimen.common_size_7);
         if (parent.getChildLayoutPosition(view) % 2 == 0) {
-            outRect.left = mContext.getResources().getDimensionPixelOffset(R.dimen.common_size_6);
-            outRect.right = 0;
+            outRect.left = mContext.getResources().getDimensionPixelOffset(R.dimen.common_size_2);
+            outRect.right = 6;
         } else {
             outRect.right = 0;
-            outRect.left = mContext.getResources().getDimensionPixelOffset(R.dimen.common_size_6);
+            outRect.left = mContext.getResources().getDimensionPixelOffset(R.dimen.common_size_2);
         }
     }
 }

@@ -1,19 +1,18 @@
 package vulan.com.trackingstore.adapter;
 
 import android.content.Context;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
 import vulan.com.trackingstore.data.model.Food;
 
 /**
@@ -23,18 +22,13 @@ import vulan.com.trackingstore.data.model.Food;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemHolder> {
 
     private Context mContext;
-    private ArrayList<Food> mFoodList;
+    private List<Food> mFoodList;
     private RecyclerView.LayoutManager mLayoutManager;
-    private OnRecyclerItemClickListener mOnItemClickListener;
 
-    public FoodAdapter(Context context, RecyclerView.LayoutManager layoutManager) {
-        mFoodList = new ArrayList<>();
+    public FoodAdapter(Context context, RecyclerView.LayoutManager layoutManager, List<Food> mFoodList) {
+        this.mFoodList = mFoodList;
         mLayoutManager = layoutManager;
         mContext = context;
-    }
-
-    public void setOnRecyclerViewItemClickListener(OnRecyclerItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -49,10 +43,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ItemHolder holder, final int position) {
+    public void onBindViewHolder(ItemHolder holder, final int position) {
         Food food = mFoodList.get(position);
         holder.foodName.setText(food.getName());
-        holder.foodPrice.setText(food.getPrice());
+        holder.foodPrice.setText(food.getPrice() + " $");
         holder.imageFood.setImageResource(food.getImageFood());
     }
 
@@ -66,7 +60,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemHolder> {
         notifyItemInserted(mFoodList.size() - 1);
     }
 
-    public void addItems(ArrayList<Food> foodArrayList) {
+    public void addItems(List<Food> foodArrayList) {
         mFoodList.addAll(foodArrayList);
         notifyDataSetChanged();
     }
@@ -75,7 +69,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemHolder> {
         return mFoodList.get(position);
     }
 
-    public ArrayList<Food> getNewsList() {
+    public List<Food> getNewsList() {
         return mFoodList;
     }
 
@@ -101,14 +95,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ItemHolder> {
         public TextView foodName;
         public ImageView imageFood;
         public TextView foodPrice;
-        public LinearLayout linearItemFoods;
+        public PercentRelativeLayout layoutItemFoods;
 
         public ItemHolder(View itemView) {
             super(itemView);
             foodName = (TextView) itemView.findViewById(R.id.text_food_name);
             imageFood = (ImageView) itemView.findViewById(R.id.image_food);
             foodPrice = (TextView) itemView.findViewById(R.id.text_food_price);
-            linearItemFoods = (LinearLayout) itemView.findViewById(R.id.linear_item_news);
+            layoutItemFoods = (PercentRelativeLayout) itemView.findViewById(R.id.layout_item_foods);
         }
     }
 }
