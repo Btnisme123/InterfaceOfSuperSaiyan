@@ -4,40 +4,45 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/layout_info_restaurant"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_size_40"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:weightSum="8"
-        android:background="@color/colorPrimaryTransparent"
-        android:padding="@dimen/common_size_5">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="@dimen/common_size_30"
-            android:layout_height="@dimen/common_size_30"
-            android:src="@drawable/mc_donald"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/text_location"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/common_size_30"
-            android:text="Mc Donal"
-            android:textStyle="italic"
-            android:textSize="@dimen/common_text_size_20"
-            android:layout_weight="5"
-            android:gravity="center_vertical"/>
-        <TextView
-            android:id="@+id/text_meter"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/common_size_30"
-            android:text="20m"
-            android:textStyle="italic"
-            android:textSize="@dimen/common_text_size_20"
-            android:layout_weight="2"
-            android:gravity="center"/>
-    </LinearLayout>
+        android:layout_height="@dimen/common_size_40">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_40"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="8"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/common_size_5">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/common_size_30"
+                android:layout_height="@dimen/common_size_30"
+                android:src="@drawable/mc_donald"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_size_30"
+                android:text="Mc Donal"
+                android:textStyle="italic"
+                android:textSize="@dimen/common_text_size_20"
+                android:layout_weight="5"
+                android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/text_meter"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_size_30"
+                android:text="20m"
+                android:textStyle="italic"
+                android:textSize="@dimen/common_text_size_20"
+                android:layout_weight="2"
+                android:gravity="center"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
     <LinearLayout
         android:id="@+id/layout_info_food"
         android:layout_width="match_parent"

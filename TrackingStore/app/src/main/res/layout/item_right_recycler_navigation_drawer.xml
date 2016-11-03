@@ -10,29 +10,34 @@
         android:id="@+id/linear_navigation_drawer"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="8"
         android:orientation="horizontal">
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/common_size_40"
+            android:layout_weight="1"
+            android:src="@drawable/kfc_logo"/>
         <TextView
             android:id="@+id/text_meter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/common_size_10"
             android:text="123"
             android:textColor="@color/red"
+            android:layout_gravity="center"
             android:textSize="@dimen/common_text_size_17" />
 
         <TextView
             android:id="@+id/text_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/common_size_10"
             android:text="123"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/common_text_size_17" />
     </LinearLayout>
 

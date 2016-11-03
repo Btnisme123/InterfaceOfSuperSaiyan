@@ -11,6 +11,7 @@
     <color name="red_transparent">#80f22800</color>
     <color name="raised_button_normal_color">#FFFFFF</color>
     <color name="raised_button_highlight_color">#88f1ecec</color>
+    <color name="color_ed_search">#f2eeee</color>
 
     <color name="colorPrimaryTransparent">#bbff5722</color>
 </resources>

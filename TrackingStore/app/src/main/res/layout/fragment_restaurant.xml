@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/banner_restaurant"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="@dimen/common_size_165"
         android:background="@drawable/kfc_banner" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="#6e000000" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/logo_restaurant"
         android:layout_width="@dimen/common_size_100"
         android:layout_height="@dimen/common_size_100"
         android:layout_marginLeft="@dimen/common_size_20"
-        android:layout_marginTop="@dimen/common_size_100"
+        android:layout_marginTop="@dimen/common_size_135"
         android:src="@drawable/kfc_logo" />
 
     <TextView
@@ -32,7 +28,7 @@
         android:paddingLeft="@dimen/common_size_10"
         android:paddingRight="@dimen/common_size_10"
         android:text="KFC INDOCHINA"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:textSize="@dimen/common_text_size_25" />
 
     <TextView
@@ -47,7 +43,7 @@
         android:paddingRight="@dimen/common_size_10"
         android:paddingTop="@dimen/common_size_5"
         android:text="@string/describe_kfc"
-        android:textColor="#9f9b9b" />
+        android:textColor="@color/colorSecondaryText" />
 
     <View
         android:id="@+id/view_line"
@@ -71,7 +67,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/icon_food"

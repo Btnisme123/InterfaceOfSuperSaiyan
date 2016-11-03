@@ -30,7 +30,7 @@
             android:id="@+id/left_recycler_navigation_drawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_size_10" />
+            android:layout_marginTop="@dimen/common_size_5" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,11 +41,13 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
+        <include layout="@layout/nav_header_right" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/right_recycler_navigation_drawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_size_10" />
+            android:layout_marginTop="@dimen/common_size_5" />
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

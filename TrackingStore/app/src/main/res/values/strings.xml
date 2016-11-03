@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TiFo</string>
+    <string name="app_name">Tifo</string>
     <string name="restaurant_list">Restaurant list</string>
     <string name="search_detail">Search detail</string>
     <string name="search">Search</string>
@@ -11,4 +11,7 @@
     <string name="setting">Setting</string>
     <string name="go_to_restaurant">Go to this restaurant</string>
     <string name="restaurant_fragment">Restaurant_fragment</string>
+    <string name="home_fragment">Home_fragment</string>
+    <string name="text_hint_search">Search by name</string>
+    <string name="restaurant">Restaurant</string>
 </resources>

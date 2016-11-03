@@ -148,8 +148,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemClick(int position) {
         switch (position) {
+            case HOME:
+                replaceFragment(new HomeFragment(),getString(R.string.home_fragment));
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                break;
             case RESTAURANT:
                 replaceFragment(new RestaurantFragment(), getString(R.string.restaurant_fragment));
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
     }
