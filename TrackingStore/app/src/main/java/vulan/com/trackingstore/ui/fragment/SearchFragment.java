@@ -2,6 +2,7 @@ package vulan.com.trackingstore.ui.fragment;
 
 import android.view.View;
 
+import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 
 /**
@@ -16,7 +17,7 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayoutId() {
-        return 0;
+        return R.layout.fragment_search;
     }
 
     private void findViews(View view) {

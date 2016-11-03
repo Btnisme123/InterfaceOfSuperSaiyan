@@ -10,7 +10,9 @@
         <item name="windowNoTitle">true</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="contentInsetStart">0dp</item>
+
     </style>
+
 
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@animator/slide_up_dialog</item>

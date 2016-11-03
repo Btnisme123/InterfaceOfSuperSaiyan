@@ -39,6 +39,7 @@
     <dimen name="common_size_370">370dp</dimen>
     <dimen name="common_size_450">450dp</dimen>
 
+    <dimen name="common_size_400">400dp</dimen>
     <dimen name="common_size_500">500dp</dimen>
     <!--Common text size-->
     <dimen name="common_text_size_10">10sp</dimen>

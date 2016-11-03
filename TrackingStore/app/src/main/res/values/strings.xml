@@ -16,4 +16,5 @@
     <string name="restaurant">Restaurant</string>
     <string name="food">FOODS</string>
     <string name="food_fragment">food fragment</string>
+    <string name="notication_search">Notification when found</string>
 </resources>

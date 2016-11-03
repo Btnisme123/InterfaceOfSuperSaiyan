@@ -42,12 +42,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <View
-        android:id="@+id/view_banner"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="#6e000000" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_food"
         android:layout_width="match_parent"
