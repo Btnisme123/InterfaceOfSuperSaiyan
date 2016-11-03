@@ -18,15 +18,10 @@
             app:cardCornerRadius="@dimen/common_size_8"
             app:cardElevation="@dimen/common_size_5">
 
-            <EditText
+            <android.support.v7.widget.SearchView
+                android:id="@+id/search_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:background="@color/color_ed_search"
-                android:drawableRight="@drawable/ic_search"
-                android:hint="@string/text_hint_search"
-                android:padding="@dimen/common_size_7"
-                android:textColorHint="@color/colorSecondaryText"
-                android:textSize="@dimen/common_size_15" />
+                android:layout_height="match_parent" />
 
         </android.support.v7.widget.CardView>
     </LinearLayout>

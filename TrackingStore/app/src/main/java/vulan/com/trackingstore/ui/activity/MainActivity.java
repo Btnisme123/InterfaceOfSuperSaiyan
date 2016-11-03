@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -32,7 +33,7 @@ import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
 import vulan.com.trackingstore.util.FakeContainer;
 import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnLeftItemClickListener, OnRightItemCLickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnLeftItemClickListener, OnRightItemCLickListener, SearchView.OnQueryTextListener {
 
     LinearLayout mLayoutSlideUp;
     private RecyclerView mLeftRecyclerDrawer, mRightRecyclerDrawer;
@@ -43,12 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mButtonMenuLeft, mButtonMenuRight;
     private DrawerLayout mDrawerLayout;
     private FrameLayout mContainerLayout;
-
+    private SearchView mSearchView;
+    private View mHeaderView;
     private static final int HOME = 0;
     private static final int RESTAURANT = 1;
     private static final int SEARCH_DETAILS = 2;
     private static final int SEARCH = 3;
     private static final int SETTINGS = 4;
+    private final int SCROLL_POSITION = 0;
 
     @Override
 
@@ -75,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonMenuLeft = (ImageView) findViewById(R.id.button_menu_left);
         mButtonMenuRight = (ImageView) findViewById(R.id.button_menu_right);
         mContainerLayout = (FrameLayout) findViewById(R.id.fragment_container);
+        mSearchView= (SearchView)findViewById(R.id.search_view);
+        mSearchView.setOnQueryTextListener(this);
         mButtonMenuLeft.setOnClickListener(this);
         mButtonMenuRight.setOnClickListener(this);
     }
@@ -167,7 +172,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (position) {
             case 1:
                 replaceFragment(new FoodFragment(), getString(R.string.food_fragment));
+                mDrawerLayout.closeDrawer(GravityCompat.END);
                 break;
         }
+    }
+
+    private List<DrawerRightItem> filter(List<DrawerRightItem> categoryProducts, String query) {
+        query = query.toLowerCase();
+        List<DrawerRightItem> filterList = new ArrayList<>();
+        int size = categoryProducts.size();
+        for (int i = 0; i < size; i++) {
+            DrawerRightItem categoryProduct = categoryProducts.get(i);
+            String categoryName = categoryProduct.getTitle().toLowerCase();
+            if (categoryName.contains(query)) {
+                filterList.add(categoryProduct);
+            }
+        }
+        return filterList;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+         List<DrawerRightItem> list = filter(mDrawerRightItemList, query);
+        mRecyclerRightDrawerAdapter.animateTo(list);
+        mRightRecyclerDrawer.scrollToPosition(SCROLL_POSITION);
+        return true;
     }
 }

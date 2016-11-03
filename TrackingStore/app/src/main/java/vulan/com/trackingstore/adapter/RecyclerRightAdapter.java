@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
@@ -26,7 +27,7 @@ public class RecyclerRightAdapter extends RecyclerView.Adapter<RecyclerRightAdap
     public RecyclerRightAdapter(Context context, List<DrawerRightItem> items
     ) {
         mContext = context;
-        mNavigationDrawerLeftItems = items;
+        mNavigationDrawerLeftItems = new ArrayList<>(items);
     }
 
     public void setOnClick(OnRightItemCLickListener onRecyclerItemInteractListener) {
@@ -57,6 +58,58 @@ public class RecyclerRightAdapter extends RecyclerView.Adapter<RecyclerRightAdap
     @Override
     public int getItemCount() {
         return mNavigationDrawerLeftItems != null ? mNavigationDrawerLeftItems.size() : 0;
+    }
+
+    public void removeItem(int position) {
+        mNavigationDrawerLeftItems.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void addItem(int position, DrawerRightItem model) {
+        mNavigationDrawerLeftItems.add(position, model);
+        notifyItemInserted(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        DrawerRightItem category = mNavigationDrawerLeftItems.remove(fromPosition);
+        mNavigationDrawerLeftItems.add(toPosition, category);
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    private void applyAndAnimateRemovals(List<DrawerRightItem> categoryProducts) {
+        int size = mNavigationDrawerLeftItems.size();
+        for (int i = size - 1; i >= 0; i--) {
+            DrawerRightItem category = mNavigationDrawerLeftItems.get(i);
+            if (!categoryProducts.contains(category)) {
+                removeItem(i);
+            }
+        }
+    }
+
+    private void applyAndAnimateAddition(List<DrawerRightItem> categoryProducts) {
+        for (int i = 0, count = categoryProducts.size(); i < count; i++) {
+            DrawerRightItem categoryProduct = categoryProducts.get(i);
+            if (!mNavigationDrawerLeftItems.contains(categoryProduct)) {
+                addItem(i, categoryProduct);
+            }
+        }
+    }
+
+    private void applyAndAnimateMoveItems(List<DrawerRightItem> categoryProducts) {
+        int size = categoryProducts.size();
+        for (int toPosition = size - 1; toPosition >= 0; toPosition--) {
+            DrawerRightItem category = categoryProducts.get(toPosition);
+            int fromPosition = mNavigationDrawerLeftItems.indexOf(category);
+            if (fromPosition != 0 && fromPosition != toPosition) {
+                moveItem(fromPosition, toPosition);
+            }
+        }
+    }
+
+    public void animateTo(List<DrawerRightItem> list) {
+        applyAndAnimateAddition(list);
+        applyAndAnimateMoveItems(list);
+        applyAndAnimateRemovals(list);
     }
 
     class ItemHolder extends RecyclerView.ViewHolder {
