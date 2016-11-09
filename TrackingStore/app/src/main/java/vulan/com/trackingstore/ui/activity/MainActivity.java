@@ -27,6 +27,7 @@ import vulan.com.trackingstore.data.listener.OnRightItemCLickListener;
 import vulan.com.trackingstore.data.model.DrawerLeftItem;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.ui.fragment.BlankFragment;
 import vulan.com.trackingstore.ui.fragment.FoodFragment;
 import vulan.com.trackingstore.ui.fragment.HomeFragment;
 import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
@@ -163,6 +164,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case RESTAURANT:
                 replaceFragment(new RestaurantFragment(), getString(R.string.restaurant_fragment));
                 mDrawerLayout.closeDrawer(GravityCompat.START);
+                break;
+            case SEARCH:
+                replaceFragment(new BlankFragment(),"blank");
                 break;
         }
     }

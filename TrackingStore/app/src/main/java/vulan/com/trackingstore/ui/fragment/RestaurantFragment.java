@@ -1,17 +1,23 @@
 package vulan.com.trackingstore.ui.fragment;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.adapter.FoodCategoryAdapter;
 import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.util.FakeContainer;
+import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
 /**
  * Created by Thanh on 10/21/2016.
  */
 
 public class RestaurantFragment extends BaseFragment {
-    ImageView bannerFood,bannerDrink,bannerOther;
+    private RecyclerView mRecyclerView;
+    private FoodCategoryAdapter mAdapter;
     public final static String TAG_RESTAURANT_FRAGMENT = "restaurant fragment";
 
     @Override
@@ -25,27 +31,10 @@ public class RestaurantFragment extends BaseFragment {
     }
 
     private void findViews(View view) {
-        bannerFood = (ImageView) view.findViewById(R.id.banner_food);
-        bannerDrink = (ImageView) view.findViewById(R.id.banner_drink);
-        bannerOther = (ImageView) view.findViewById(R.id.banner_other);
-
-        bannerFood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //open details of food
-            }
-        });
-        bannerDrink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //open details of drink
-            }
-        });
-        bannerOther.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //open details of other
-            }
-        });
+        mRecyclerView= (RecyclerView) view.findViewById(R.id.recycler_food_drink);
+        mAdapter=new FoodCategoryAdapter(FakeContainer.getFoodDrinkList(),getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new LinearItemDecoration(getActivity()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

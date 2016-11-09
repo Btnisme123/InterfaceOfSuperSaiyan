@@ -45,7 +45,7 @@ public class HomeDialog extends Dialog {
             }
         });
         findView(mView);
-        init(food, drawerRightItem);
+        //init(food, drawerRightItem);
     }
 
     @Override

@@ -25,6 +25,11 @@ public class Food {
         this.mPrice = mPrice;
         this.mSaleoffPercentage=mSaleoffPercentage;
     }
+
+    public Food(int imageFood) {
+        this.mImageFood = imageFood;
+    }
+
     public int getImageFood() {
         return mImageFood;
     }

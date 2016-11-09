@@ -11,6 +11,7 @@ import vulan.com.trackingstore.R;
 
 public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     private int mSpace;
+    private boolean mIsHorizontal;
 
     public LinearItemDecoration(Context context) {
         mSpace = context.getResources().getDimensionPixelSize(R.dimen.common_size_7);
@@ -20,11 +21,17 @@ public class LinearItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
                                RecyclerView.State state) {
         int position = parent.getChildLayoutPosition(view);
-        if (position == 0 && outRect.top == 0) {
-            outRect.top = mSpace;
+        if(!mIsHorizontal){
+            if (position == 0 && outRect.top == 0) {
+                outRect.top = mSpace;
+            }
         }
         outRect.bottom = mSpace;
         outRect.right = mSpace;
         outRect.left = mSpace;
+    }
+
+    public void setIsHorizontal(boolean mIsHorizontal) {
+        this.mIsHorizontal = mIsHorizontal;
     }
 }
