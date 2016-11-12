@@ -15,17 +15,10 @@ import vulan.com.trackingstore.util.customview.BallBounce;
 
 
 public class BlankFragment extends BaseFragment {
-    BallBounce ball;
+
     @Override
     protected void onCreateContentView(View rootView) {
 
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ball=new BallBounce(getActivity());
-        return ball;
     }
 
     @Override

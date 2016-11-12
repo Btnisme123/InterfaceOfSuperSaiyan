@@ -26,7 +26,7 @@ public class FoodFragment extends BaseFragment implements View.OnClickListener {
     private List<Food> foodList;
     private LinearItemDecoration mListViewItemDecoration;
     private GridItemDecoration mGridViewItemDecoration;
-
+    public static final String FOOD_FRAGMENT_TAG="food fragment tag";
     @Override
     protected void onCreateContentView(View rootView) {
         findView(rootView);

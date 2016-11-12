@@ -1,5 +1,7 @@
 package vulan.com.trackingstore.adapter;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.data.listener.OnFoodListClickListener;
 import vulan.com.trackingstore.data.model.CategoryList;
 import vulan.com.trackingstore.data.model.ImageBanner;
+import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.ui.fragment.FoodFragment;
 import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
 
-public class FoodCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FoodCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnFoodListClickListener {
     private final int TYPE_BANNER_FIRST = 2;
     private final int TYPE_BANNER_SECOND= 4;
     private final int TYPE_BANNER_THIRD= 6;
@@ -28,10 +33,12 @@ public class FoodCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int TYPE_CATEGORY_OTHER = 5;
     private List<Object> mItems;
     private Context mContext;
+    private Activity mActivity;
 
     public FoodCategoryAdapter(List<Object> items, Context context) {
         mItems = items;
         mContext = context;
+        mActivity= (Activity) context;
     }
 
 
@@ -87,6 +94,7 @@ public class FoodCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         CategoryList foods= (CategoryList) mItems.get(position);
         if(foods!=null){
           FoodListCategoryAdapter adapter=new FoodListCategoryAdapter((ArrayList)foods.getProductList());
+            adapter.setOnFoodListClickListener(this);
             LinearItemDecoration linearItemDecoration=new LinearItemDecoration(mContext);
             linearItemDecoration.setIsHorizontal(true);
             holder.recyclerView.addItemDecoration(linearItemDecoration);
@@ -120,6 +128,19 @@ public class FoodCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return mItems.size();
+    }
+
+    @Override
+    public void onItemFoodClick() {
+       replaceFragment(new FoodFragment(),FoodFragment.FOOD_FRAGMENT_TAG);
+    }
+
+    public void replaceFragment(BaseFragment fragment, String tag) {
+        FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.animator.fragment_slide_right_enter, R.animator.fragment_slide_left_exit,
+                R.animator.fragment_slide_left_enter, R.animator.fragment_slide_right_exit)
+                .replace(R.id.fragment_container, fragment, tag)
+                .addToBackStack("").commit();
     }
 
     public class BannerHolder extends RecyclerView.ViewHolder{

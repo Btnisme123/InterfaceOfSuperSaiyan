@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     private FrameLayout mContainerLayout;
     private SearchView mSearchView;
-    private View mHeaderView;
     private static final int HOME = 0;
     private static final int RESTAURANT = 1;
     private static final int SEARCH_DETAILS = 2;
@@ -124,9 +123,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_menu_right:
                 mDrawerLayout.openDrawer(GravityCompat.END);
                 break;
-            case R.id.button_icon:
-
-                break;
         }
     }
 
@@ -161,10 +157,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 replaceFragment(new HomeFragment(),getString(R.string.home_fragment));
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
-            case RESTAURANT:
-                replaceFragment(new RestaurantFragment(), getString(R.string.restaurant_fragment));
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-                break;
             case SEARCH:
                 replaceFragment(new BlankFragment(),"blank");
                 break;
@@ -175,8 +167,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onRightItemClick(int position) {
         switch (position) {
             case 1:
-                replaceFragment(new FoodFragment(), getString(R.string.food_fragment));
-                mDrawerLayout.closeDrawer(GravityCompat.END);
+                replaceFragment(new RestaurantFragment(), getString(R.string.restaurant_fragment));
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
         }
     }

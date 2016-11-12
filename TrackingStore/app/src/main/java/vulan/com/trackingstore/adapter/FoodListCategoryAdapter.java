@@ -1,17 +1,15 @@
 package vulan.com.trackingstore.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.data.listener.OnFoodListClickListener;
 import vulan.com.trackingstore.data.model.Food;
 
 /**
@@ -20,7 +18,8 @@ import vulan.com.trackingstore.data.model.Food;
 
 public class FoodListCategoryAdapter extends RecyclerView.Adapter<FoodListCategoryAdapter.ItemHolder>{
 
-    private ArrayList<Food> foodList=new ArrayList<>();;
+    private ArrayList<Food> foodList=new ArrayList<>();
+    private OnFoodListClickListener mOnFoodListClickListener;
 
     public FoodListCategoryAdapter(ArrayList<Food> foodList) {
         this.foodList = foodList;
@@ -36,11 +35,23 @@ public class FoodListCategoryAdapter extends RecyclerView.Adapter<FoodListCatego
     @Override
     public void onBindViewHolder(FoodListCategoryAdapter.ItemHolder holder, int position) {
         holder.imageBanner.setImageResource(R.drawable.ic_chicken);
+        holder.imageBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnFoodListClickListener!=null){
+                    mOnFoodListClickListener.onItemFoodClick();
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return foodList.size();
+    }
+
+    public void setOnFoodListClickListener(OnFoodListClickListener onFoodListClickListener) {
+        this.mOnFoodListClickListener = onFoodListClickListener;
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder{
