@@ -52,4 +52,6 @@ public abstract class BaseFragment extends Fragment {
     protected boolean enableToolbar() {
         return true;
     }
+
+
 }

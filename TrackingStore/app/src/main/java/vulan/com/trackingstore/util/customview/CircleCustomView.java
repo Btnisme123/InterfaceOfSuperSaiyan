@@ -28,13 +28,9 @@ import vulan.com.trackingstore.R;
 public class CircleCustomView extends View {
 
     private Paint mPaint = new Paint();
-    private int mRadius;
     private int mWidth;
     private int mHeight;
     private Context mContext;
-    private View mView;
-    private ImageView mImageFirst;
-    private Bitmap mBitmap;
 
 
     public CircleCustomView(Context context) {
@@ -49,16 +45,12 @@ public class CircleCustomView extends View {
 
     private void init(Context context){
         mContext=context;
-        mBitmap=BitmapFactory.decodeResource(mContext.getResources(),R.drawable.ball);
     }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int size = 200;
         int alpha = 255;
-//        int cx=(mWidth-mBitmap.getWidth())>>1;
-//        int cy=(mHeight-mBitmap.getHeight())>>1;
-//        canvas.drawBitmap(mBitmap,cx+size,cy+size,mPaint);
         mPaint.setColor(mContext.getResources().getColor(R.color.colorPrimary));
         DashPathEffect[] dashPathEffects = new DashPathEffect[4];
         for (int i = 0; i < 4; i++) {
@@ -74,9 +66,6 @@ public class CircleCustomView extends View {
         invalidate();
     }
 
-    public int getRadius() {
-        return mRadius;
-    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -84,9 +73,5 @@ public class CircleCustomView extends View {
         mWidth = View.MeasureSpec.getSize(widthMeasureSpec);
         mHeight = View.MeasureSpec.getSize(heightMeasureSpec);
         setMeasuredDimension(mWidth, mHeight);
-    }
-
-    public void setRadius(int radius) {
-        this.mRadius = radius;
     }
 }

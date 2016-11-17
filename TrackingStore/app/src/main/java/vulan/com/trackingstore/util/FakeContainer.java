@@ -8,6 +8,7 @@ import vulan.com.trackingstore.data.model.CategoryList;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.data.model.Food;
 import vulan.com.trackingstore.data.model.ImageBanner;
+import vulan.com.trackingstore.data.model.Restaurant;
 
 /**
  * Created by VULAN on 10/21/2016.
@@ -63,5 +64,42 @@ public class FakeContainer {
         items.add(new ImageBanner("Other",R.drawable.other_icon));
         items.add(categoryListOther);
         return items;
+    }
+
+    public static List<Restaurant> getListRestaurant(int numberRestaurant) {
+        List<Restaurant> list = new ArrayList<>();
+        Restaurant restaurantKFC=new Restaurant("KFC",R.drawable.kfc_logo);
+        Restaurant restaurantMcDonald=new Restaurant("KFC",R.drawable.mc_donald);
+        Restaurant lottle=new Restaurant("Lottle",R.drawable.lottle);
+        Restaurant viettel=new Restaurant("Viettel",R.drawable.viettel_store);
+        Restaurant fpt=new Restaurant("Fpt",R.drawable.fpt);
+       switch (numberRestaurant){
+           case 1:
+               list.add(restaurantKFC);
+               break;
+           case 2:
+               list.add(restaurantKFC);
+               list.add(restaurantMcDonald);
+               break;
+           case 3:
+               list.add(restaurantKFC);
+               list.add(restaurantMcDonald);
+               list.add(lottle);
+               break;
+           case 4:
+               list.add(restaurantKFC);
+               list.add(restaurantMcDonald);
+               list.add(lottle);
+               list.add(viettel);
+               break;
+           case 5:
+               list.add(restaurantKFC);
+               list.add(restaurantMcDonald);
+               list.add(lottle);
+               list.add(viettel);
+               list.add(fpt);
+               break;
+       }
+        return list;
     }
 }

@@ -27,8 +27,6 @@ import vulan.com.trackingstore.data.listener.OnRightItemCLickListener;
 import vulan.com.trackingstore.data.model.DrawerLeftItem;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.ui.base.BaseFragment;
-import vulan.com.trackingstore.ui.fragment.BlankFragment;
-import vulan.com.trackingstore.ui.fragment.FoodFragment;
 import vulan.com.trackingstore.ui.fragment.HomeFragment;
 import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
 import vulan.com.trackingstore.util.FakeContainer;
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findView();
         init();
-        replaceFragment(new HomeFragment(), "home fragment");
+        replaceFragment(new HomeFragment(), "blank fragment");
     }
 
     protected BaseFragment getFragment() {
@@ -158,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case SEARCH:
-                replaceFragment(new BlankFragment(),"blank");
                 break;
         }
     }
