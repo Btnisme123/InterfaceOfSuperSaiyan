@@ -4,125 +4,56 @@ package vulan.com.trackingstore.ui.activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
-import vulan.com.trackingstore.adapter.RecyclerRightAdapter;
-import vulan.com.trackingstore.data.listener.OnLeftItemClickListener;
-import vulan.com.trackingstore.data.listener.OnRightItemCLickListener;
-import vulan.com.trackingstore.data.model.DrawerLeftItem;
-import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.HomeFragment;
-import vulan.com.trackingstore.ui.fragment.RestaurantFragment;
-import vulan.com.trackingstore.util.FakeContainer;
-import vulan.com.trackingstore.util.widget.LinearItemDecoration;
+import vulan.com.trackingstore.ui.fragment.ListShopFragment;
+import vulan.com.trackingstore.ui.fragment.SearchFragment;
+import vulan.com.trackingstore.ui.fragment.SettingsFragment;
+import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
+import vulan.com.trackingstore.util.Constants;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnLeftItemClickListener, OnRightItemCLickListener, SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private ImageView mButtonHome, mButtonListShop, mButtonSearch, mButtonSettings;
 
-    LinearLayout mLayoutSlideUp;
-    private RecyclerView mLeftRecyclerDrawer, mRightRecyclerDrawer;
-    private RecyclerLeftDrawerAdapter mRecyclerLeftDrawerAdapter;
-    private RecyclerRightAdapter mRecyclerRightDrawerAdapter;
-    private List<DrawerLeftItem> mDrawerLeftItemList;
-    private List<DrawerRightItem> mDrawerRightItemList;
-    private ImageView mButtonMenuLeft, mButtonMenuRight;
-    private DrawerLayout mDrawerLayout;
-    private FrameLayout mContainerLayout;
-    private SearchView mSearchView;
-    private static final int HOME = 0;
-    private static final int RESTAURANT = 1;
-    private static final int SEARCH_DETAILS = 2;
-    private static final int SEARCH = 3;
-    private static final int SETTINGS = 4;
-    private final int SCROLL_POSITION = 0;
 
     @Override
-
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findView();
         init();
-        replaceFragment(new HomeFragment(), "blank fragment");
+        replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+        updateIconMenu(Constants.Menu.MENU_HOME);
     }
 
     protected BaseFragment getFragment() {
-        return new RestaurantFragment();
+        return new ShopFragment();
     }
 
     private void findView() {
-        //mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(mToolbar);
-        // mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        //mLayoutSlideUp= (LinearLayout) findViewById(R.id.dialog_layout_slide_up);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mLeftRecyclerDrawer = (RecyclerView) findViewById(R.id.left_recycler_navigation_drawer);
-        mRightRecyclerDrawer = (RecyclerView) findViewById(R.id.right_recycler_navigation_drawer);
-        mButtonMenuLeft = (ImageView) findViewById(R.id.button_menu_left);
-        mButtonMenuRight = (ImageView) findViewById(R.id.button_menu_right);
-        mContainerLayout = (FrameLayout) findViewById(R.id.fragment_container);
-        mSearchView= (SearchView)findViewById(R.id.search_view);
-        mSearchView.setOnQueryTextListener(this);
-        mButtonMenuLeft.setOnClickListener(this);
-        mButtonMenuRight.setOnClickListener(this);
+        mButtonHome = (ImageView) findViewById(R.id.btn_home);
+        mButtonListShop = (ImageView) findViewById(R.id.btn_list_shop);
+        mButtonSearch = (ImageView) findViewById(R.id.btn_search);
+        mButtonSettings = (ImageView) findViewById(R.id.btn_settings);
     }
 
     public void init() {
-        mDrawerLeftItemList = new ArrayList<>();
-        mDrawerRightItemList = new ArrayList<>();
-        mDrawerRightItemList = FakeContainer.getRightItems();
-        mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.home_page), R.drawable.ic_home));
-        mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.restaurant_list), R.drawable.ic_list));
-        mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.search_detail), R.drawable.ic_search_detail));
-        mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.search), R.drawable.ic_search));
-        mDrawerLeftItemList.add(new DrawerLeftItem(getString(R.string.setting), R.drawable.ic_setting));
-        mRecyclerLeftDrawerAdapter = new RecyclerLeftDrawerAdapter(this, mDrawerLeftItemList);
-        mLeftRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
-        mLeftRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
-        mLeftRecyclerDrawer.setAdapter(mRecyclerLeftDrawerAdapter);
-        mRecyclerRightDrawerAdapter = new RecyclerRightAdapter(this, mDrawerRightItemList);
-        mRightRecyclerDrawer.setLayoutManager(new LinearLayoutManager(this));
-        mRightRecyclerDrawer.addItemDecoration(new LinearItemDecoration(this));
-        mRightRecyclerDrawer.setAdapter(mRecyclerRightDrawerAdapter);
-        mRecyclerLeftDrawerAdapter.setOnClick(this);
-        mRecyclerRightDrawerAdapter.setOnClick(this);
+        mButtonHome.setOnClickListener(this);
+        mButtonListShop.setOnClickListener(this);
+        mButtonSearch.setOnClickListener(this);
+        mButtonSettings.setOnClickListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_menu_left:
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-                break;
-            case R.id.button_menu_right:
-                mDrawerLayout.openDrawer(GravityCompat.END);
-                break;
-        }
-    }
 
     public void addFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -148,52 +79,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return null;
     }
 
+
     @Override
-    public void onLeftItemClick(int position) {
-        switch (position) {
-            case HOME:
-                replaceFragment(new HomeFragment(),getString(R.string.home_fragment));
-                mDrawerLayout.closeDrawer(GravityCompat.START);
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_home:
+                replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+                updateIconMenu(Constants.Menu.MENU_HOME);
                 break;
-            case SEARCH:
+            case R.id.btn_list_shop:
+                replaceFragment(new ListShopFragment(), Constants.FragmentTag.LIST);
+                updateIconMenu(Constants.Menu.MENU_LIST_SHOP);
+                break;
+            case R.id.btn_search:
+                replaceFragment(new SearchFragment(), Constants.FragmentTag.SEARCH);
+                updateIconMenu(Constants.Menu.MENU_SEARCH);
+                break;
+            case R.id.btn_settings:
+                replaceFragment(new SettingsFragment(), Constants.FragmentTag.SETTINGS);
+                updateIconMenu(Constants.Menu.MENU_SETTING);
                 break;
         }
     }
 
-    @Override
-    public void onRightItemClick(int position) {
-        switch (position) {
-            case 1:
-                replaceFragment(new RestaurantFragment(), getString(R.string.restaurant_fragment));
-                mDrawerLayout.closeDrawer(GravityCompat.START);
+    private void updateIconMenu(int code) {
+        switch (code) {
+            case Constants.Menu.MENU_HOME:
+                mButtonHome.setImageResource(R.drawable.ic_home);
+                mButtonListShop.setImageResource(R.drawable.ic_list_transparent);
+                mButtonSearch.setImageResource(R.drawable.ic_search_transparent);
+                mButtonSettings.setImageResource(R.drawable.ic_setting_transparent);
+                break;
+            case Constants.Menu.MENU_LIST_SHOP:
+                mButtonHome.setImageResource(R.drawable.ic_home_transparent);
+                mButtonListShop.setImageResource(R.drawable.ic_list_white);
+                mButtonSearch.setImageResource(R.drawable.ic_search_transparent);
+                mButtonSettings.setImageResource(R.drawable.ic_setting_transparent);
+                break;
+            case Constants.Menu.MENU_SEARCH:
+                mButtonHome.setImageResource(R.drawable.ic_home_transparent);
+                mButtonListShop.setImageResource(R.drawable.ic_list_transparent);
+                mButtonSearch.setImageResource(R.drawable.ic_search);
+                mButtonSettings.setImageResource(R.drawable.ic_setting_transparent);
+                break;
+            case Constants.Menu.MENU_SETTING:
+                mButtonHome.setImageResource(R.drawable.ic_home_transparent);
+                mButtonListShop.setImageResource(R.drawable.ic_list_transparent);
+                mButtonSearch.setImageResource(R.drawable.ic_search_transparent);
+                mButtonSettings.setImageResource(R.drawable.ic_setting);
                 break;
         }
-    }
-
-    private List<DrawerRightItem> filter(List<DrawerRightItem> categoryProducts, String query) {
-        query = query.toLowerCase();
-        List<DrawerRightItem> filterList = new ArrayList<>();
-        int size = categoryProducts.size();
-        for (int i = 0; i < size; i++) {
-            DrawerRightItem categoryProduct = categoryProducts.get(i);
-            String categoryName = categoryProduct.getTitle().toLowerCase();
-            if (categoryName.contains(query)) {
-                filterList.add(categoryProduct);
-            }
-        }
-        return filterList;
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String query) {
-         List<DrawerRightItem> list = filter(mDrawerRightItemList, query);
-        mRecyclerRightDrawerAdapter.animateTo(list);
-        mRightRecyclerDrawer.scrollToPosition(SCROLL_POSITION);
-        return true;
     }
 }

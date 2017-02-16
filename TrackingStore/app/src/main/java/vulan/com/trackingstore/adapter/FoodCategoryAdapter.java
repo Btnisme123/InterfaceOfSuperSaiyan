@@ -20,7 +20,7 @@ import vulan.com.trackingstore.data.listener.OnFoodListClickListener;
 import vulan.com.trackingstore.data.model.CategoryList;
 import vulan.com.trackingstore.data.model.ImageBanner;
 import vulan.com.trackingstore.ui.base.BaseFragment;
-import vulan.com.trackingstore.ui.fragment.FoodFragment;
+import vulan.com.trackingstore.ui.fragment.Shop.ProductFragment;
 import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
 
@@ -132,7 +132,7 @@ public class FoodCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onItemFoodClick() {
-       replaceFragment(new FoodFragment(),FoodFragment.FOOD_FRAGMENT_TAG);
+       replaceFragment(new ProductFragment(), ProductFragment.FOOD_FRAGMENT_TAG);
     }
 
     public void replaceFragment(BaseFragment fragment, String tag) {

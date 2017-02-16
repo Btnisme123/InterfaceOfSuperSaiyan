@@ -1,9 +1,8 @@
-package vulan.com.trackingstore.ui.fragment;
+package vulan.com.trackingstore.ui.fragment.Shop;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.FoodCategoryAdapter;
@@ -15,7 +14,7 @@ import vulan.com.trackingstore.util.widget.LinearItemDecoration;
  * Created by Thanh on 10/21/2016.
  */
 
-public class RestaurantFragment extends BaseFragment {
+public class ShopFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private FoodCategoryAdapter mAdapter;
     public final static String TAG_RESTAURANT_FRAGMENT = "restaurant fragment";

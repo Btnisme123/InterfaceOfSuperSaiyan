@@ -1,4 +1,4 @@
-package vulan.com.trackingstore.ui.fragment;
+package vulan.com.trackingstore.ui.fragment.Shop;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +17,7 @@ import vulan.com.trackingstore.util.widget.GridItemDecoration;
 import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
 
-public class FoodFragment extends BaseFragment implements View.OnClickListener {
+public class ProductFragment extends BaseFragment implements View.OnClickListener {
 
     private static final int NUMBER_OF_COLUMN = 2;
     private RecyclerView mRecyclerView;

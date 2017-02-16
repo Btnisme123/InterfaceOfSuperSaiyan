@@ -5,8 +5,18 @@ package vulan.com.trackingstore.util;
  */
 
 public class Constants {
-    public static final int NAVIGATION_POSITION_0 =0;
-    public static final int NAVIGATION_POSITION_1 =1;
-    public static final int NAVIGATION_POSITION_2 =2;
-    public static final int NAVIGATION_POSITION_3 =3;
+    public static final class Menu {
+        public static final int MENU_HOME =0;
+        public static final int MENU_LIST_SHOP =1;
+        public static final int MENU_SEARCH =2;
+        public static final int MENU_SETTING =3;
+    }
+    public static final class FragmentTag{
+        public static final String HOME ="home fragment";
+        public static final String LIST ="list fragment";
+        public static final String SEARCH ="search fragment";
+        public static final String SETTINGS ="setting fragment";
+
+    }
+
 }
