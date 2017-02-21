@@ -17,7 +17,11 @@
     <string name="food">FOODS</string>
     <string name="food_fragment">food fragment</string>
     <string name="notication_search">Notification when found</string>
+
     <string name="shop_title">Thông tin cửa hàng</string>
     <string name="category_title">Danh mục sản phẩm</string>
     <string name="promotion_title">Sản phẩm khuyến mãi</string>
+=======
+    <string name="title_activity_maps">Map</string>
+>>>>>>> add map
 </resources>

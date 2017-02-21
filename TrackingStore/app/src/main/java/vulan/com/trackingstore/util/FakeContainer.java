@@ -1,5 +1,9 @@
 package vulan.com.trackingstore.util;
 
+import android.content.Context;
+
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +14,7 @@ import vulan.com.trackingstore.data.model.ImageBanner;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.data.model.Restaurant;
+import vulan.com.trackingstore.util.customview.CustomMarkerView;
 
 /**
  * Created by VULAN on 10/21/2016.
@@ -85,25 +90,6 @@ public class FakeContainer {
         return products;
     }
 
-    public static List<Object> getFoodDrinkList() {
-        List<Object> items = new ArrayList<>();
-        List<ProductCategory> itemFoods = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-//            itemFoods.add(new Product(R.drawable.ic_chicken));
-        }
-        CategoryList categoryListFood = new CategoryList(itemFoods);
-        CategoryList categoryListDrink = new CategoryList(itemFoods);
-        CategoryList categoryListOther = new CategoryList(itemFoods);
-
-        items.add(new ImageBanner("Food", R.drawable.food_icon));
-        items.add(categoryListFood);
-        items.add(new ImageBanner("Drink", R.drawable.drink_icon));
-        items.add(categoryListDrink);
-        items.add(new ImageBanner("Other", R.drawable.other_icon));
-        items.add(categoryListOther);
-        return items;
-    }
-
     public static List<Restaurant> getListRestaurant(int numberRestaurant) {
         List<Restaurant> list = new ArrayList<>();
         Restaurant restaurantKFC = new Restaurant("KFC", R.drawable.kfc_logo);
@@ -138,6 +124,21 @@ public class FakeContainer {
                 list.add(fpt);
                 break;
         }
+        return list;
+    }
+
+    public static List<CustomMarkerView> getCustomMarker(Context context) {
+        List<CustomMarkerView> list = new ArrayList<>();
+        CustomMarkerView customMarkerView1 = new CustomMarkerView(context);
+        CustomMarkerView customMarkerView2 = new CustomMarkerView(context);
+        CustomMarkerView customMarkerView3 = new CustomMarkerView(context);
+        customMarkerView1.setPosition(new LatLng(21.007380, 105.793139));
+        customMarkerView2.setPosition(new LatLng(21.007480, 105.793139));
+        customMarkerView3.setPosition(new LatLng(21.007580, 105.793139));
+
+        list.add(customMarkerView1);
+        list.add(customMarkerView2);
+        list.add(customMarkerView3);
         return list;
     }
 }
