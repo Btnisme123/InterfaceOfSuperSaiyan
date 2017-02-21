@@ -5,17 +5,17 @@ import java.util.List;
 
 public class CategoryList {
 
-    private List<Food> mProductList = new ArrayList<>();
+    private List<ProductCategory> mProductList = new ArrayList<>();
 
-    public CategoryList(List<Food> productList) {
+    public CategoryList(List<ProductCategory> productList) {
         mProductList = productList;
     }
 
-    public List<Food> getProductList() {
+    public List<ProductCategory> getProductList() {
         return mProductList;
     }
 
-    public void setProductList(List<Food> productList) {
+    public void setProductList(List<ProductCategory> productList) {
         mProductList = productList;
     }
 }

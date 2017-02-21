@@ -6,8 +6,9 @@ import java.util.List;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.CategoryList;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
-import vulan.com.trackingstore.data.model.Food;
 import vulan.com.trackingstore.data.model.ImageBanner;
+import vulan.com.trackingstore.data.model.Product;
+import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.data.model.Restaurant;
 
 /**
@@ -28,78 +29,115 @@ public class FakeContainer {
         return list;
     }
 
-    public static Food getFood() {
-        return new Food(R.drawable.ic_chicken, "Chicken", "Thịt gà thơm ngon ,bổ dưỡng ,giảm giá nhân ngày 20/10", 30);
-    }
-
     public static DrawerRightItem getRightItem() {
         return new DrawerRightItem("Lotteria 139 Cau Giay Street", "20m");
     }
 
-    public static List<Food> getListFood() {
-        List<Food> foodList = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            if(i%2==0){
-                foodList.add(new Food(R.drawable.ic_chicken, "Nem chua", 20, 14));
-            }
-            foodList.add(new Food(R.drawable.nemran, "Nem rán ", 20, 14));
+
+    public static List<ProductCategory> getListCategory(int type) {
+        List<ProductCategory> categoryList = new ArrayList<>();
+        if (type == 1) {
+            categoryList.add(new ProductCategory(R.drawable.jeans, "Jean"));
+            categoryList.add(new ProductCategory(R.drawable.blouse, "Blouse"));
+            categoryList.add(new ProductCategory(R.drawable.ic_shirt, "Shirt"));
+            categoryList.add(new ProductCategory(R.drawable.jacket, "Jacket"));
+            categoryList.add(new ProductCategory(R.drawable.tie, "Accessories"));
+        } else if (type == 2) {
+            categoryList.add(new ProductCategory(R.drawable.jeans, "Jean"));
+            categoryList.add(new ProductCategory(R.drawable.blouse, "Blouse"));
+            categoryList.add(new ProductCategory(R.drawable.ic_shirt, "Shirt"));
+            categoryList.add(new ProductCategory(R.drawable.dress, "Dress"));
+        } else {
+            categoryList.add(new ProductCategory(R.drawable.jeans, "Jean"));
+            categoryList.add(new ProductCategory(R.drawable.ic_shirt, "Shirt"));
+            categoryList.add(new ProductCategory(R.drawable.jacket, "Jacket"));
         }
-        return foodList;
+
+        return categoryList;
+    }
+
+    public static List<Product> getListProduct(int type) {
+        List<Product> products = new ArrayList<>();
+        if (type == 1) {
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+        } else if (type == 2) {
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+        } else {
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+            products.add(new Product(R.drawable.jacket_product, "Jacket", "400000", "5"));
+            products.add(new Product(R.drawable.dress_product, "Dress", "200000", "10"));
+        }
+        return products;
     }
 
     public static List<Object> getFoodDrinkList() {
         List<Object> items = new ArrayList<>();
-        List<Food> itemFoods = new ArrayList<>();
-        for(int i=0;i<10;i++){
-            itemFoods.add(new Food(R.drawable.ic_chicken));
+        List<ProductCategory> itemFoods = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+//            itemFoods.add(new Product(R.drawable.ic_chicken));
         }
-        CategoryList categoryListFood=new CategoryList(itemFoods);
-        CategoryList categoryListDrink=new CategoryList(itemFoods);
-        CategoryList categoryListOther=new CategoryList(itemFoods);
+        CategoryList categoryListFood = new CategoryList(itemFoods);
+        CategoryList categoryListDrink = new CategoryList(itemFoods);
+        CategoryList categoryListOther = new CategoryList(itemFoods);
 
-        items.add(new ImageBanner("Food",R.drawable.food_icon));
+        items.add(new ImageBanner("Food", R.drawable.food_icon));
         items.add(categoryListFood);
-        items.add(new ImageBanner("Drink",R.drawable.drink_icon));
+        items.add(new ImageBanner("Drink", R.drawable.drink_icon));
         items.add(categoryListDrink);
-        items.add(new ImageBanner("Other",R.drawable.other_icon));
+        items.add(new ImageBanner("Other", R.drawable.other_icon));
         items.add(categoryListOther);
         return items;
     }
 
     public static List<Restaurant> getListRestaurant(int numberRestaurant) {
         List<Restaurant> list = new ArrayList<>();
-        Restaurant restaurantKFC=new Restaurant("KFC",R.drawable.kfc_logo);
-        Restaurant restaurantMcDonald=new Restaurant("KFC",R.drawable.mc_donald);
-        Restaurant lottle=new Restaurant("Lottle",R.drawable.lottle);
-        Restaurant viettel=new Restaurant("Viettel",R.drawable.viettel_store);
-        Restaurant fpt=new Restaurant("Fpt",R.drawable.fpt);
-       switch (numberRestaurant){
-           case 1:
-               list.add(restaurantKFC);
-               break;
-           case 2:
-               list.add(restaurantKFC);
-               list.add(restaurantMcDonald);
-               break;
-           case 3:
-               list.add(restaurantKFC);
-               list.add(restaurantMcDonald);
-               list.add(lottle);
-               break;
-           case 4:
-               list.add(restaurantKFC);
-               list.add(restaurantMcDonald);
-               list.add(lottle);
-               list.add(viettel);
-               break;
-           case 5:
-               list.add(restaurantKFC);
-               list.add(restaurantMcDonald);
-               list.add(lottle);
-               list.add(viettel);
-               list.add(fpt);
-               break;
-       }
+        Restaurant restaurantKFC = new Restaurant("KFC", R.drawable.kfc_logo);
+        Restaurant restaurantMcDonald = new Restaurant("KFC", R.drawable.mc_donald);
+        Restaurant lottle = new Restaurant("Lottle", R.drawable.lottle);
+        Restaurant viettel = new Restaurant("Viettel", R.drawable.viettel_store);
+        Restaurant fpt = new Restaurant("Fpt", R.drawable.fpt);
+        switch (numberRestaurant) {
+            case 1:
+                list.add(restaurantKFC);
+                break;
+            case 2:
+                list.add(restaurantKFC);
+                list.add(restaurantMcDonald);
+                break;
+            case 3:
+                list.add(restaurantKFC);
+                list.add(restaurantMcDonald);
+                list.add(lottle);
+                break;
+            case 4:
+                list.add(restaurantKFC);
+                list.add(restaurantMcDonald);
+                list.add(lottle);
+                list.add(viettel);
+                break;
+            case 5:
+                list.add(restaurantKFC);
+                list.add(restaurantMcDonald);
+                list.add(lottle);
+                list.add(viettel);
+                list.add(fpt);
+                break;
+        }
         return list;
     }
 }

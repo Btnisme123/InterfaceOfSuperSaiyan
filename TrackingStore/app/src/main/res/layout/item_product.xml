@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_category"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/common_size_3"
+    android:layout_marginRight="@dimen/common_size_3"
+    android:layout_marginTop="@dimen/common_size_5"
+    android:layout_marginBottom="@dimen/common_size_5"
+    android:background="@color/white"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="@dimen/common_size_2">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_product"
+            android:layout_width="@dimen/common_size_120"
+            android:layout_height="@dimen/common_size_120"
+            android:src="@drawable/jacket_product" />
+
+        <TextView
+            android:id="@+id/tv_name_product"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_25"
+            android:gravity="center"
+            android:text="Jacket Black"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/common_text_size_17" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_25"
+            android:gravity="center"
+            android:text="1.000.0000000000000"
+            android:textSize="@dimen/common_text_size_17" />
+
+        <TextView
+            android:id="@+id/tv_promotion"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_25"
+            android:gravity="center"
+            android:text="100.000"
+            android:textColor="@color/red"
+            android:textSize="@dimen/common_text_size_17" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,23 +1,21 @@
 package vulan.com.trackingstore.ui.fragment.Shop;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle;
 import android.view.View;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.adapter.FoodCategoryAdapter;
 import vulan.com.trackingstore.ui.base.BaseFragment;
-import vulan.com.trackingstore.util.FakeContainer;
-import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
 /**
  * Created by Thanh on 10/21/2016.
  */
 
 public class ShopFragment extends BaseFragment {
-    private RecyclerView mRecyclerView;
-    private FoodCategoryAdapter mAdapter;
-    public final static String TAG_RESTAURANT_FRAGMENT = "restaurant fragment";
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void onCreateContentView(View rootView) {
@@ -26,14 +24,10 @@ public class ShopFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayoutId() {
-        return R.layout.fragment_restaurant;
+        return R.layout.fragment_info_shop;
     }
 
     private void findViews(View view) {
-        mRecyclerView= (RecyclerView) view.findViewById(R.id.recycler_food_drink);
-        mAdapter=new FoodCategoryAdapter(FakeContainer.getFoodDrinkList(),getActivity());
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new LinearItemDecoration(getActivity()));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
     }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/common_size_10">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_30"
+                android:background="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/common_size_15"
+                android:text="Man"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_text_size_17"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_promotion_man"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"></android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_30"
+                android:background="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/common_size_15"
+                android:text="Woman"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_text_size_17"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_promotion_woman"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"></android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_30"
+                android:background="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/common_size_15"
+                android:text="Other"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_text_size_17"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_promotion_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_size_2"
+                android:background="@color/white"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

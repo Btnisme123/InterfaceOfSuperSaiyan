@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBgSetting"
+    android:paddingTop="@dimen/common_size_7">
+
+    <ImageView
+        android:layout_width="@dimen/common_size_61"
+        android:layout_height="@dimen/common_size_61"
+        android:background="@drawable/border" />
+
+    <ImageView
+        android:id="@+id/img_shop"
+        android:layout_width="@dimen/common_size_61"
+        android:layout_height="@dimen/common_size_61"
+        android:background="@drawable/border"
+        android:padding="@dimen/common_size_2"
+        android:src="@drawable/blues_logo" />
+
+    <LinearLayout
+        android:id="@+id/layout_info"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_size_60"
+        android:layout_marginLeft="@dimen/common_size_5"
+        android:layout_toRightOf="@+id/img_shop"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_25"
+            android:gravity="center_vertical"
+            android:text="The Blues"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/common_text_size_17"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_25"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="136 Hoàng Quốc Việt,Cầu Giấy,Hà Nội"
+            android:textColor="@color/colorSecondaryText" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_size_1"
+        android:background="@color/colorViewLine"
+        android:layout_toRightOf="@id/img_shop"
+        android:layout_marginLeft="@dimen/common_size_5"
+        android:layout_marginRight="@dimen/common_size_5"
+        android:layout_below="@id/layout_info"/>
+</RelativeLayout>

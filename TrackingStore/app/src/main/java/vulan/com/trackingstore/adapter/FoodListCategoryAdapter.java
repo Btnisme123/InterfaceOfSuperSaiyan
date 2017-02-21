@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.listener.OnFoodListClickListener;
-import vulan.com.trackingstore.data.model.Food;
+import vulan.com.trackingstore.data.model.ProductCategory;
 
 /**
  * Created by vulan on 08/11/2016.
@@ -18,10 +18,10 @@ import vulan.com.trackingstore.data.model.Food;
 
 public class FoodListCategoryAdapter extends RecyclerView.Adapter<FoodListCategoryAdapter.ItemHolder>{
 
-    private ArrayList<Food> foodList=new ArrayList<>();
+    private ArrayList<ProductCategory> foodList=new ArrayList<>();
     private OnFoodListClickListener mOnFoodListClickListener;
 
-    public FoodListCategoryAdapter(ArrayList<Food> foodList) {
+    public FoodListCategoryAdapter(ArrayList<ProductCategory> foodList) {
         this.foodList = foodList;
     }
 

@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_category"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common_size_120"
+    android:background="@color/colorAccent">
+
+    <ImageView
+        android:id="@+id/img_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="@dimen/common_size_20"
+        android:src="@drawable/ic_shirt" />
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_size_20"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="Jean"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_text_size_15" />
+</RelativeLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/layout_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_size_20"
+        android:paddingLeft="@dimen/common_size_15">
+
+        <ImageView
+            android:layout_width="@dimen/common_size_90"
+            android:layout_height="@dimen/common_size_90"
+            android:background="@drawable/border" />
+
+        <ImageView
+            android:id="@+id/img_shop"
+            android:layout_width="@dimen/common_size_90"
+            android:layout_height="@dimen/common_size_90"
+            android:background="@drawable/border"
+            android:padding="@dimen/common_size_2"
+            android:src="@drawable/blues_logo" />
+
+        <LinearLayout
+            android:id="@+id/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_50"
+            android:layout_toRightOf="@+id/img_shop"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/common_size_50"
+                android:gravity="center"
+                android:paddingLeft="@dimen/common_size_5"
+                android:paddingRight="@dimen/common_size_5"
+                android:text="The Blues"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/common_text_size_20"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_1"
+                android:layout_below="@id/layout_info"
+                android:layout_marginLeft="@dimen/common_size_5"
+                android:layout_marginRight="@dimen/common_size_5"
+                android:layout_toRightOf="@id/img_shop"
+                android:background="@color/colorViewLine" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_shop">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_title_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_25"
+                android:layout_marginLeft="@dimen/common_size_15"
+                android:layout_marginRight="@dimen/common_size_15"
+                android:layout_marginTop="@dimen/common_size_10"
+                android:gravity="center_vertical"
+                android:text="Giới thiệu"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/common_text_size_17"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title_content"
+                android:paddingBottom="@dimen/common_size_5"
+                android:layout_marginLeft="@dimen/common_size_15"
+                android:layout_marginRight="@dimen/common_size_15"
+                android:text="The Blues (thương hiệu của chuỗi cửa hàng thời trang của công ty Blue-Exchange) xuất hiện mang dáng vấp của một trung tâm thời trang, kinh doanh nhiều dòng sản phẩm và nhãn hiệu đa dạng từ quần áo cho đến các phụ kiện thời trang như giày, dép, túi xách, ví, nón, dây nịch... "
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/common_text_size_17" />
+
+            <TextView
+                android:id="@+id/tv_title_info_shop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_25"
+                android:layout_below="@id/tv_content"
+                android:layout_marginLeft="@dimen/common_size_15"
+                android:layout_marginRight="@dimen/common_size_15"
+                android:gravity="center_vertical"
+                android:text="Thông tin cửa hàng"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/common_text_size_17"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/layout_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title_info_shop"
+                android:padding="@dimen/common_size_5"
+                android:layout_marginLeft="@dimen/common_size_10"
+                android:layout_marginRight="@dimen/common_size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="Địa chỉ: "
+                    android:textSize="@dimen/common_text_size_17"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="136 Hoàng Quốc Việt, Cầu Giấy, Hà Nội"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/common_text_size_17" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_address"
+                android:padding="@dimen/common_size_5"
+                android:layout_marginLeft="@dimen/common_size_10"
+                android:layout_marginRight="@dimen/common_size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="Số điện thoại: "
+                    android:textSize="@dimen/common_text_size_17"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_phone_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="01665502241"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/common_text_size_17" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_phone"
+                android:padding="@dimen/common_size_5"
+                android:layout_marginLeft="@dimen/common_size_10"
+                android:layout_marginRight="@dimen/common_size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="Website: "
+                    android:textSize="@dimen/common_text_size_17"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_website"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="http://www.theblues.vn/"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/common_text_size_17" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
