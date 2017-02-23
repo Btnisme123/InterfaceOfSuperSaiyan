@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,10 +40,9 @@ public class CustomDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_product);
-//        DisplayMetrics metrics = getResources().getDisplayMetrics();
-//        int width = metrics.widthPixels;
-//        int height = metrics.heightPixels;
-//        getWindow().setLayout((6 * width)/7, LayoutParams.WRAP_CONTENT);
+        DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        getWindow().setLayout((8 * width)/9, WindowManager.LayoutParams.WRAP_CONTENT);
         findViews();
         init();
     }
