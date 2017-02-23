@@ -45,12 +45,10 @@ public class CustomMarkerView extends FrameLayout {
         mPosition = position;
     }
 
-    @Override
     public int getId() {
         return mId;
     }
 
-    @Override
     public void setId(int id) {
         mId = id;
     }
@@ -81,6 +79,13 @@ public class CustomMarkerView extends FrameLayout {
 
     public RelativeLayout getMarkerBackground() {
         return mMarkerBackground;
+    }
+
+    public void setProperties(LatLng latLng, int id, int type, String name) {
+        mPosition = latLng;
+        mId = id;
+        mType = type;
+        mName = name;
     }
 
     public void setMarkerBackground(RelativeLayout markerBackground) {

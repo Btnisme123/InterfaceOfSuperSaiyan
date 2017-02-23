@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.data.model.CategoryList;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
-import vulan.com.trackingstore.data.model.ImageBanner;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.data.model.Restaurant;
@@ -132,10 +130,18 @@ public class FakeContainer {
         CustomMarkerView customMarkerView1 = new CustomMarkerView(context);
         CustomMarkerView customMarkerView2 = new CustomMarkerView(context);
         CustomMarkerView customMarkerView3 = new CustomMarkerView(context);
-        customMarkerView1.setPosition(new LatLng(21.007380, 105.793139));
-        customMarkerView2.setPosition(new LatLng(21.007480, 105.793139));
-        customMarkerView3.setPosition(new LatLng(21.007580, 105.793139));
-
+        customMarkerView1.setProperties(new LatLng(21.007380, 105.793139),
+                1,
+                Constants.StoreType.MOVIE_THEATER,
+                "Store 1 ");
+        customMarkerView2.setProperties(new LatLng(21.007480, 105.793139),
+                1,
+                Constants.StoreType.RESTAURANT,
+                "Store 2 ");
+        customMarkerView3.setProperties(new LatLng(21.007580, 105.793139),
+                1,
+                Constants.StoreType.MOVIE_THEATER,
+                "Store 3 ");
         list.add(customMarkerView1);
         list.add(customMarkerView2);
         list.add(customMarkerView3);

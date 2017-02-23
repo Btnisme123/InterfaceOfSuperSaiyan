@@ -3,10 +3,12 @@ package vulan.com.trackingstore.ui.activity;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.ui.base.BaseFragment;
@@ -84,8 +86,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_home:
-                replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
-                updateIconMenu(Constants.Menu.MENU_HOME);
+                Toast.makeText(MainActivity.this,getString(R.string.map_loading),Toast.LENGTH_LONG).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+                        updateIconMenu(Constants.Menu.MENU_HOME);
+                    }
+                },1000);
                 break;
             case R.id.btn_list_shop:
                 replaceFragment(new ListShopFragment(), Constants.FragmentTag.LIST);
