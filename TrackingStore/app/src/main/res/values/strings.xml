@@ -23,5 +23,6 @@
     <string name="promotion_title">Sản phẩm khuyến mãi</string>
     =======
     <string name="title_activity_maps">Map</string>
+    <string name="map_loading">Loading map  , please wait for a couple of second</string>
     >>>>>>> add map
 </resources>

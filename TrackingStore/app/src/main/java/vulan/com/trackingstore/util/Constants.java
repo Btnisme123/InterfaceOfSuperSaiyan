@@ -28,4 +28,11 @@ public class Constants {
 
     }
 
+    public static final class StoreType {
+        public static final int RESTAURANT = 1;
+        public static final int MOVIE_THEATER = 2;
+        public static final int PRODUCT_TYPE = 3;
+
+    }
+
 }
