@@ -1,10 +1,9 @@
-package vulan.com.trackingstore.ui.activity;
+package vulan.com.trackingstore.ui.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -15,8 +14,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -30,40 +29,65 @@ import java.util.HashMap;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.FakeContainer;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
+public class MapFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
-
+    private MapView mMapView;
+    private View mView;
     private List<CustomMarkerView> mCustomMarkerViewList = new ArrayList<>();
     private HashMap<Marker, CustomMarkerView> mMarkerPointHashMap = new HashMap<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreateContentView(View rootView) {
+        mView = rootView;
+    }
+
+    @Override
+    protected int getFragmentLayoutId() {
+        return R.layout.activity_maps;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        com.google.android.gms.maps.MapFragment fragment = (com.google.android.gms.maps.MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//        fragment.getMapAsync(this);
+        mMapView = (MapView) mView.findViewById(R.id.map);
+        if (mMapView != null) {
+            mMapView.onCreate(savedInstanceState);
+            mMapView.onResume();
+            mMapView.getMapAsync(this);
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(getActivity());
         mMap = googleMap;
         setGroundOverlay();
         init();
     }
 
+
     private void init() {
-        mCustomMarkerViewList= FakeContainer.getCustomMarker(this);
+        mCustomMarkerViewList = FakeContainer.getCustomMarker(getActivity());
         for (CustomMarkerView customMarkerView : mCustomMarkerViewList) {
             drawMarker(customMarkerView);
         }
         mMap.setOnMarkerClickListener(this);
-        mMap.setInfoWindowAdapter(new MarkerInfoAdapter());
+        mMap.setInfoWindowAdapter(new MapFragment.MarkerInfoAdapter());
         mMap.setOnInfoWindowClickListener(this);
     }
 
@@ -71,25 +95,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.picture_aeon);
         LatLng tesLatLng = new LatLng(21.007380, 105.793139);
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
-                .image(bitmapDescriptor)
+               // .image(bitmapDescriptor)
                 .position(tesLatLng, 116f, 150f)
                 .bearing(53f);
-        mMap.addGroundOverlay(groundOverlayOptions);
+//        mMap.addGroundOverlay(groundOverlayOptions);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(tesLatLng)
-                .zoom(40)
+                .zoom(10)
                 .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(tesLatLng));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private void drawMarker(CustomMarkerView customMarkerView) {
-        View markerView = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE))
+        View markerView = ((LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.custom_marker_view, null);
         markerView.setBackground(getResources().getDrawable(R.drawable.background_profile));
         LatLng latLng = new LatLng(customMarkerView.getPosition().latitude
                 , customMarkerView.getPosition().longitude);
-        Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.drink_icon);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marker);
         Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
         mMarkerPointHashMap.put(marker, customMarkerView);
@@ -97,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Bitmap createBitmapFromView(View view) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         view.setLayoutParams(new DrawerLayout.LayoutParams
                 (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
@@ -115,6 +139,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    public void onLowMemory() {
+        if(mMapView!=null){
+            mMapView.onLowMemory();
+        }
+        super.onLowMemory();
+    }
+
+    @Override
     public void onInfoWindowClick(Marker marker) {
         CustomMarkerView customMarkerView = mMarkerPointHashMap.get(marker);
     }
@@ -128,7 +160,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         public View getInfoContents(Marker marker) {
-            View view = getLayoutInflater().inflate(R.layout.item_info_marker, null);
+            View view = getActivity().getLayoutInflater().inflate(R.layout.item_info_marker, null);
             TextView textView = (TextView) view.findViewById(R.id.text_marker);
             textView.setText("1");
             return view;

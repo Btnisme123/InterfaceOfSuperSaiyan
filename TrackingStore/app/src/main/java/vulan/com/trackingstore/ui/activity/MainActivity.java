@@ -10,8 +10,8 @@ import android.widget.ImageView;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.ui.base.BaseFragment;
-import vulan.com.trackingstore.ui.fragment.HomeFragment;
 import vulan.com.trackingstore.ui.fragment.ListShopFragment;
+import vulan.com.trackingstore.ui.fragment.MapFragment;
 import vulan.com.trackingstore.ui.fragment.SearchFragment;
 import vulan.com.trackingstore.ui.fragment.SettingsFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findView();
         init();
-        replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+        replaceFragment(new MapFragment(), Constants.FragmentTag.HOME);
         updateIconMenu(Constants.Menu.MENU_HOME);
     }
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_home:
-                replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+                replaceFragment(new MapFragment(), Constants.FragmentTag.HOME);
                 updateIconMenu(Constants.Menu.MENU_HOME);
                 break;
             case R.id.btn_list_shop:
