@@ -1,5 +1,6 @@
 package vulan.com.trackingstore.ui.fragment.Shop;
 
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,7 +23,7 @@ public class CategoryFragment extends BaseFragment {
     private List<ProductCategory> productCategoriesMan, productCategoriesWoman, productCategoriesOther;
 
     @Override
-    protected void onCreateContentView(View rootView) {
+    protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findView(rootView);
         init();
     }

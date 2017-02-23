@@ -1,6 +1,7 @@
 package vulan.com.trackingstore.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +26,7 @@ public class ListShopFragment extends BaseFragment implements AdapterView.OnItem
     private ArrayList<Shop> shopArrayList = new ArrayList<>();
 
     @Override
-    protected void onCreateContentView(View rootView) {
+    protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findViews(rootView);
         fakeData();
         init();

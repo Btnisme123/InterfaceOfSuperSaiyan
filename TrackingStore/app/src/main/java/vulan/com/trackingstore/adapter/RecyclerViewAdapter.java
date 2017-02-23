@@ -9,19 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Random;
 
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ProductFragment;
 import vulan.com.trackingstore.util.Constants;
+import vulan.com.trackingstore.util.CustomDialog;
 
 /**
  * Created by VULAN on 10/22/2016.
@@ -33,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Activity mActivity;
     private List<ProductCategory> mCategoryList;
     private List<Product> mProductList;
-    private Random random;
+    private OnRecyclerItemClickListener mOnRecyclerItemClickListener;
     private int type;
     private int[] color = {R.color.colorCategory1, R.color.colorCategory2,
             R.color.colorCategory3, R.color.colorCategory4,
@@ -45,6 +47,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mContext = context;
         mActivity = context;
         this.type = type;
+    }
+
+    public void setOnItemClick(OnRecyclerItemClickListener onItemClick) {
+        this.mOnRecyclerItemClickListener = onItemClick;
     }
 
     @Override
@@ -64,7 +70,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             ProductCategory product = mCategoryList.get(position);
             holder.categoryName.setText(product.getmNameCategory());
             holder.imageCategory.setImageResource(product.getmImageCategory());
-            //random bg warm color, b<r = warm color
             if (position < color.length) {
                 holder.layoutCategory.setBackgroundColor(mContext.getResources().getColor(color[position]));
             } else {
@@ -84,20 +89,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     replaceFragment(new ProductFragment(), Constants.FragmentTag.PRODUCT);
                 }
             });
-        } else if (type == Constants.RecyclerViewType.PROMOTION_TYPE) {
-            Product product = mProductList.get(position);
-            holder.productName.setText(product.getmName());
-            holder.imageProduct.setImageResource(product.getmImageProduct());
-            holder.price.setText(product.getmPrice() + " VND");
-            holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            int newPrice = Integer.parseInt(product.getmPrice()) * (100 - Integer.parseInt(product.getmPromotion())) / 100;
-            holder.pricePromotion.setText(newPrice + " VND");
         } else {
-            Product product = mProductList.get(position);
+            final Product product = mProductList.get(position);
             holder.productName.setText(product.getmName());
             holder.imageProduct.setImageResource(product.getmImageProduct());
             holder.price.setText(product.getmPrice() + " VND");
-            holder.pricePromotion.setVisibility(View.GONE);
+            holder.layoutProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    mOnRecyclerItemClickListener.onRecyclerItemClick(position);
+                    CustomDialog customDialog = new CustomDialog(mContext,product,mProductList);
+                    customDialog.show();
+                }
+            });
+            if (type == Constants.RecyclerViewType.PROMOTION_TYPE) {
+                holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                int newPrice = Integer.parseInt(product.getmPrice()) * (100 - Integer.parseInt(product.getmPromotion())) / 100;
+                holder.pricePromotion.setText(newPrice + " VND");
+            } else {
+                holder.pricePromotion.setVisibility(View.GONE);
+            }
         }
 
     }
@@ -146,6 +157,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView categoryName;
         private ImageView imageCategory;
         private RelativeLayout layoutCategory;
+        private LinearLayout layoutProduct;
         //product
         private ImageView imageProduct;
         private TextView productName, price, pricePromotion;
@@ -161,6 +173,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 productName = (TextView) itemView.findViewById(R.id.tv_name_product);
                 price = (TextView) itemView.findViewById(R.id.tv_price);
                 pricePromotion = (TextView) itemView.findViewById(R.id.tv_promotion);
+                layoutProduct = (LinearLayout) itemView.findViewById(R.id.layout_product);
             }
 
         }

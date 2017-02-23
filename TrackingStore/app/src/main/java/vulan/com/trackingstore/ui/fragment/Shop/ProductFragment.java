@@ -1,5 +1,6 @@
 package vulan.com.trackingstore.ui.fragment.Shop;
 
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,8 +23,9 @@ public class ProductFragment extends BaseFragment {
     private RecyclerView recyclerProduct;
     private List<Product> products;
     RecyclerViewAdapter adapter;
+
     @Override
-    protected void onCreateContentView(View rootView) {
+    protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findViews(rootView);
         init();
     }
@@ -32,14 +34,18 @@ public class ProductFragment extends BaseFragment {
     protected int getFragmentLayoutId() {
         return R.layout.fragment_product;
     }
-    private void findViews(View rootView){
+
+    private void findViews(View rootView) {
         recyclerProduct = (RecyclerView) rootView.findViewById(R.id.recycler_product);
     }
-    private void init(){
+
+    private void init() {
         products = new ArrayList<>();
         products = FakeContainer.getListProduct(1);
         recyclerProduct.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         adapter = new RecyclerViewAdapter(getActivity(), null, products, Constants.RecyclerViewType.PRODUCT_TYPE);
         recyclerProduct.setAdapter(adapter);
+
+
     }
 }

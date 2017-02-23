@@ -1,5 +1,6 @@
 package vulan.com.trackingstore.ui.fragment.Shop;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,11 +21,11 @@ import vulan.com.trackingstore.util.FakeContainer;
 
 public class PromotionFragment extends BaseFragment {
     private RecyclerView recyclerMan, recyclerWoman, recyclerOther;
-    private List<Product> productsMan,productsWoman,productsOther;
+    private List<Product> productsMan, productsWoman, productsOther;
     RecyclerViewAdapter adapter;
 
     @Override
-    protected void onCreateContentView(View rootView) {
+    protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findViews(rootView);
         init();
     }
@@ -58,5 +59,6 @@ public class PromotionFragment extends BaseFragment {
         recyclerOther.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         adapter = new RecyclerViewAdapter(getActivity(), null, productsOther, Constants.RecyclerViewType.PROMOTION_TYPE);
         recyclerOther.setAdapter(adapter);
+
     }
 }

@@ -18,7 +18,7 @@ public class ShopFragment extends BaseFragment {
     }
 
     @Override
-    protected void onCreateContentView(View rootView) {
+    protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findViews(rootView);
     }
 
