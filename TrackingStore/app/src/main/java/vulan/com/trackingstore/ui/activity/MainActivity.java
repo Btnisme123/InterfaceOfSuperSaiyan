@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Shop> shopArrayList;
     private RecyclerLeftDrawerAdapter adapter;
     private DrawerLayout mDrawerLayout;
-    private LinearLayout mButtonListLeft;
+    private FloatingActionButton mButtonListLeft;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonSearch = (ImageView) findViewById(R.id.btn_search);
         mButtonSettings = (ImageView) findViewById(R.id.btn_settings);
         recyclerShopLeft = (RecyclerView) findViewById(R.id.recycler_shop_left);
-        mButtonListLeft = (LinearLayout) findViewById(R.id.btn_near_shop);
+        mButtonListLeft = (FloatingActionButton) findViewById(R.id.btn_near_shop);
     }
 
     public void init() {
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         , "Replace ShopFragment: " + shopArrayList.get(position).getmShopName(), Toast.LENGTH_SHORT).show();
             }
         });
+        mButtonListLeft.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
         mButtonListLeft.setOnClickListener(this);
         mButtonHome.setOnClickListener(this);
         mButtonListShop.setOnClickListener(this);
