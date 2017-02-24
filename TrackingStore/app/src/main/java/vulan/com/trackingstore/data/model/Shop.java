@@ -9,7 +9,8 @@ public class Shop {
     private String mShopName;
     private String mAddress;
 
-    public Shop(String mShopName,String mAddress){
+    public Shop(int imgShop,String mShopName,String mAddress){
+        this.mImageShop = imgShop;
         this.mShopName = mShopName;
         this.mAddress = mAddress;
     }

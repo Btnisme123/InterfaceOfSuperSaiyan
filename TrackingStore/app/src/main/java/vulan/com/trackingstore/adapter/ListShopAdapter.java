@@ -47,21 +47,15 @@ public class ListShopAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         MyViewHolder holder;
         Shop shop = shopArrayList.get(position);
-        if (convertView== null){
-            convertView = inflater.inflate(R.layout.item_list_shop,null);
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.item_list_shop, null);
             holder = new MyViewHolder(convertView);
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (MyViewHolder) convertView.getTag();
         }
 
-        if (position %2==0){
-            holder.mImageShop.setImageResource(R.drawable.blues_logo);
-        }else if (position %5==0){
-            holder.mImageShop.setImageResource(R.drawable.adidas_logo);
-        }else {
-            holder.mImageShop.setImageResource(R.drawable.nike_logo);
-        }
+        holder.mImageShop.setImageResource(shop.getmImageShop());
         holder.mTextAddress.setText(shop.getmAddress());
         holder.mTextShopName.setText(shop.getmShopName());
         return convertView;
@@ -69,9 +63,9 @@ public class ListShopAdapter extends BaseAdapter {
 
     private class MyViewHolder {
         private ImageView mImageShop;
-        private TextView mTextShopName,mTextAddress;
+        private TextView mTextShopName, mTextAddress;
 
-        public MyViewHolder(View itemView){
+        public MyViewHolder(View itemView) {
             mImageShop = (ImageView) itemView.findViewById(R.id.img_shop);
             mTextShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
             mTextAddress = (TextView) itemView.findViewById(R.id.tv_address);

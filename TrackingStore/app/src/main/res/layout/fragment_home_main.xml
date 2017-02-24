@@ -5,19 +5,19 @@
     android:background="@color/white"
     android:id="@+id/layout_home"
     tools:context="vulan.com.trackingstore.ui.fragment.HomeFragment">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_list_shop_near_by"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/common_size_150"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/common_size_2"
-        android:background="@color/colorAccent"
-        android:id="@+id/space"
-        android:layout_below="@+id/recycler_list_shop_near_by"/>
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recycler_list_shop_near_by"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/common_size_150"/>-->
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/common_size_2"-->
+        <!--android:background="@color/colorAccent"-->
+        <!--android:id="@+id/space"-->
+        <!--android:layout_below="@+id/recycler_list_shop_near_by"/>-->
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/space"/>
+        />
 </RelativeLayout>

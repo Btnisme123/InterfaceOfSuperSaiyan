@@ -14,6 +14,7 @@ import vulan.com.trackingstore.adapter.ListShopAdapter;
 import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.util.FakeContainer;
 
 /**
  * Created by Thanh on 2/15/2017.
@@ -49,19 +50,7 @@ public class ListShopFragment extends BaseFragment implements AdapterView.OnItem
     }
 
     private void fakeData() {
-        shopArrayList.add(new Shop("Nike", "192 Cầu Giấy,Q.Cầu Giấy,Hà Nội"));
-        shopArrayList.add(new Shop("Adidas", "65 Nguyễn Văn Huyên,Q.Cầu Giấy,Hà Nội"));
-        shopArrayList.add(new Shop("The Blues", "Indochina Xuân Thủy,Q.Cầu Giấy,Hà Nội"));
-        shopArrayList.add(new Shop("Vans", "74 Nguyễn Văn Cừ,Q.Long Biên,Hà Nội"));
-        shopArrayList.add(new Shop("Famous", "139 Núi Trúc,Q.Cầu Giấy,Hà Nội"));
-        shopArrayList.add(new Shop("Mẹ và bé", "Hồ Tùng Mậu,Q.Bắc Từ Liêm,Hà Nội"));
-        shopArrayList.add(new Shop("Shop tên dài xem nhìn ra gì không", "Địa chỉ cũng thật là dài xem nhìn có bị xấu không còn chỉnh"));
-        shopArrayList.add(new Shop("Đông Nobita", "167 Võ Chí Công,Q.Tây Hồ,Hà Nội"));
-        shopArrayList.add(new Shop("Lân Quýt", "27 Phạm Hùng,Q.Nam Từ Liêm,Hà Nội"));
-        shopArrayList.add(new Shop("Dell", "165 Xuân Thủy,Q.Cầu Giấy,Hà Nội"));
-        shopArrayList.add(new Shop("Sion", "Liên Minh Huyền Thoại,Q.Bắc Từ Liêm,Hà Nội"));
-        shopArrayList.add(new Shop("Clothes", "19 Mai Dịch,Q.Bắc Từ Liêm,Hà Nội"));
-        shopArrayList.add(new Shop("Sport", "42 Tôn Đức Thắng,Q.Đống Đa,Hà Nội"));
+        shopArrayList = FakeContainer.getListShop();
     }
 
     @Override

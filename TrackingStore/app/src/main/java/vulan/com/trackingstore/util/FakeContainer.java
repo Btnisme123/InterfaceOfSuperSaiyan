@@ -11,7 +11,7 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
-import vulan.com.trackingstore.data.model.Restaurant;
+import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
 
 /**
@@ -36,6 +36,23 @@ public class FakeContainer {
         return new DrawerRightItem("Lotteria 139 Cau Giay Street", "20m");
     }
 
+    public static ArrayList<Shop> getListShop() {
+        ArrayList<Shop> shopArrayList = new ArrayList<>();
+        shopArrayList.add(new Shop(R.drawable.nike_logo,"Nike", "192 Cầu Giấy,Q.Cầu Giấy,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.adidas_logo,"Adidas", "65 Nguyễn Văn Huyên,Q.Cầu Giấy,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.blues_logo,"The Blues", "Indochina Xuân Thủy,Q.Cầu Giấy,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.nike_logo,"Vans", "74 Nguyễn Văn Cừ,Q.Long Biên,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.adidas_logo,"Famous", "139 Núi Trúc,Q.Cầu Giấy,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.blues_logo,"Mẹ và bé", "Hồ Tùng Mậu,Q.Bắc Từ Liêm,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.nike_logo,"Shop tên dài xem nhìn ra gì không", "Địa chỉ cũng thật là dài xem nhìn có bị xấu không còn chỉnh"));
+        shopArrayList.add(new Shop(R.drawable.adidas_logo,"Đông Nobita", "167 Võ Chí Công,Q.Tây Hồ,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.blues_logo,"Lân Quýt", "27 Phạm Hùng,Q.Nam Từ Liêm,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.nike_logo,"Dell", "165 Xuân Thủy,Q.Cầu Giấy,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.adidas_logo,"Sion", "Liên Minh Huyền Thoại,Q.Bắc Từ Liêm,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.blues_logo,"Clothes", "19 Mai Dịch,Q.Bắc Từ Liêm,Hà Nội"));
+        shopArrayList.add(new Shop(R.drawable.nike_logo,"Sport", "42 Tôn Đức Thắng,Q.Đống Đa,Hà Nội"));
+        return shopArrayList;
+    }
 
     public static List<ProductCategory> getListCategory(int type) {
         List<ProductCategory> categoryList = new ArrayList<>();
@@ -88,60 +105,17 @@ public class FakeContainer {
         return products;
     }
 
-    public static List<Restaurant> getListRestaurant(int numberRestaurant) {
-        List<Restaurant> list = new ArrayList<>();
-        Restaurant restaurantKFC = new Restaurant("KFC", R.drawable.kfc_logo);
-        Restaurant restaurantMcDonald = new Restaurant("KFC", R.drawable.mc_donald);
-        Restaurant lottle = new Restaurant("Lottle", R.drawable.lottle);
-        Restaurant viettel = new Restaurant("Viettel", R.drawable.viettel_store);
-        Restaurant fpt = new Restaurant("Fpt", R.drawable.fpt);
-        switch (numberRestaurant) {
-            case 1:
-                list.add(restaurantKFC);
-                break;
-            case 2:
-                list.add(restaurantKFC);
-                list.add(restaurantMcDonald);
-                break;
-            case 3:
-                list.add(restaurantKFC);
-                list.add(restaurantMcDonald);
-                list.add(lottle);
-                break;
-            case 4:
-                list.add(restaurantKFC);
-                list.add(restaurantMcDonald);
-                list.add(lottle);
-                list.add(viettel);
-                break;
-            case 5:
-                list.add(restaurantKFC);
-                list.add(restaurantMcDonald);
-                list.add(lottle);
-                list.add(viettel);
-                list.add(fpt);
-                break;
-        }
-        return list;
-    }
-
     public static List<CustomMarkerView> getCustomMarker(Context context) {
         List<CustomMarkerView> list = new ArrayList<>();
         CustomMarkerView customMarkerView1 = new CustomMarkerView(context);
         CustomMarkerView customMarkerView2 = new CustomMarkerView(context);
         CustomMarkerView customMarkerView3 = new CustomMarkerView(context);
-        customMarkerView1.setProperties(new LatLng(21.007380, 105.793139),
-                1,
-                Constants.StoreType.MOVIE_THEATER,
-                "Store 1 ");
-        customMarkerView2.setProperties(new LatLng(21.007480, 105.793139),
-                1,
-                Constants.StoreType.RESTAURANT,
-                "Store 2 ");
-        customMarkerView3.setProperties(new LatLng(21.007580, 105.793139),
-                1,
-                Constants.StoreType.MOVIE_THEATER,
-                "Store 3 ");
+        customMarkerView1.setProperties(new LatLng(21.04517, 105.78434), 1,
+                Constants.StoreType.MOVIE_THEATER, "Store 1 ");
+        customMarkerView2.setProperties(new LatLng(21.04601, 105.7851), 1,
+                Constants.StoreType.RESTAURANT, "Store 2 ");
+        customMarkerView3.setProperties(new LatLng(21.04609, 105.78357), 1,
+                Constants.StoreType.MOVIE_THEATER, "Store 3 ");
         list.add(customMarkerView1);
         list.add(customMarkerView2);
         list.add(customMarkerView3);

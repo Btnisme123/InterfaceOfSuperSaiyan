@@ -71,6 +71,7 @@
     <dimen name="comon_size_300dp">300dp</dimen>
     <dimen name="common_size_300">300dp</dimen>
     <dimen name="common_size_250">250dp</dimen>
+    <dimen name="common_size_280">280dp</dimen>
 
 
     <dimen name="restaurant_text_height">30dp</dimen>

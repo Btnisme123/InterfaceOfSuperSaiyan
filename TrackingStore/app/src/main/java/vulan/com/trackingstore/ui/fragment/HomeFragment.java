@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -33,10 +31,8 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerRightAdapter;
 import vulan.com.trackingstore.data.model.DrawerRightItem;
 import vulan.com.trackingstore.ui.base.BaseFragment;
-import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.FakeContainer;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
-import vulan.com.trackingstore.util.widget.LinearItemDecoration;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -63,18 +59,18 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
 
     private void findView(View rootView) {
         mMapView = (MapView) rootView.findViewById(R.id.map_view);
-        mRecyclerListShop = (RecyclerView) rootView.findViewById(R.id.recycler_list_shop_near_by);
+//        mRecyclerListShop = (RecyclerView) rootView.findViewById(R.id.recycler_list_shop_near_by);
     }
 
     private void init(Bundle savedInstanceState) {
         MapsInitializer.initialize(getActivity());
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
-        mDrawerRightItemList = FakeContainer.getRightItems();
-        mRightAdapter = new RecyclerRightAdapter(getActivity(), mDrawerRightItemList);
-        mRecyclerListShop.setAdapter(mRightAdapter);
-        mRecyclerListShop.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerListShop.addItemDecoration(new LinearItemDecoration(getActivity()));
+//        mDrawerRightItemList = FakeContainer.getRightItems();
+//        mRightAdapter = new RecyclerRightAdapter(getActivity(), mDrawerRightItemList);
+//        mRecyclerListShop.setAdapter(mRightAdapter);
+//        mRecyclerListShop.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mRecyclerListShop.addItemDecoration(new LinearItemDecoration(getActivity()));
     }
 
     @Override
@@ -128,20 +124,20 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMap.setOnMarkerClickListener(this);
         mMap.setInfoWindowAdapter(new HomeFragment.MarkerInfoAdapter());
         mMap.setOnInfoWindowClickListener(this);
+        mMap.setBuildingsEnabled(true);
     }
 
 
     private void setGroundOverlay() {
-        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.picture_aeon);
-        LatLng tesLatLng = new LatLng(21.007380, 105.793139);
-        GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
-                .image(bitmapDescriptor)
-                .position(tesLatLng, 116f, 150f)
-                .bearing(53f);
-        mMap.addGroundOverlay(groundOverlayOptions);
+//        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.picture_aeon);
+        LatLng tesLatLng = new LatLng(21.04613, 105.78432);
+//        GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
+//                .position(tesLatLng, 116f, 150f)
+//                .bearing(53f);
+//        mMap.addGroundOverlay(groundOverlayOptions);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(tesLatLng)
-                .zoom(40)
+                .zoom(17)
                 .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(tesLatLng));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -155,12 +151,12 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                 , customMarkerView.getPosition().longitude);
         BitmapDescriptor bitmapDescriptor;
         switch (customMarkerView.getType()) {
-            case Constants.StoreType.MOVIE_THEATER:
-                bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.theatre_stage);
-                break;
-            case Constants.StoreType.RESTAURANT:
-                bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.drink_icon);
-                break;
+//            case Constants.StoreType.MOVIE_THEATER:
+//                bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.theatre_stage);
+//                break;
+//            case Constants.StoreType.RESTAURANT:
+//                bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.drink_icon);
+//                break;
             default:
                 bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker);
         }
