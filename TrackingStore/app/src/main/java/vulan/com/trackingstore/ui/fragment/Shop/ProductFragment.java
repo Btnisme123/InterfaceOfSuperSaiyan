@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.adapter.RecyclerViewAdapter;
+import vulan.com.trackingstore.adapter.RecyclerProductAdapter;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
@@ -22,7 +22,7 @@ import vulan.com.trackingstore.util.FakeContainer;
 public class ProductFragment extends BaseFragment {
     private RecyclerView recyclerProduct;
     private List<Product> products;
-    RecyclerViewAdapter adapter;
+    RecyclerProductAdapter adapter;
 
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class ProductFragment extends BaseFragment {
         products = new ArrayList<>();
         products = FakeContainer.getListProduct(1);
         recyclerProduct.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        adapter = new RecyclerViewAdapter(getActivity(), null, products, Constants.RecyclerViewType.PRODUCT_TYPE);
+        adapter = new RecyclerProductAdapter(getActivity(), null, products, Constants.RecyclerViewType.PRODUCT_TYPE);
         recyclerProduct.setAdapter(adapter);
 
 

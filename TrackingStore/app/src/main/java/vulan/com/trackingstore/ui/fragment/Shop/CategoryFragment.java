@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.adapter.RecyclerViewAdapter;
+import vulan.com.trackingstore.adapter.RecyclerProductAdapter;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
@@ -17,7 +17,7 @@ import vulan.com.trackingstore.util.FakeContainer;
 
 
 public class CategoryFragment extends BaseFragment {
-    private RecyclerViewAdapter adapter;
+    private RecyclerProductAdapter adapter;
     private RecyclerView listCategoryMan, listCategoryWoman, listCategoryOther;
     private int NUM_OF_COLUMNS = 3;
     private List<ProductCategory> productCategoriesMan, productCategoriesWoman, productCategoriesOther;
@@ -37,19 +37,19 @@ public class CategoryFragment extends BaseFragment {
         productCategoriesMan = new ArrayList<>();
         productCategoriesMan = FakeContainer.getListCategory(1);
         listCategoryMan.setLayoutManager(new GridLayoutManager(getActivity(), NUM_OF_COLUMNS));
-        adapter = new RecyclerViewAdapter(getActivity(), productCategoriesMan, null, Constants.RecyclerViewType.CATEGORY_TYPE);
+        adapter = new RecyclerProductAdapter(getActivity(), productCategoriesMan, null, Constants.RecyclerViewType.CATEGORY_TYPE);
         listCategoryMan.setAdapter(adapter);
 
         productCategoriesWoman = new ArrayList<>();
         productCategoriesWoman = FakeContainer.getListCategory(2);
         listCategoryWoman.setLayoutManager(new GridLayoutManager(getActivity(), NUM_OF_COLUMNS));
-        adapter = new RecyclerViewAdapter(getActivity(), productCategoriesWoman, null, Constants.RecyclerViewType.CATEGORY_TYPE);
+        adapter = new RecyclerProductAdapter(getActivity(), productCategoriesWoman, null, Constants.RecyclerViewType.CATEGORY_TYPE);
         listCategoryWoman.setAdapter(adapter);
 
         productCategoriesOther = new ArrayList<>();
         productCategoriesOther = FakeContainer.getListCategory(3);
         listCategoryOther.setLayoutManager(new GridLayoutManager(getActivity(), NUM_OF_COLUMNS));
-        adapter = new RecyclerViewAdapter(getActivity(), productCategoriesOther, null, Constants.RecyclerViewType.CATEGORY_TYPE);
+        adapter = new RecyclerProductAdapter(getActivity(), productCategoriesOther, null, Constants.RecyclerViewType.CATEGORY_TYPE);
         listCategoryOther.setAdapter(adapter);
     }
 

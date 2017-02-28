@@ -2,12 +2,91 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBgSetting"
     android:orientation="vertical">
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_size_30"
-        android:background="@color/color_ed_search"
-        android:text="bbbbbbbbbbbbbbbbbbbbbbb"
-        android:textSize="@dimen/common_size_15" />
+        android:layout_height="@dimen/common_size_50"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Tìm kiếm chi tiết"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_text_size_20"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/ed_tag"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_40"
+            android:layout_marginLeft="@dimen/common_size_7"
+            android:layout_marginRight="@dimen/common_size_7"
+            android:layout_marginTop="@dimen/common_size_7"
+            android:background="@drawable/border"
+            android:hint="Add your keyword here"
+            android:paddingLeft="@dimen/common_size_10"
+            android:searchIcon="@color/colorAccent"
+            android:textColorHint="@color/colorSecondaryText"
+            android:textSize="@dimen/common_text_size_15" />
+
+        <ImageView
+            android:id="@+id/btn_add_tag"
+            android:layout_width="@dimen/common_size_40"
+            android:layout_height="@dimen/common_size_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/common_size_5"
+            android:layout_marginTop="@dimen/common_size_7"
+            android:padding="@dimen/common_size_5"
+            android:src="@drawable/ic_add" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_size_405"
+        android:layout_margin="@dimen/common_size_7"
+        android:background="@drawable/border"
+        android:padding="@dimen/common_size_5"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_size_7"
+        android:layout_marginRight="@dimen/common_size_7"
+        android:background="@drawable/border"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/common_size_5"
+        android:paddingRight="@dimen/common_size_10">
+
+        <ImageView
+            android:layout_width="@dimen/common_size_40"
+            android:layout_height="@dimen/common_size_40"
+            android:padding="@dimen/common_size_7"
+            android:src="@drawable/ic_sms" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8.5"
+            android:gravity="center_vertical"
+            android:text="Thông báo khi có cửa hàng phù hợp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/common_text_size_15" />
+
+        <Switch
+            android:id="@+id/sw_notify"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/common_size_40"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/layout_notify1"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:thumb="@drawable/custom_switch_selector"
+            android:track="@drawable/custom_switch_track" />
+    </LinearLayout>
 </LinearLayout>

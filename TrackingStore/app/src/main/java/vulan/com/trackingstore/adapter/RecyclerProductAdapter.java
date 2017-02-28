@@ -29,7 +29,7 @@ import vulan.com.trackingstore.util.CustomDialog;
  * Created by VULAN on 10/22/2016.
  */
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ItemHolder> {
+public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProductAdapter.ItemHolder> {
 
     private Context mContext;
     private Activity mActivity;
@@ -41,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             R.color.colorCategory3, R.color.colorCategory4,
             R.color.colorCategory5, R.color.colorCategory6};
 
-    public RecyclerViewAdapter(Activity context, List<ProductCategory> mCategoryList, List<Product> mProductList, int type) {
+    public RecyclerProductAdapter(Activity context, List<ProductCategory> mCategoryList, List<Product> mProductList, int type) {
         this.mCategoryList = mCategoryList;
         this.mProductList = mProductList;
         mContext = context;

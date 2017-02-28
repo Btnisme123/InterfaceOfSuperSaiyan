@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/common_size_5"
+    android:layout_marginTop="@dimen/common_size_5"
+    android:background="@drawable/border_tag"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_tag_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_size_5"
+        android:text="Man clothes"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/common_text_size_15"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/btn_clear_tag"
+        android:layout_width="@dimen/common_size_20"
+        android:layout_height="@dimen/common_size_20"
+        android:layout_margin="@dimen/common_size_5"
+        android:src="@drawable/ic_clear" />
+</LinearLayout>

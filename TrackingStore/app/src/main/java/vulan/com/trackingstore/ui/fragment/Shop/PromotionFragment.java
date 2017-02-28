@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
-import vulan.com.trackingstore.adapter.RecyclerViewAdapter;
+import vulan.com.trackingstore.adapter.RecyclerProductAdapter;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
@@ -22,7 +22,7 @@ import vulan.com.trackingstore.util.FakeContainer;
 public class PromotionFragment extends BaseFragment {
     private RecyclerView recyclerMan, recyclerWoman, recyclerOther;
     private List<Product> productsMan, productsWoman, productsOther;
-    RecyclerViewAdapter adapter;
+    RecyclerProductAdapter adapter;
 
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
@@ -45,19 +45,19 @@ public class PromotionFragment extends BaseFragment {
         productsMan = new ArrayList<>();
         productsMan = FakeContainer.getListProduct(1);
         recyclerMan.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        adapter = new RecyclerViewAdapter(getActivity(), null, productsMan, Constants.RecyclerViewType.PROMOTION_TYPE);
+        adapter = new RecyclerProductAdapter(getActivity(), null, productsMan, Constants.RecyclerViewType.PROMOTION_TYPE);
         recyclerMan.setAdapter(adapter);
 
         productsWoman = new ArrayList<>();
         productsWoman = FakeContainer.getListProduct(2);
         recyclerWoman.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        adapter = new RecyclerViewAdapter(getActivity(), null, productsWoman, Constants.RecyclerViewType.PROMOTION_TYPE);
+        adapter = new RecyclerProductAdapter(getActivity(), null, productsWoman, Constants.RecyclerViewType.PROMOTION_TYPE);
         recyclerWoman.setAdapter(adapter);
 
         productsOther = new ArrayList<>();
         productsOther = FakeContainer.getListProduct(3);
         recyclerOther.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        adapter = new RecyclerViewAdapter(getActivity(), null, productsOther, Constants.RecyclerViewType.PROMOTION_TYPE);
+        adapter = new RecyclerProductAdapter(getActivity(), null, productsOther, Constants.RecyclerViewType.PROMOTION_TYPE);
         recyclerOther.setAdapter(adapter);
 
     }
