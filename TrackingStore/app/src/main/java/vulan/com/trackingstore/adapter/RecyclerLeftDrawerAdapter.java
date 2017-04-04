@@ -1,6 +1,7 @@
 package vulan.com.trackingstore.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.estimote.coresdk.recognition.packets.Beacon;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
@@ -24,6 +27,7 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
     private List<Shop> mNavigationDrawerLeftItems;
     private Context mContext;
     private OnLeftItemClickListener mOnRecyclerItemInteractListener;
+    private List<Beacon> beaconList = new ArrayList<>();
 
     public RecyclerLeftDrawerAdapter(Context context, List<Shop> items
     ) {
@@ -41,28 +45,44 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
                 inflate(R.layout.item_shop_left_recycler, parent, false));
     }
 
+    public List<Beacon> getBeaconList() {
+        return beaconList;
+    }
+
+    public void setBeaconList(List<Beacon> beaconList) {
+        this.beaconList = beaconList;
+    }
+
     @Override
-    public void onBindViewHolder(RecyclerLeftDrawerAdapter.ItemHolder holder, final int position) {
-        Shop item = mNavigationDrawerLeftItems.get(position);
+    public void onBindViewHolder(final RecyclerLeftDrawerAdapter.ItemHolder holder, int position) {
+        final Shop item = mNavigationDrawerLeftItems.get(position);
         holder.mImageShop.setImageResource(item.getmImageShop());
         holder.mTextName.setText(item.getmShopName());
         holder.mTextAddress.setText(item.getmAddress());
-        holder.mTextDistance.setText("Distance: 50m");
-
+        holder.mTextDistance.setText(String.format("%f  m", (float) item.getMeter()));
         if (position % 2 != 0) {
-            holder.mLayoutShop.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
-            holder.mTextName.setTextColor(mContext.getResources().getColor(R.color.white));
-            holder.mTextAddress.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.mTextDistance.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            holder.mLayoutShop.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            holder.mTextName.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            holder.mTextAddress.setTextColor(ContextCompat.getColor(mContext, R.color.white));
         }
         holder.mTextName.setSelected(true);
         holder.mTextAddress.setSelected(true);
         holder.mLayoutShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnRecyclerItemInteractListener.onLeftItemClick(position);
-                Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
+                mOnRecyclerItemInteractListener.onLeftItemClick(
+                        beaconList.get(holder.getAdapterPosition()),
+                        item.getmShopName(),
+                        beaconList.get(holder.getAdapterPosition()).getMacAddress().toString());
             }
         });
+    }
+
+    public void setList(List<Shop> shops) {
+        mNavigationDrawerLeftItems.clear();
+        mNavigationDrawerLeftItems.addAll(shops);
+        notifyDataSetChanged();
     }
 
     @Override
