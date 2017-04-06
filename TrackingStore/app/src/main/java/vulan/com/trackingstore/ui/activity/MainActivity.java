@@ -2,6 +2,7 @@ package vulan.com.trackingstore.ui.activity;
 
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,11 +12,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
+import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
+import com.estimote.coresdk.recognition.packets.Beacon;
+import com.estimote.coresdk.service.BeaconManager;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
@@ -37,6 +45,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerLeftDrawerAdapter adapter;
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mButtonListLeft;
+    private BeaconManager mBeaconManager;
+    public static final String EXTRAS_BEACON = "extrasBeacon";
+    public static final String SHOP_NAME="shop name";
+    public static final String METER="meter";
+    public static final BeaconRegion ALL_ESTIMOTE_BEACONS_REGION = new BeaconRegion("ranged region",
+            null, null, null);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +60,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
         replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
         updateIconMenu(Constants.Menu.MENU_HOME);
+
+        mBeaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
+            @Override
+            public void onBeaconsDiscovered(BeaconRegion beaconRegion, List<Beacon> list) {
+                for(int i=0;i<list.size();i++){
+                    Log.e("address : ",""+list.get(i).getMacAddress());
+                }
+                shopArrayList = FakeContainer.getListShop(list.size(), list);
+                adapter.setList(shopArrayList);
+                adapter.setBeaconList(list);
+            }
+        });
+        mBeaconManager.setScanStatusListener(new BeaconManager.ScanStatusListener() {
+            @Override
+            public void onScanStart() {
+                recyclerShopLeft.setEnabled(true);
+                recyclerShopLeft.setAlpha(1.0f);
+            }
+
+            @Override
+            public void onScanStop() {
+                recyclerShopLeft.setEnabled(false);
+                recyclerShopLeft.setAlpha(0.5f);
+            }
+        });
     }
 
     protected BaseFragment getFragment() {
@@ -71,10 +110,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerShopLeft.setAdapter(adapter);
         adapter.setOnClick(new OnLeftItemClickListener() {
             @Override
-            public void onLeftItemClick(int position) {
+            public void onLeftItemClick(Beacon beacon,String shopName,String meter) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-                Toast.makeText(getApplicationContext()
-                        , "Replace ShopFragment: " + shopArrayList.get(position).getmShopName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DetailBeaconActivity.class);
+                intent.putExtra(SHOP_NAME,shopName);
+                intent.putExtra(METER,meter);
+                intent.putExtra(EXTRAS_BEACON, beacon);
+                startActivity(intent);
             }
         });
         mButtonListLeft.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
@@ -83,6 +125,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonListShop.setOnClickListener(this);
         mButtonSearch.setOnClickListener(this);
         mButtonSettings.setOnClickListener(this);
+        mBeaconManager = new BeaconManager(this);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        mBeaconManager.disconnect();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mBeaconManager.stopRanging(ALL_ESTIMOTE_BEACONS_REGION);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
+            startScanning();
+        }
+    }
+
+    private void startScanning() {
+
+        mBeaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+            @Override
+            public void onServiceReady() {
+                mBeaconManager.startRanging(ALL_ESTIMOTE_BEACONS_REGION);
+            }
+        });
     }
 
     @Override
