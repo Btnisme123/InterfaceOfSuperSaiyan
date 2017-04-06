@@ -1,10 +1,12 @@
 package vulan.com.trackingstore.data.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Thanh on 2/16/2017.
  */
 
-public class Shop {
+public class Shop implements Serializable {
     private int mImageShop;
     private String mShopName;
     private String mAddress;

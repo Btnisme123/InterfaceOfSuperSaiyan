@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/img_notify"
+        android:layout_width="@dimen/common_size_60"
+        android:layout_height="@dimen/common_size_60"
+        android:src="@drawable/ic_location_notify"/>
+    <TextView
+        android:id="@+id/tv_notify"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_size_60"
+        android:gravity="center"
+        android:textSize="@dimen/common_text_size_15"
+        android:text="Quanh đây có địa điểm phù hợp với yêu cầu" />
+</LinearLayout>

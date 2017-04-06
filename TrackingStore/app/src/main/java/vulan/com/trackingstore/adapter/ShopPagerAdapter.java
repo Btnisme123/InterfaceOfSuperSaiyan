@@ -1,9 +1,13 @@
 package vulan.com.trackingstore.adapter;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.data.model.Shop;
+import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.CategoryFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.PromotionFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
@@ -15,10 +19,14 @@ import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
 public class ShopPagerAdapter extends android.support.v13.app.FragmentPagerAdapter {
     private Context mContext;
     private int PAGE_COUNT = 3;
+    private Activity mActivity;
+    private Shop shop;
 
-    public ShopPagerAdapter(android.app.FragmentManager fm, Context context) {
+    public ShopPagerAdapter(android.app.FragmentManager fm, Activity context, Shop shop) {
         super(fm);
         mContext = context;
+        mActivity = context;
+        this.shop = shop;
     }
 
     @Override
@@ -58,5 +66,13 @@ public class ShopPagerAdapter extends android.support.v13.app.FragmentPagerAdapt
                 break;
         }
         return title;
+    }
+
+    public void replaceFragment(BaseFragment fragment, String tag) {
+        FragmentTransaction transaction = mActivity.getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.animator.fragment_slide_right_enter, R.animator.fragment_slide_left_exit,
+                R.animator.fragment_slide_left_enter, R.animator.fragment_slide_right_exit)
+                .replace(R.id.fragment_container, fragment, tag)
+                .addToBackStack("").commit();
     }
 }
