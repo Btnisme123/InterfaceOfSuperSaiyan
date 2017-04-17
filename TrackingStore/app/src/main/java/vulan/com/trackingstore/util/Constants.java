@@ -41,6 +41,7 @@ public class Constants {
         public static final String SHOP_MODEL = "shop";
         public static final String SHOP_ID = "shop id";
         public static final String CATEGORY_ID = "category id";
+        public static final String CATEGORY_NAME = "category name";
     }
 
 

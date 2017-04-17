@@ -78,6 +78,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                     ProductFragment productFragment = new ProductFragment();
                     Bundle bundle = new Bundle();
                     bundle.putInt(Constants.ShopInfo.CATEGORY_ID, mCategoryList.get(position).getId());
+                    bundle.putString(Constants.ShopInfo.CATEGORY_NAME, mCategoryList.get(position).getmNameCategory());
                     productFragment.setArguments(bundle);
                     replaceFragment(productFragment, Constants.FragmentTag.PRODUCT);
                 }

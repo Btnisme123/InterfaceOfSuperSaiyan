@@ -20,7 +20,8 @@
     <color name="colorViewSetting">#3c4eca0b</color>
     <color name="colorSwitchBg">#e1e0e0</color>
     <color name="colorViewLine">#78378e09</color>
-    <color name="colorBgProduct">#835cef0e</color>
+    <color name="colorBgProduct">#64b6b6b6</color>
     <color name="colorBgCategoryTransparent">#5a000000</color>
     <color name="colorBorderText">#b6b6b6</color>
+
 </resources>
