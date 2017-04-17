@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Bundle;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.Shop;
@@ -11,6 +12,7 @@ import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.CategoryFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.PromotionFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
+import vulan.com.trackingstore.util.Constants;
 
 /**
  * Created by Thanh on 2/16/2017.
@@ -35,9 +37,15 @@ public class ShopPagerAdapter extends android.support.v13.app.FragmentPagerAdapt
         switch (position) {
             case 0:
                 fragment = new ShopFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.ShopInfo.SHOP_MODEL, shop);
+                fragment.setArguments(bundle);
                 break;
             case 1:
                 fragment = new CategoryFragment();
+                Bundle bundleCate = new Bundle();
+                bundleCate.putInt(Constants.ShopInfo.SHOP_ID, shop.getId());
+                fragment.setArguments(bundleCate);
                 break;
             case 2:
                 fragment = new PromotionFragment();

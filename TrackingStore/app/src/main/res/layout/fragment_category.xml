@@ -1,68 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <ScrollView
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_category"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBgSetting">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBgSetting">
-            <TextView
-                android:id="@+id/tv_man"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:textSize="@dimen/common_text_size_17"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:text="Man"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/common_size_15"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_category_man"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_man"/>
-            <TextView
-                android:id="@+id/tv_woman"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:textSize="@dimen/common_text_size_17"
-                android:textStyle="bold"
-                android:layout_below="@id/recycler_category_man"
-                android:textColor="@color/white"
-                android:text="Woman"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/common_size_15"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_category_woman"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_woman"/>
-            <TextView
-                android:id="@+id/tv_other"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:textSize="@dimen/common_text_size_17"
-                android:textStyle="bold"
-                android:layout_below="@id/recycler_category_woman"
-                android:textColor="@color/white"
-                android:text="Other"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/common_size_15"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_category_other"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_other"
-                android:layout_marginBottom="@dimen/common_size_2"/>
-        </RelativeLayout>
-    </ScrollView>
-    
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_size_5"
+        android:layout_marginTop="@dimen/common_size_5" />
 </RelativeLayout>

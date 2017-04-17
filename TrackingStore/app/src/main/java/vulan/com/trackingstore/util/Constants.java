@@ -5,6 +5,8 @@ package vulan.com.trackingstore.util;
  */
 
 public class Constants {
+    public static final String BASE_URL = "http://doanbeacon.com/";
+
     public static final class Menu {
         public static final int MENU_HOME = 0;
         public static final int MENU_LIST_SHOP = 1;
@@ -34,5 +36,12 @@ public class Constants {
         public static final int PRODUCT_TYPE = 3;
 
     }
+
+    public static final class ShopInfo {
+        public static final String SHOP_MODEL = "shop";
+        public static final String SHOP_ID = "shop id";
+        public static final String CATEGORY_ID = "category id";
+    }
+
 
 }

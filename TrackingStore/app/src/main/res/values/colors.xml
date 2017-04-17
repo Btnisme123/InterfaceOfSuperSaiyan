@@ -21,11 +21,6 @@
     <color name="colorSwitchBg">#e1e0e0</color>
     <color name="colorViewLine">#78378e09</color>
     <color name="colorBgProduct">#835cef0e</color>
-    <color name="colorCategory1">#631010</color>
-    <color name="colorCategory2">#ff6f21</color>
-    <color name="colorCategory3">#6c008c</color>
-    <color name="colorCategory4">#00c0e2</color>
-    <color name="colorCategory5">#a9033c</color>
-    <color name="colorCategory6">#8de507</color>
-
+    <color name="colorBgCategoryTransparent">#5a000000</color>
+    <color name="colorBorderText">#b6b6b6</color>
 </resources>

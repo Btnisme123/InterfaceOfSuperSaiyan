@@ -8,7 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.Shop;
@@ -18,11 +21,11 @@ import vulan.com.trackingstore.data.model.Shop;
  */
 
 public class ListShopAdapter extends BaseAdapter {
-    private ArrayList<Shop> shopArrayList = new ArrayList<>();
+    private List<Shop> shopArrayList = new ArrayList<>();
     private Context mContext;
     LayoutInflater inflater;
 
-    public ListShopAdapter(Context context, ArrayList<Shop> shopArrayList) {
+    public ListShopAdapter(Context context, List<Shop> shopArrayList) {
         this.shopArrayList = shopArrayList;
         mContext = context;
         inflater = LayoutInflater.from(this.mContext);
@@ -55,7 +58,9 @@ public class ListShopAdapter extends BaseAdapter {
             holder = (MyViewHolder) convertView.getTag();
         }
 
-        holder.mImageShop.setImageResource(shop.getmImageShop());
+        Glide.with(mContext).load(shop.getmUrlLogo())
+                .fitCenter()
+                .into(holder.mImageShop);
         holder.mTextAddress.setText(shop.getmAddress());
         holder.mTextShopName.setText(shop.getmShopName());
         return convertView;

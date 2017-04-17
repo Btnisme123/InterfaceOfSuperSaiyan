@@ -56,10 +56,10 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
     @Override
     public void onBindViewHolder(final RecyclerLeftDrawerAdapter.ItemHolder holder, int position) {
         final Shop item = mNavigationDrawerLeftItems.get(position);
-        holder.mImageShop.setImageResource(item.getmImageShop());
+//        holder.mImageShop.setImageResource(item.getmImageShop());
         holder.mTextName.setText(item.getmShopName());
         holder.mTextAddress.setText(item.getmAddress());
-        holder.mTextDistance.setText(String.format("%f  m", (float) item.getMeter()));
+//        holder.mTextDistance.setText(String.format("%f  m", (float) item.getMeter()));
         if (position % 2 != 0) {
             holder.mTextDistance.setTextColor(ContextCompat.getColor(mContext, R.color.white));
             holder.mLayoutShop.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));

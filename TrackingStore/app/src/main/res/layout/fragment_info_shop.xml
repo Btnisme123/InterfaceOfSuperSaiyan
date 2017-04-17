@@ -21,8 +21,7 @@
             android:layout_width="@dimen/common_size_90"
             android:layout_height="@dimen/common_size_90"
             android:background="@drawable/border"
-            android:padding="@dimen/common_size_2"
-            android:src="@drawable/blues_logo" />
+            android:padding="@dimen/common_size_2" />
 
         <LinearLayout
             android:id="@+id/layout_info"
@@ -79,13 +78,13 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_content"
+                android:id="@+id/tv_desription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_title_content"
-                android:paddingBottom="@dimen/common_size_5"
                 android:layout_marginLeft="@dimen/common_size_15"
                 android:layout_marginRight="@dimen/common_size_15"
+                android:paddingBottom="@dimen/common_size_5"
                 android:text="The Blues (thương hiệu của chuỗi cửa hàng thời trang của công ty Blue-Exchange) xuất hiện mang dáng vấp của một trung tâm thời trang, kinh doanh nhiều dòng sản phẩm và nhãn hiệu đa dạng từ quần áo cho đến các phụ kiện thời trang như giày, dép, túi xách, ví, nón, dây nịch... "
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/common_text_size_15" />
@@ -94,7 +93,7 @@
                 android:id="@+id/tv_title_info_shop"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_size_25"
-                android:layout_below="@id/tv_content"
+                android:layout_below="@id/tv_desription"
                 android:layout_marginLeft="@dimen/common_size_15"
                 android:layout_marginRight="@dimen/common_size_15"
                 android:gravity="center_vertical"
@@ -108,9 +107,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_title_info_shop"
-                android:padding="@dimen/common_size_5"
                 android:layout_marginLeft="@dimen/common_size_10"
-                android:layout_marginRight="@dimen/common_size_10">
+                android:layout_marginRight="@dimen/common_size_10"
+                android:padding="@dimen/common_size_5">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,9 +134,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_address"
-                android:padding="@dimen/common_size_5"
                 android:layout_marginLeft="@dimen/common_size_10"
-                android:layout_marginRight="@dimen/common_size_10">
+                android:layout_marginRight="@dimen/common_size_10"
+                android:padding="@dimen/common_size_5">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -158,24 +157,24 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_web"
+                android:id="@+id/layout_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_phone"
-                android:padding="@dimen/common_size_5"
                 android:layout_marginLeft="@dimen/common_size_10"
-                android:layout_marginRight="@dimen/common_size_10">
+                android:layout_marginRight="@dimen/common_size_10"
+                android:padding="@dimen/common_size_5">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:text="Website: "
+                    android:text="Email: "
                     android:textSize="@dimen/common_text_size_15"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_website"
+                    android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"

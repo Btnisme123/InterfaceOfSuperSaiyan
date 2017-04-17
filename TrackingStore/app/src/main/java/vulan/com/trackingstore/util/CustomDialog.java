@@ -56,7 +56,7 @@ public class CustomDialog extends Dialog {
 
     private void init() {
         mNameProduct.setText(product.getmName());
-        mImageProduct.setImageResource(product.getmImageProduct());
+//        mImageProduct.setImageResource(product.getmImageProduct());
         mPrice.setText(product.getmPrice() + " VND");
         if (Integer.parseInt(product.getmPromotion()) != 0) {
             mPrice.setPaintFlags(mPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

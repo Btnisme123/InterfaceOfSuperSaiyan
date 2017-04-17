@@ -36,7 +36,6 @@ import vulan.com.trackingstore.ui.fragment.SearchFragment;
 import vulan.com.trackingstore.ui.fragment.SettingsFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
 import vulan.com.trackingstore.util.Constants;
-import vulan.com.trackingstore.util.FakeContainer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView mButtonHome, mButtonListShop, mButtonSearch, mButtonSettings;
@@ -47,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton mButtonListLeft;
     private BeaconManager mBeaconManager;
     public static final String EXTRAS_BEACON = "extrasBeacon";
-    public static final String SHOP_NAME="shop name";
-    public static final String METER="meter";
+    public static final String SHOP_NAME = "shop name";
+    public static final String METER = "meter";
     public static final BeaconRegion ALL_ESTIMOTE_BEACONS_REGION = new BeaconRegion("ranged region",
             null, null, null);
 
@@ -61,13 +60,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
         updateIconMenu(Constants.Menu.MENU_HOME);
 
+
         mBeaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion beaconRegion, List<Beacon> list) {
-                for(int i=0;i<list.size();i++){
-                    Log.e("address : ",""+list.get(i).getMacAddress());
+                for (int i = 0; i < list.size(); i++) {
+                    Log.e("address : ", "" + list.get(i).getMacAddress());
                 }
-                shopArrayList = FakeContainer.getListShop(list.size(), list);
+//                shopArrayList = FakeContainer.getListShop(list.size(), list);
                 adapter.setList(shopArrayList);
                 adapter.setBeaconList(list);
             }
@@ -104,17 +104,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void init() {
         //list slide left
         shopArrayList = new ArrayList<>();
-        shopArrayList = FakeContainer.getListShop();
+//        shopArrayList = FakeContainer.getListShop();
         adapter = new RecyclerLeftDrawerAdapter(this, shopArrayList);
         recyclerShopLeft.setLayoutManager(new LinearLayoutManager(this));
         recyclerShopLeft.setAdapter(adapter);
         adapter.setOnClick(new OnLeftItemClickListener() {
             @Override
-            public void onLeftItemClick(Beacon beacon,String shopName,String meter) {
+            public void onLeftItemClick(Beacon beacon, String shopName, String meter) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(MainActivity.this, DetailBeaconActivity.class);
-                intent.putExtra(SHOP_NAME,shopName);
-                intent.putExtra(METER,meter);
+                intent.putExtra(SHOP_NAME, shopName);
+                intent.putExtra(METER, meter);
                 intent.putExtra(EXTRAS_BEACON, beacon);
                 startActivity(intent);
             }

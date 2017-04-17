@@ -87,8 +87,8 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            shop = new Shop(R.drawable.nike_logo, "Nike", "165 Xuân Thủy, Q.Cầu Giấy, HN");
-            notifySearch(shop);
+//            shop = new Shop(R.drawable.nike_logo, "Nike", "165 Xuân Thủy, Q.Cầu Giấy, HN");
+//            notifySearch(shop);
         } else {
 
         }
@@ -96,7 +96,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
 
     private void notifySearch(Shop shop) {
         RemoteViews remoteViews = new RemoteViews(getActivity().getPackageName(), R.layout.notification_view);
-        remoteViews.setImageViewResource(R.id.img_notify, shop.getmImageShop());
+//        remoteViews.setImageViewResource(R.id.img_notify, shop.getmImageShop());
         remoteViews.setTextViewText(R.id.tv_notify, "Tìm được cửa hàng " + shop.getmShopName() + " phù hợp với yêu cầu");
         notiBuilder = new NotificationCompat.Builder(getActivity())
                 .setSmallIcon(R.drawable.adidas_logo)

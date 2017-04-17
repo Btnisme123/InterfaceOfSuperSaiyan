@@ -3,18 +3,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/common_size_35"
-        android:text="Man clothes"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:textSize="@dimen/common_text_size_17"
-        android:textStyle="bold"
-        android:gravity="center"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"></android.support.v7.widget.RecyclerView>
+        android:background="@color/white"
+        android:layout_gravity="center"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

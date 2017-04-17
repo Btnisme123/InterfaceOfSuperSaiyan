@@ -27,7 +27,7 @@ public class PromotionFragment extends BaseFragment {
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findViews(rootView);
-        init();
+//        init();
     }
 
     @Override
@@ -41,24 +41,24 @@ public class PromotionFragment extends BaseFragment {
         recyclerOther = (RecyclerView) rootView.findViewById(R.id.recycler_promotion_other);
     }
 
-    private void init() {
-        productsMan = new ArrayList<>();
-        productsMan = FakeContainer.getListProduct(1);
-        recyclerMan.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        adapter = new RecyclerProductAdapter(getActivity(), null, productsMan, Constants.RecyclerViewType.PROMOTION_TYPE);
-        recyclerMan.setAdapter(adapter);
-
-        productsWoman = new ArrayList<>();
-        productsWoman = FakeContainer.getListProduct(2);
-        recyclerWoman.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        adapter = new RecyclerProductAdapter(getActivity(), null, productsWoman, Constants.RecyclerViewType.PROMOTION_TYPE);
-        recyclerWoman.setAdapter(adapter);
-
-        productsOther = new ArrayList<>();
-        productsOther = FakeContainer.getListProduct(3);
-        recyclerOther.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        adapter = new RecyclerProductAdapter(getActivity(), null, productsOther, Constants.RecyclerViewType.PROMOTION_TYPE);
-        recyclerOther.setAdapter(adapter);
-
-    }
+//    private void init() {
+//        productsMan = new ArrayList<>();
+//        productsMan = FakeContainer.getListProduct(1);
+//        recyclerMan.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+//        adapter = new RecyclerProductAdapter(getActivity(), null, productsMan, Constants.RecyclerViewType.PROMOTION_TYPE);
+//        recyclerMan.setAdapter(adapter);
+//
+//        productsWoman = new ArrayList<>();
+//        productsWoman = FakeContainer.getListProduct(2);
+//        recyclerWoman.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+//        adapter = new RecyclerProductAdapter(getActivity(), null, productsWoman, Constants.RecyclerViewType.PROMOTION_TYPE);
+//        recyclerWoman.setAdapter(adapter);
+//
+//        productsOther = new ArrayList<>();
+//        productsOther = FakeContainer.getListProduct(3);
+//        recyclerOther.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+//        adapter = new RecyclerProductAdapter(getActivity(), null, productsOther, Constants.RecyclerViewType.PROMOTION_TYPE);
+//        recyclerOther.setAdapter(adapter);
+//
+//    }
 }

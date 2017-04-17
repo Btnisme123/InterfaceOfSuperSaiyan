@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.ShopPagerAdapter;
 import vulan.com.trackingstore.data.model.Shop;
+import vulan.com.trackingstore.util.Constants;
 
 public class ShopActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -32,7 +33,7 @@ public class ShopActivity extends AppCompatActivity {
 
     private void init() {
         Intent intent = getIntent();
-        shop = (Shop) intent.getSerializableExtra("shop");
+        shop = (Shop) intent.getSerializableExtra(Constants.ShopInfo.SHOP_MODEL);
 
         FragmentManager manager = getFragmentManager();
         adapter = new ShopPagerAdapter(manager, this, shop);

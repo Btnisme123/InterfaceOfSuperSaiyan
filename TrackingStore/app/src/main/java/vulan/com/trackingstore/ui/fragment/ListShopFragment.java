@@ -8,31 +8,33 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.ListShopAdapter;
 import vulan.com.trackingstore.data.model.Shop;
+import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
-import vulan.com.trackingstore.util.FakeContainer;
+import vulan.com.trackingstore.util.Constants;
 
 /**
  * Created by Thanh on 2/15/2017.
  */
 
-public class ListShopFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class ListShopFragment extends BaseFragment {
     private ListView mListShop;
     private SearchView mSearchView;
     private ListShopAdapter adapter;
-    private ArrayList<Shop> shopArrayList = new ArrayList<>();
+    private List<Shop> shopArrayList = new ArrayList<>();
 
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findViews(rootView);
-        fakeData();
         init();
-        adapter = new ListShopAdapter(getActivity(), shopArrayList);
-        mListShop.setAdapter(adapter);
     }
 
     @Override
@@ -46,16 +48,28 @@ public class ListShopFragment extends BaseFragment implements AdapterView.OnItem
     }
 
     private void init() {
-        mListShop.setOnItemClickListener(this);
-    }
+        ApiRequest.getInstance().init();
+        ApiRequest.getInstance().getAllShop(new Callback<List<Shop>>() {
+            @Override
+            public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
+                shopArrayList = response.body();
+                adapter = new ListShopAdapter(getActivity(), shopArrayList);
+                mListShop.setAdapter(adapter);
+                mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Intent intent = new Intent(getActivity(), ShopActivity.class);
+                        intent.putExtra(Constants.ShopInfo.SHOP_MODEL, shopArrayList.get(i));
+                        startActivity(intent);
+                    }
+                });
+            }
 
-    private void fakeData() {
-        shopArrayList = FakeContainer.getListShop();
-    }
+            @Override
+            public void onFailure(Call<List<Shop>> call, Throwable t) {
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), ShopActivity.class);
-        startActivity(intent);
+            }
+        });
+
     }
 }

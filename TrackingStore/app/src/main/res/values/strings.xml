@@ -20,9 +20,7 @@
 
     <string name="shop_title">Thông tin cửa hàng</string>
     <string name="category_title">Danh mục sản phẩm</string>
-    <string name="promotion_title">Sản phẩm khuyến mãi</string>
-    =======
+    <string name="promotion_title">Khuyến mại</string>
     <string name="title_activity_maps">Map</string>
     <string name="map_loading">Loading map  , please wait for a couple of second</string>
-    >>>>>>> add map
 </resources>
