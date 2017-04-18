@@ -21,6 +21,7 @@ public class Constants {
         public static final String SETTINGS = "setting fragment";
         public static final String SHOP = "shop fragment";
         public static final String PRODUCT = "product fragment";
+        public static final String PRODUCT_DETAIL = "product detail fragment";
     }
 
     public static final class RecyclerViewType {
@@ -42,6 +43,7 @@ public class Constants {
         public static final String SHOP_ID = "shop id";
         public static final String CATEGORY_ID = "category id";
         public static final String CATEGORY_NAME = "category name";
+        public static final String PRODUCT = "product";
     }
 
 

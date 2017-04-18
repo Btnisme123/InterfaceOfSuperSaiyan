@@ -24,6 +24,7 @@ import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.ui.fragment.Shop.ProductDetailFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ProductFragment;
 import vulan.com.trackingstore.util.Constants;
 
@@ -91,18 +92,20 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                     .fitCenter()
                     .into(holder.imageProduct);
             holder.price.setText(product.getmPrice() + " VND");
-//            holder.layoutProduct.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    CustomDialog customDialog = new CustomDialog(mContext, product, mProductList);
-//                    customDialog.show();
-//                }
-//            });
+            holder.mTextWatch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.ShopInfo.PRODUCT, product);
+                    productDetailFragment.setArguments(bundle);
+                    replaceFragment(productDetailFragment, Constants.FragmentTag.PRODUCT_DETAIL);
+                }
+            });
             if (type == Constants.RecyclerViewType.PROMOTION_TYPE) {
                 holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }
         }
-
     }
 
     @Override
@@ -165,8 +168,6 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                 productName = (TextView) itemView.findViewById(R.id.tv_product_name);
                 price = (TextView) itemView.findViewById(R.id.tv_price);
                 mTextWatch = (TextView) itemView.findViewById(R.id.tv_watch);
-//                pricePromotion = (TextView) itemView.findViewById(R.id.tv_promotion);
-//                layoutProduct = (LinearLayout) itemView.findViewById(R.id.layout_product);
             }
 
         }

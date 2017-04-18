@@ -14,6 +14,7 @@ import retrofit2.Response;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerProductAdapter;
 import vulan.com.trackingstore.data.model.ProductCategory;
+import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
@@ -23,7 +24,7 @@ public class CategoryFragment extends BaseFragment {
     private RecyclerProductAdapter adapter;
     private RecyclerView mRecycleCategory;
     private List<ProductCategory> productCategories;
-    private int mShopId;
+    private Shop mShop;
 
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
@@ -37,10 +38,10 @@ public class CategoryFragment extends BaseFragment {
     }
 
     private void init() {
-        mShopId = getArguments().getInt(Constants.ShopInfo.SHOP_ID);
+        mShop = (Shop) getArguments().getSerializable(Constants.ShopInfo.SHOP_MODEL);
 
         ApiRequest.getInstance().init();
-        ApiRequest.getInstance().getCategoryByShopId(mShopId, new Callback<List<ProductCategory>>() {
+        ApiRequest.getInstance().getCategoryByShopId(mShop.getId(), new Callback<List<ProductCategory>>() {
             @Override
             public void onResponse(Call<List<ProductCategory>> call, Response<List<ProductCategory>> response) {
                 productCategories = response.body();

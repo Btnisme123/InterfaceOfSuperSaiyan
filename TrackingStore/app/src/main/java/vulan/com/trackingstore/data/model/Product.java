@@ -2,13 +2,15 @@ package vulan.com.trackingstore.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import static vulan.com.trackingstore.util.Constants.BASE_URL;
 
 /**
  * Created by Thanh on 2/21/2017.
  */
 
-public class Product {
+public class Product implements Serializable{
     @SerializedName("ID")
     private int Id;
     @SerializedName("Name")

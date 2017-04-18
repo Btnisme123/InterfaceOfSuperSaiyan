@@ -44,7 +44,7 @@ public class ShopPagerAdapter extends android.support.v13.app.FragmentPagerAdapt
             case 1:
                 fragment = new CategoryFragment();
                 Bundle bundleCate = new Bundle();
-                bundleCate.putInt(Constants.ShopInfo.SHOP_ID, shop.getId());
+                bundleCate.putSerializable(Constants.ShopInfo.SHOP_MODEL, shop);
                 fragment.setArguments(bundleCate);
                 break;
             case 2:

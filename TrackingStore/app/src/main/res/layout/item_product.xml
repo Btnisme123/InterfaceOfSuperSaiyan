@@ -2,39 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/common_size_3"
+    android:layout_marginTop="@dimen/common_size_1"
+    android:padding="@dimen/common_size_3"
     android:weightSum="2">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="@dimen/common_size_2">
+        android:background="@drawable/border_item_product">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_size_300"
-            android:background="@drawable/border_item_product"
             android:padding="@dimen/common_size_3">
 
             <ImageView
                 android:id="@+id/img_product"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_200"
+                android:layout_height="@dimen/common_size_180"
                 android:padding="@dimen/common_size_2"
                 android:src="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/tv_product_name"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_20"
+                android:layout_height="@dimen/common_size_30"
                 android:layout_below="@id/img_product"
                 android:layout_marginLeft="@dimen/common_size_10"
                 android:layout_marginRight="@dimen/common_size_10"
                 android:layout_marginTop="@dimen/common_size_5"
                 android:ellipsize="end"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:maxLines="1"
                 android:text="Áo nam ákdjlaksdjlaksdjkasjdk"
                 android:textColor="@color/colorPrimaryText"
@@ -43,11 +43,10 @@
             <TextView
                 android:id="@+id/tv_price"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_20"
+                android:layout_height="@dimen/common_size_30"
                 android:layout_below="@+id/tv_product_name"
                 android:layout_marginLeft="@dimen/common_size_10"
                 android:layout_marginRight="@dimen/common_size_10"
-                android:gravity="center_vertical"
                 android:text="250$"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/common_text_size_15" />
