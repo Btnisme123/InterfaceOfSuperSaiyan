@@ -22,15 +22,16 @@ public class Product implements Serializable {
     @SerializedName("Image")
     private String mImageProduct;
     @SerializedName("Price")
-    private String mPrice;
-    @SerializedName("PromotionPrice")
-    private String mPromotion;
+    private int mPrice;
     @SerializedName("Quantity")
     private int mQuantity;
     @SerializedName("Detail")
     private String mDetail;
     @SerializedName("CategoryID")
     private int mCategoryId;
+    @SerializedName("TopHot")
+    private int mPromotion;
+
 
     public int getId() {
         return Id;
@@ -72,19 +73,19 @@ public class Product implements Serializable {
         this.mImageProduct = mImageProduct;
     }
 
-    public String getmPrice() {
+    public int getmPrice() {
         return mPrice;
     }
 
-    public void setmPrice(String mPrice) {
+    public void setmPrice(int mPrice) {
         this.mPrice = mPrice;
     }
 
-    public String getmPromotion() {
+    public int getmPromotion() {
         return mPromotion;
     }
 
-    public void setmPromotion(String mPromotion) {
+    public void setmPromotion(int mPromotion) {
         this.mPromotion = mPromotion;
     }
 

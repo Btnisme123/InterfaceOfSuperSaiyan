@@ -2,6 +2,8 @@ package vulan.com.trackingstore.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import static vulan.com.trackingstore.util.Constants.BASE_URL;
+
 /**
  * Created by Ominext on 4/20/2017.
  */
@@ -23,6 +25,16 @@ public class BeaconWithShop {
     private String mShopName;
     @SerializedName("ShopAddress")
     private String mShopAddress;
+    @SerializedName("Logo")
+    private String mUrlImage;
+
+    public String getmUrlImage() {
+        return BASE_URL + mUrlImage;
+    }
+
+    public void setmUrlImage(String mUrlImage) {
+        this.mUrlImage = mUrlImage;
+    }
 
     public String getmMacId() {
         return mMacId;

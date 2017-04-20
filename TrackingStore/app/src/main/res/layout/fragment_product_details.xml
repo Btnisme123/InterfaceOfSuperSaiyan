@@ -52,14 +52,12 @@
             android:background="@color/colorBgProductFrag"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/common_size_10"
-                android:layout_marginTop="@dimen/common_size_5"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:padding="@dimen/common_size_5">
 
                 <RelativeLayout
                     android:layout_width="@dimen/common_size_250"
@@ -74,25 +72,22 @@
                         android:id="@+id/img_product_dt"
                         android:layout_width="@dimen/common_size_250"
                         android:layout_height="@dimen/common_size_250"
-                        android:layout_gravity="center"
                         android:padding="@dimen/common_size_2"
                         android:src="@drawable/jacket_product" />
-
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_size_5"
-                    android:layout_weight="2"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/common_size_10">
+                    android:padding="@dimen/common_size_5">
 
                     <TextView
                         android:id="@+id/tv_product_name_dt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/common_size_5"
+                        android:gravity="center"
                         android:text="NIKE AIR HUARACHE ULTRA BREATHE"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/common_text_size_17"
@@ -103,11 +98,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/common_size_5"
-                        android:text="300.000 VND"
+                        android:gravity="center"
+                        android:padding="@dimen/common_size_5"
+                        android:text="111300.000 VND"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/common_text_size_15" />
                 </LinearLayout>
-
 
             </LinearLayout>
 
@@ -117,7 +113,8 @@
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/common_size_10"
                 android:paddingLeft="@dimen/common_size_10"
-                android:paddingRight="@dimen/common_size_10">
+                android:paddingRight="@dimen/common_size_10"
+                android:paddingTop="@dimen/common_size_10">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_product_small_dt"
@@ -138,18 +135,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_size_25"
                 android:layout_marginLeft="@dimen/common_size_10"
+                android:layout_marginTop="@dimen/common_size_10"
                 android:gravity="center_vertical"
-                android:text="Sản phẩm liên quan"
+                android:text="Sản phẩm cùng loại"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/common_text_size_15"
+                android:textSize="@dimen/common_text_size_17"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_product_dt"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_size_70"
-                android:layout_marginTop="@dimen/common_size_5"
-                android:layout_marginBottom="@dimen/common_size_10"></android.support.v7.widget.RecyclerView>
+                android:layout_marginBottom="@dimen/common_size_10"
+                android:layout_marginTop="@dimen/common_size_5"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

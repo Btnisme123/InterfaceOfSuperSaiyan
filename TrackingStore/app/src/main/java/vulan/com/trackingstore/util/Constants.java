@@ -47,4 +47,5 @@ public class Constants {
     }
 
     public static final String MAC_ID = "mac ids";
+    public static final String STATUS_SEARCH = "status search";
 }

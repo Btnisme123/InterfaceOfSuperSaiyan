@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -34,7 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
-import vulan.com.trackingstore.data.listener.OnLeftItemClickListener;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
@@ -45,6 +45,7 @@ import vulan.com.trackingstore.ui.fragment.SearchFragment;
 import vulan.com.trackingstore.ui.fragment.SettingsFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
 import vulan.com.trackingstore.util.Constants;
+import vulan.com.trackingstore.util.NotificationUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String ACTION_BEACON_CHANGE = "com.ominext.shoppush.ACTION_BEACON_CHANGE";
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView mButtonHome, mButtonListShop, mButtonSearch, mButtonSettings;
     private RecyclerView recyclerShopLeft;
-    private ArrayList<Shop> shopArrayList;
+    private List<BeaconWithShop> mShopList;
     private RecyclerLeftDrawerAdapter adapter;
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mButtonListLeft;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (list != null) {
                     mCurrentSize = list.size();
                     if (mCurrentSize != mLastSize) {
+                        Log.e("last", mLastSize + "");
                         String mMacIds = "";
                         for (int i = 0; i < list.size(); i++) {
                             mMacIds = mMacIds + list.get(i).getMacAddress().toString() + " ";
@@ -90,13 +92,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent.putExtra(Constants.MAC_ID, mMacIds);
                         intent.setAction(MainActivity.ACTION_BEACON_CHANGE);
                         LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
+                        mLastSize = mCurrentSize;
                     }
                 }
-
-                for (int i = 0; i < list.size(); i++) {
-                    Log.e("address : ", "" + list.size());
-                }
-
             }
         });
         mBeaconManager.setScanStatusListener(new BeaconManager.ScanStatusListener() {
@@ -132,22 +130,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void init() {
         //list slide left
-        shopArrayList = new ArrayList<>();
+        mShopList = new ArrayList<>();
 //        shopArrayList = FakeContainer.getListShop();
-        adapter = new RecyclerLeftDrawerAdapter(this, shopArrayList);
+//        adapter = new RecyclerLeftDrawerAdapter(this, mShopList);
         recyclerShopLeft.setLayoutManager(new LinearLayoutManager(this));
-        recyclerShopLeft.setAdapter(adapter);
-        adapter.setOnClick(new OnLeftItemClickListener() {
-            @Override
-            public void onLeftItemClick(Beacon beacon, String shopName, String meter) {
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, DetailBeaconActivity.class);
-                intent.putExtra(SHOP_NAME, shopName);
-                intent.putExtra(METER, meter);
-                intent.putExtra(EXTRAS_BEACON, beacon);
-                startActivity(intent);
-            }
-        });
+//        recyclerShopLeft.setAdapter(adapter);
+//        adapter.setOnClick(new OnLeftItemClickListener() {
+//            @Override
+//            public void onLeftItemClick(Beacon beacon, String shopName, String meter) {
+//                mDrawerLayout.closeDrawer(GravityCompat.START);
+//                Intent intent = new Intent(MainActivity.this, DetailBeaconActivity.class);
+//                intent.putExtra(SHOP_NAME, shopName);
+//                intent.putExtra(METER, meter);
+//                intent.putExtra(EXTRAS_BEACON, beacon);
+//                startActivity(intent);
+//            }
+//        });
         mButtonListLeft.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
         mButtonListLeft.setOnClickListener(this);
         mButtonHome.setOnClickListener(this);
@@ -296,21 +294,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onReceive(Context context, Intent intent) {
             mMacIds = intent.getStringExtra(Constants.MAC_ID);
-            ApiRequest.getInstance().init();
-            ApiRequest.getInstance().getListShopBeacon(mMacIds, new Callback<List<BeaconWithShop>>() {
-                @Override
-                public void onResponse(Call<List<BeaconWithShop>> call, Response<List<BeaconWithShop>> response) {
+            if (mMacIds.length() != 0) {
+                mMacIds = mMacIds.substring(0, mMacIds.length() - 2);
+                ApiRequest.getInstance().init();
+                ApiRequest.getInstance().getListShopBeacon(mMacIds, new Callback<List<BeaconWithShop>>() {
+                    @Override
+                    public void onResponse(Call<List<BeaconWithShop>> call, Response<List<BeaconWithShop>> response) {
+                        mShopList = response.body();
+                        Log.e("size", mShopList.size() + "");
+                        adapter = new RecyclerLeftDrawerAdapter(MainActivity.this, mShopList);
+                        recyclerShopLeft.setAdapter(adapter);
+                    }
 
+                    @Override
+                    public void onFailure(Call<List<BeaconWithShop>> call, Throwable t) {
+
+                    }
+                });
+
+                //search
+                SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
+                if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
+                    ApiRequest.getInstance().getShopByKeyWord(SearchFragment.mKeyword, mMacIds, new Callback<List<Shop>>() {
+                        @Override
+                        public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
+                            List<Shop> shopList = response.body();
+                            if (shopList.size() != 0 && shopList != null) {
+                                NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Shop>> call, Throwable t) {
+
+                        }
+                    });
                 }
-
-                @Override
-                public void onFailure(Call<List<BeaconWithShop>> call, Throwable t) {
-
-                }
-            });
-////                shopArrayList = FakeContainer.getListShop(list.size(), list);
-//            adapter.setList(shopArrayList);
-//            adapter.setBeaconList(list);
+            }
         }
     }
 }

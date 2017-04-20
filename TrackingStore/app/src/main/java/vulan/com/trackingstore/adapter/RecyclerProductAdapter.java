@@ -3,7 +3,6 @@ package vulan.com.trackingstore.adapter;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -88,14 +87,15 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                     replaceFragment(productFragment, Constants.FragmentTag.PRODUCT);
                 }
             });
-        } else {
+        } else if (type == Constants.RecyclerViewType.PRODUCT_TYPE) {
             final Product product = mProductList.get(position);
-            holder.productName.setText(product.getmName());
+            holder.mTextProductName.setText(product.getmName());
             Glide.with(mContext)
                     .load(product.getmImageProduct())
                     .fitCenter()
                     .into(holder.imageProduct);
-            holder.price.setText(product.getmPrice() + " VND");
+            holder.mTextPrice.setText(product.getmPrice() + " VND");
+            holder.mTextPromotion.setVisibility(View.GONE);
             holder.mTextWatch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,9 +107,28 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                     replaceFragment(productDetailFragment, Constants.FragmentTag.PRODUCT_DETAIL);
                 }
             });
-            if (type == Constants.RecyclerViewType.PROMOTION_TYPE) {
-                holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            }
+        } else {
+            final Product product = mProductList.get(position);
+            holder.mTextProductName.setText(product.getmName());
+            Glide.with(mContext)
+                    .load(product.getmImageProduct())
+                    .fitCenter()
+                    .into(holder.imageProduct);
+            int mPricePromotion = (int) (product.getmPrice() * (100 - product.getmPromotion()) / 100);
+            holder.mTextPrice.setText(mPricePromotion + " VND");
+            holder.mTextPromotion.setText("-" + product.getmPromotion() + "%");
+            holder.mTextPromotion.setVisibility(View.VISIBLE);
+            holder.mTextWatch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.ShopInfo.PRODUCT, product);
+                    bundle.putSerializable(Constants.ShopInfo.SHOP_MODEL, shop);
+                    productDetailFragment.setArguments(bundle);
+                    replaceFragment(productDetailFragment, Constants.FragmentTag.PRODUCT_DETAIL);
+                }
+            });
         }
     }
 
@@ -122,36 +141,6 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
         }
     }
 
-    public void addItem(ProductCategory food) {
-        mCategoryList.add(food);
-        notifyItemInserted(mCategoryList.size() - 1);
-    }
-
-    public void addItems(List<ProductCategory> foodArrayList) {
-        mCategoryList.addAll(foodArrayList);
-        notifyDataSetChanged();
-    }
-
-    public ProductCategory getItem(int position) {
-        return mCategoryList.get(position);
-    }
-
-    public List<ProductCategory> getNewsList() {
-        return mCategoryList;
-    }
-
-    public void removeAllItemsIfExist() {
-        if (mCategoryList != null) {
-            mCategoryList.clear();
-            notifyDataSetChanged();
-        }
-    }
-
-    public void removeItem(int position) {
-        mCategoryList.remove(position);
-        this.notifyDataSetChanged();
-    }
-
     class ItemHolder extends RecyclerView.ViewHolder {
         //category
         private TextView categoryName;
@@ -160,7 +149,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
         private LinearLayout layoutProduct;
         //product
         private ImageView imageProduct;
-        private TextView productName, price, mTextWatch;
+        private TextView mTextProductName, mTextPrice, mTextWatch, mTextPromotion;
 
         public ItemHolder(View itemView) {
             super(itemView);
@@ -169,10 +158,11 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                 imageCategory = (ImageView) itemView.findViewById(R.id.img_category);
                 layoutCategory = (RelativeLayout) itemView.findViewById(R.id.layout_category);
             } else {
-                imageProduct = (ImageView) itemView.findViewById(R.id.img_product);
-                productName = (TextView) itemView.findViewById(R.id.tv_product_name);
-                price = (TextView) itemView.findViewById(R.id.tv_price);
+                imageProduct = (ImageView) itemView.findViewById(R.id.img_product_promo);
+                mTextProductName = (TextView) itemView.findViewById(R.id.tv_product_name);
+                mTextPrice = (TextView) itemView.findViewById(R.id.tv_price);
                 mTextWatch = (TextView) itemView.findViewById(R.id.tv_watch);
+                mTextPromotion = (TextView) itemView.findViewById(R.id.tv_promotion);
             }
 
         }

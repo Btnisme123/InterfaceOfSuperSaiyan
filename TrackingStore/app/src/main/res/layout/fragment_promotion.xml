@@ -5,67 +5,40 @@
     android:orientation="vertical"
     android:paddingBottom="@dimen/common_size_10">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/layout_img_shop_promo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/common_size_5">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_shop_promo"
+            android:layout_width="@dimen/common_size_40"
+            android:layout_height="@dimen/common_size_40"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/blues_logo" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/common_size_15"
-                android:text="Man"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_text_size_17"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_shop_name_promo"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/common_size_30"
+            android:layout_marginLeft="@dimen/common_size_5"
+            android:gravity="center"
+            android:text="The Blues"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/common_text_size_15" />
+    </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_promotion_man"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"></android.support.v7.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/common_size_15"
-                android:text="Woman"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_text_size_17"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_promotion_woman"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"></android.support.v7.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:background="@color/colorAccent"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/common_size_15"
-                android:text="Other"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_text_size_17"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_promotion_other"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/common_size_2"
-                android:background="@color/white"></android.support.v7.widget.RecyclerView>
-        </LinearLayout>
-    </ScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_product_promo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/common_size_3"
+        android:layout_marginLeft="@dimen/common_size_3"
+        android:layout_marginRight="@dimen/common_size_3"
+        android:background="@color/colorBgProductFrag"></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

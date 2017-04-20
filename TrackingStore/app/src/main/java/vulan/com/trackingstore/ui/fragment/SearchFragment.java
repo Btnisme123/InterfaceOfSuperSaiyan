@@ -5,9 +5,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -24,12 +24,13 @@ import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.model.TagSearch;
 import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.util.Constants;
 
 /**
  * Created by Thanh on 10/27/2016.
  */
 
-public class SearchFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class SearchFragment extends BaseFragment implements CompoundButton.OnCheckedChangeListener {
     private RecyclerView mRecyclerSearch;
     private ImageView mButtonAdd;
     private EditText mEditTag;
@@ -37,12 +38,13 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     private ArrayList<TagSearch> tagSearchArrayList;
     private RecyclerTagAdapter adapter;
 
-    private Shop shop;
     private NotificationCompat.Builder notiBuilder;
 
     private static final int MY_NOTIFICATION_ID = 12345;
-
     private static final int MY_REQUEST_CODE = 100;
+
+    public static String mKeyword = "";
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
@@ -57,40 +59,34 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
 
     private void findViews(View view) {
         mRecyclerSearch = (RecyclerView) view.findViewById(R.id.recycler_search);
-        mButtonAdd = (ImageView) view.findViewById(R.id.btn_add_tag);
+//        mButtonAdd = (ImageView) view.findViewById(R.id.btn_add_tag);
         mEditTag = (EditText) view.findViewById(R.id.ed_tag);
         swSearch = (Switch) view.findViewById(R.id.sw_notify);
     }
 
     private void init() {
-        tagSearchArrayList = new ArrayList<>();
-        mRecyclerSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecyclerTagAdapter(getActivity(), tagSearchArrayList);
-        mRecyclerSearch.setAdapter(adapter);
-        mButtonAdd.setOnClickListener(this);
+//        tagSearchArrayList = new ArrayList<>();
+//        mRecyclerSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        adapter = new RecyclerTagAdapter(getActivity(), tagSearchArrayList);
+//        mRecyclerSearch.setAdapter(adapter);
+
         swSearch.setOnCheckedChangeListener(this);
+        sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, Context.MODE_PRIVATE);
     }
 
-    //button add tag click
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_add_tag:
-                tagSearchArrayList.add(new TagSearch(mEditTag.getText().toString()));
-                mEditTag.setText("");
-                adapter.notifyDataSetChanged();
-                break;
-        }
-    }
 
     //switch search listener
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-//            shop = new Shop(R.drawable.nike_logo, "Nike", "165 Xuân Thủy, Q.Cầu Giấy, HN");
-//            notifySearch(shop);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(Constants.STATUS_SEARCH, true);
+            editor.commit();
+            mKeyword = mEditTag.getText().toString();
         } else {
-
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(Constants.STATUS_SEARCH, false);
+            editor.commit();
         }
     }
 
@@ -103,7 +99,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                 .setContent(remoteViews)
                 .setAutoCancel(true);
         Intent intent = new Intent(getActivity(), ShopActivity.class);
-        intent.putExtra("shop",shop);
+        intent.putExtra("shop", shop);
         int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff); //help intent transfer data (don't know why)
         PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), iUniqueId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notiBuilder.setContentIntent(pendingIntent);
