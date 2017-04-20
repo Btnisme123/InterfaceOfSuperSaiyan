@@ -10,7 +10,7 @@ import static vulan.com.trackingstore.util.Constants.BASE_URL;
  * Created by Thanh on 2/21/2017.
  */
 
-public class Product implements Serializable{
+public class Product implements Serializable {
     @SerializedName("ID")
     private int Id;
     @SerializedName("Name")
@@ -29,6 +29,8 @@ public class Product implements Serializable{
     private int mQuantity;
     @SerializedName("Detail")
     private String mDetail;
+    @SerializedName("CategoryID")
+    private int mCategoryId;
 
     public int getId() {
         return Id;
@@ -100,5 +102,13 @@ public class Product implements Serializable{
 
     public void setmDetail(String mDetail) {
         this.mDetail = mDetail;
+    }
+
+    public int getmCategoryId() {
+        return mCategoryId;
+    }
+
+    public void setmCategoryId(int mCategoryId) {
+        this.mCategoryId = mCategoryId;
     }
 }

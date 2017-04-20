@@ -46,5 +46,5 @@ public class Constants {
         public static final String PRODUCT = "product";
     }
 
-
+    public static final String MAC_ID = "mac ids";
 }

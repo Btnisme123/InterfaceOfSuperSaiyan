@@ -23,6 +23,7 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.listener.OnRecyclerItemClickListener;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
+import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ProductDetailFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ProductFragment;
@@ -40,13 +41,15 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
     private List<Product> mProductList;
     private OnRecyclerItemClickListener mOnRecyclerItemClickListener;
     private int type;
+    private Shop shop;
 
-    public RecyclerProductAdapter(Activity context, List<ProductCategory> mCategoryList, List<Product> mProductList, int type) {
+    public RecyclerProductAdapter(Activity context, List<ProductCategory> mCategoryList, List<Product> mProductList, int type, Shop shop) {
         this.mCategoryList = mCategoryList;
         this.mProductList = mProductList;
         mContext = context;
         mActivity = context;
         this.type = type;
+        this.shop = shop;
     }
 
     public void setOnItemClick(OnRecyclerItemClickListener onItemClick) {
@@ -80,6 +83,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                     Bundle bundle = new Bundle();
                     bundle.putInt(Constants.ShopInfo.CATEGORY_ID, mCategoryList.get(position).getId());
                     bundle.putString(Constants.ShopInfo.CATEGORY_NAME, mCategoryList.get(position).getmNameCategory());
+                    bundle.putSerializable(Constants.ShopInfo.SHOP_MODEL, shop);
                     productFragment.setArguments(bundle);
                     replaceFragment(productFragment, Constants.FragmentTag.PRODUCT);
                 }
@@ -98,6 +102,7 @@ public class RecyclerProductAdapter extends RecyclerView.Adapter<RecyclerProduct
                     ProductDetailFragment productDetailFragment = new ProductDetailFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constants.ShopInfo.PRODUCT, product);
+                    bundle.putSerializable(Constants.ShopInfo.SHOP_MODEL, shop);
                     productDetailFragment.setArguments(bundle);
                     replaceFragment(productDetailFragment, Constants.FragmentTag.PRODUCT_DETAIL);
                 }

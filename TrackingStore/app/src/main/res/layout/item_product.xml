@@ -21,29 +21,30 @@
             <ImageView
                 android:id="@+id/img_product"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_180"
-                android:padding="@dimen/common_size_2"
-                android:src="@color/colorAccent" />
+                android:layout_height="@dimen/common_size_190"
+                android:src="@color/colorAccent"
+                android:padding="@dimen/common_size_1"/>
 
             <TextView
                 android:id="@+id/tv_product_name"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
+                android:layout_height="@dimen/common_size_25"
                 android:layout_below="@id/img_product"
                 android:layout_marginLeft="@dimen/common_size_10"
                 android:layout_marginRight="@dimen/common_size_10"
-                android:layout_marginTop="@dimen/common_size_5"
+                android:layout_marginTop="@dimen/common_size_7"
                 android:ellipsize="end"
                 android:gravity="bottom"
                 android:maxLines="1"
                 android:text="Áo nam ákdjlaksdjlaksdjkasjdk"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/common_text_size_15" />
+                android:textSize="@dimen/common_text_size_15"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_price"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
+                android:layout_height="@dimen/common_size_25"
                 android:layout_below="@+id/tv_product_name"
                 android:layout_marginLeft="@dimen/common_size_10"
                 android:layout_marginRight="@dimen/common_size_10"
@@ -54,10 +55,10 @@
             <TextView
                 android:id="@+id/tv_watch"
                 android:layout_width="@dimen/common_size_150"
-                android:layout_height="@dimen/common_size_40"
+                android:layout_height="@dimen/common_size_35"
                 android:layout_below="@+id/tv_price"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/common_size_5"
+                android:layout_marginTop="@dimen/common_size_7"
                 android:background="@drawable/border_text"
                 android:gravity="center"
                 android:text="Watch more"

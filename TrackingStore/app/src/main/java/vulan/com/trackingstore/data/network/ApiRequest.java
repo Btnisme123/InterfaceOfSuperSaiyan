@@ -11,6 +11,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.data.model.Shop;
@@ -82,5 +83,17 @@ public class ApiRequest {
 
     public void getListProduct(int categoryId, Callback<List<Product>> callback) {
         mApi.getListProduct(categoryId).enqueue(callback);
+    }
+
+    public void getListShopBeacon(String macIds, Callback<List<BeaconWithShop>> callback) {
+        mApi.getListShopBeacon(macIds).enqueue(callback);
+    }
+
+    public void getShopByKeyWord(String keyword, String macIds, Callback<List<Shop>> callback) {
+        mApi.getShopByKeyword(keyword, macIds).enqueue(callback);
+    }
+
+    public void getListPromotion(int shopId, Callback<List<Product>> callback) {
+        mApi.getListPromotion(shopId).enqueue(callback);
     }
 }

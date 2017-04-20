@@ -2,11 +2,15 @@ package vulan.com.trackingstore.ui.activity;
 
 
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,10 +29,15 @@ import com.estimote.coresdk.service.BeaconManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
 import vulan.com.trackingstore.data.listener.OnLeftItemClickListener;
+import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.model.Shop;
+import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.HomeFragment;
 import vulan.com.trackingstore.ui.fragment.ListShopFragment;
@@ -38,6 +47,12 @@ import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
 import vulan.com.trackingstore.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String ACTION_BEACON_CHANGE = "com.ominext.shoppush.ACTION_BEACON_CHANGE";
+    private RequestBeaconReceiver requestBeaconReceiver;
+    private int mLastSize = 0;
+    private int mCurrentSize = 0;
+    private String mMacIds = "";
+
     private ImageView mButtonHome, mButtonListShop, mButtonSearch, mButtonSettings;
     private RecyclerView recyclerShopLeft;
     private ArrayList<Shop> shopArrayList;
@@ -64,12 +79,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBeaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion beaconRegion, List<Beacon> list) {
-                for (int i = 0; i < list.size(); i++) {
-                    Log.e("address : ", "" + list.get(i).getMacAddress());
+                if (list != null) {
+                    mCurrentSize = list.size();
+                    if (mCurrentSize != mLastSize) {
+                        String mMacIds = "";
+                        for (int i = 0; i < list.size(); i++) {
+                            mMacIds = mMacIds + list.get(i).getMacAddress().toString() + " ";
+                        }
+                        Intent intent = new Intent();
+                        intent.putExtra(Constants.MAC_ID, mMacIds);
+                        intent.setAction(MainActivity.ACTION_BEACON_CHANGE);
+                        LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
+                    }
                 }
-//                shopArrayList = FakeContainer.getListShop(list.size(), list);
-                adapter.setList(shopArrayList);
-                adapter.setBeaconList(list);
+
+                for (int i = 0; i < list.size(); i++) {
+                    Log.e("address : ", "" + list.size());
+                }
+
             }
         });
         mBeaconManager.setScanStatusListener(new BeaconManager.ScanStatusListener() {
@@ -85,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 recyclerShopLeft.setAlpha(0.5f);
             }
         });
+
+        requestBeaconReceiver = new RequestBeaconReceiver();
     }
 
     protected BaseFragment getFragment() {
@@ -147,6 +176,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
             startScanning();
         }
+        LocalBroadcastManager.getInstance(this).registerReceiver(requestBeaconReceiver,
+                new IntentFilter(ACTION_BEACON_CHANGE));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(requestBeaconReceiver);
     }
 
     private void startScanning() {
@@ -251,6 +288,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mButtonSettings.setImageResource(R.drawable.ic_setting);
                 mButtonListLeft.setVisibility(View.GONE);
                 break;
+        }
+    }
+
+    public class RequestBeaconReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mMacIds = intent.getStringExtra(Constants.MAC_ID);
+            ApiRequest.getInstance().init();
+            ApiRequest.getInstance().getListShopBeacon(mMacIds, new Callback<List<BeaconWithShop>>() {
+                @Override
+                public void onResponse(Call<List<BeaconWithShop>> call, Response<List<BeaconWithShop>> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<List<BeaconWithShop>> call, Throwable t) {
+
+                }
+            });
+////                shopArrayList = FakeContainer.getListShop(list.size(), list);
+//            adapter.setList(shopArrayList);
+//            adapter.setBeaconList(list);
         }
     }
 }

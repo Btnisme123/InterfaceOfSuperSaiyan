@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorBgProductFrag">
+    android:background="@color/colorBgProductFrag"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_category_product"
+        android:id="@+id/tv_name_shop_pr"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_size_50"
         android:background="@color/colorPrimary"
@@ -15,6 +15,32 @@
         android:textColor="@color/white"
         android:textSize="@dimen/common_text_size_17"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/layout_img_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/common_size_5">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_shop_product"
+            android:layout_width="@dimen/common_size_40"
+            android:layout_height="@dimen/common_size_40"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/blues_logo" />
+
+        <TextView
+            android:id="@+id/tv_category_product"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/common_size_30"
+            android:layout_marginLeft="@dimen/common_size_5"
+            android:gravity="center"
+            android:text="The Blues"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/common_text_size_15" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_product"

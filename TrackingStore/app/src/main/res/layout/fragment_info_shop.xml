@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/colorBgProductFrag">
 
     <RelativeLayout
         android:id="@+id/layout_shop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_size_20"
+        android:layout_marginTop="@dimen/common_size_10"
+        android:gravity="center"
         android:paddingLeft="@dimen/common_size_15">
 
         <ImageView
@@ -26,7 +27,7 @@
         <LinearLayout
             android:id="@+id/layout_info"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_50"
+            android:layout_height="@dimen/common_size_80"
             android:layout_toRightOf="@+id/img_shop"
             android:gravity="center"
             android:orientation="vertical">
@@ -34,13 +35,13 @@
             <TextView
                 android:id="@+id/tv_shop_name"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/common_size_50"
+                android:layout_height="@dimen/common_size_30"
+                android:layout_marginRight="@dimen/common_size_15"
                 android:gravity="center"
-                android:paddingLeft="@dimen/common_size_5"
-                android:paddingRight="@dimen/common_size_5"
                 android:text="The Blues"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/common_text_size_20"
+                android:textSize="@dimen/common_text_size_18"
+
                 android:textStyle="bold" />
 
             <View
@@ -52,6 +53,7 @@
                 android:layout_toRightOf="@id/img_shop"
                 android:background="@color/colorViewLine" />
         </LinearLayout>
+
     </RelativeLayout>
 
 
