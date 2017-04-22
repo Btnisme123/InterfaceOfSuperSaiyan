@@ -22,12 +22,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <android.support.design.widget.FloatingActionButton
+            <ImageView
                 android:id="@+id/btn_near_shop"
                 android:layout_width="@dimen/common_size_50"
                 android:layout_height="@dimen/common_size_50"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/common_size_10"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right|top"
+                android:padding="@dimen/common_size_12"
                 android:src="@drawable/ic_location" />
         </android.support.design.widget.CoordinatorLayout>
 
@@ -108,7 +109,21 @@
     <LinearLayout
         android:layout_width="@dimen/common_size_280"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="end"
+        android:background="@color/colorBgSetting"
+        android:layout_marginBottom="@dimen/common_size_51"
+        android:layout_marginTop="@dimen/common_size_50"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_40"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="Cửa hàng xung quanh"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/common_text_size_15"
+            android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_shop_left"

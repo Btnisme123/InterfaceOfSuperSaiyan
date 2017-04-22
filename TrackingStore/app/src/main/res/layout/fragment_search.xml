@@ -12,7 +12,7 @@
         android:gravity="center"
         android:text="Tìm kiếm chi tiết"
         android:textColor="@color/white"
-        android:textSize="@dimen/common_text_size_20"
+        android:textSize="@dimen/common_text_size_17"
         android:textStyle="bold" />
 
     <RelativeLayout

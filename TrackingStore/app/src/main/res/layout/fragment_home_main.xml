@@ -1,23 +1,134 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/layout_home"
     tools:context="vulan.com.trackingstore.ui.fragment.HomeFragment">
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/recycler_list_shop_near_by"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/common_size_150"/>-->
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/common_size_2"-->
-        <!--android:background="@color/colorAccent"-->
-        <!--android:id="@+id/space"-->
-        <!--android:layout_below="@+id/recycler_list_shop_near_by"/>-->
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map_view"
+
+    <RelativeLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_size_50"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_title_home"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_size_50"
+            android:gravity="center"
+            android:padding="@dimen/common_size_8"
+            android:text="Hệ thống cửa hàng"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_text_size_17"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_ads"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_size_135"
+        android:layout_below="@id/layout_title"
+        android:layout_marginLeft="@dimen/common_size_6"
+        android:layout_marginRight="@dimen/common_size_6"
+        android:layout_marginTop="@dimen/common_size_6"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/border_text_banner"
+            android:padding="@dimen/common_size_5">
+
+            <TextView
+                android:id="@+id/tv_title_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_30"
+                android:gravity="center_vertical"
+                android:text="Gần bạn nhất"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/common_text_size_15"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_1"
+                android:layout_below="@+id/tv_title_banner"
+                android:background="@color/colorViewLine" />
+
+            <ImageView
+                android:id="@+id/img_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/view_banner" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/view_banner"
+                android:background="@color/colorTransparentBanner" />
+
+            <RelativeLayout
+                android:id="@+id/layout_shop_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_40"
+                android:layout_below="@+id/view_banner"
+                android:layout_marginTop="@dimen/common_size_10"
+                android:gravity="center"
+
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_logo_home"
+                    android:layout_width="@dimen/common_size_40"
+                    android:layout_height="@dimen/common_size_40"
+                    android:padding="@dimen/common_size_2"
+                    android:src="@drawable/blues_logo" />
+
+                <TextView
+                    android:id="@+id/tv_shop_name_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/common_size_30"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/img_logo_home"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/common_size_5"
+                    android:text="The Blues Exchange"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/common_text_size_15"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_address_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_shop_banner"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:maxLines="1"
+                android:text="359 Lê Văn Sỹ, Phường 13, Quận 3, Tp. HCM"
+                android:textSize="@dimen/common_text_size_15" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_below="@+id/layout_ads"
+        android:layout_margin="@dimen/common_size_6"
+        android:background="@drawable/border_text_banner"
+        android:padding="@dimen/common_size_2">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
 </RelativeLayout>

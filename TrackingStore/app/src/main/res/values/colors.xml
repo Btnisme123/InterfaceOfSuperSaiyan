@@ -13,9 +13,10 @@
     <color name="raised_button_highlight_color">#88f1ecec</color>
     <color name="color_ed_search">#f2eeee</color>
     <color name="colorBgProductFrag">#f9f9f9</color>
-    <color name="colorPrimaryTransparent">#acff5722</color>
     <color name="colorTransparent">#28ffffff</color>
     <color name="colorTransparentIcon">#73ffffff</color>
+    <color name="colorTransparentBanner">#d4ffffff</color>
+    <color name="colorTextBorderBanner">#00ffffff</color>
     <color name="colorBgSetting">#f2f1f1</color>
     <color name="colorViewSetting">#3c4eca0b</color>
     <color name="colorSwitchBg">#e1e0e0</color>

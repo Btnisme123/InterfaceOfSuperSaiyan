@@ -33,6 +33,9 @@ public interface ApiPoint {
 
     @GET("ProductApi/getPromotionProduct/")
     Call<List<Product>> getListPromotion(@Query("shopid") int shopId);
+
+    @GET("BeaconApi/getAll")
+    Call<List<BeaconWithShop>> getAllBeacon();
 }
 
 

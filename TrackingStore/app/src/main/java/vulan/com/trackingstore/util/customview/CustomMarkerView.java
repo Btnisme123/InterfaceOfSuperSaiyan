@@ -17,8 +17,6 @@ import vulan.com.trackingstore.R;
  */
 
 public class CustomMarkerView extends FrameLayout {
-    //private final String FONT = "KaushanScriptRegular.otf";
-
     private LatLng mPosition;
     private int mId;
     private double mNumber;
@@ -81,10 +79,9 @@ public class CustomMarkerView extends FrameLayout {
         return mMarkerBackground;
     }
 
-    public void setProperties(LatLng latLng, int id, int type, String name) {
+    public void setProperties(LatLng latLng, int id, String name) {
         mPosition = latLng;
         mId = id;
-        mType = type;
         mName = name;
     }
 

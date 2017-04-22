@@ -96,4 +96,8 @@ public class ApiRequest {
     public void getListPromotion(int shopId, Callback<List<Product>> callback) {
         mApi.getListPromotion(shopId).enqueue(callback);
     }
+
+    public void getAllBeacon(Callback<List<BeaconWithShop>> callback) {
+        mApi.getAllBeacon().enqueue(callback);
+    }
 }

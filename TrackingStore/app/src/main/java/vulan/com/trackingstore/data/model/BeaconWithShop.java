@@ -27,6 +27,15 @@ public class BeaconWithShop {
     private String mShopAddress;
     @SerializedName("Logo")
     private String mUrlImage;
+    private double mDistance;
+
+    public double getmDistance() {
+        return mDistance;
+    }
+
+    public void setmDistance(double mDistance) {
+        this.mDistance = mDistance;
+    }
 
     public String getmUrlImage() {
         return BASE_URL + mUrlImage;

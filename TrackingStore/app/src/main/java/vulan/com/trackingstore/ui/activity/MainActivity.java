@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
 import com.estimote.coresdk.recognition.packets.Beacon;
@@ -35,6 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
+import vulan.com.trackingstore.data.model.BeaconWithDistance;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
@@ -57,9 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mButtonHome, mButtonListShop, mButtonSearch, mButtonSettings;
     private RecyclerView recyclerShopLeft;
     private List<BeaconWithShop> mShopList;
+    private List<BeaconWithDistance> mBeaconList;
     private RecyclerLeftDrawerAdapter adapter;
     private DrawerLayout mDrawerLayout;
-    private FloatingActionButton mButtonListLeft;
+    private ImageView mButtonListLeft;
     private BeaconManager mBeaconManager;
     public static final String EXTRAS_BEACON = "extrasBeacon";
     public static final String SHOP_NAME = "shop name";
@@ -82,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onBeaconsDiscovered(BeaconRegion beaconRegion, List<Beacon> list) {
                 if (list != null) {
                     mCurrentSize = list.size();
+                    for (int i = 0; i < list.size(); i++) {
+                        double distance = Math.pow(10d, ((double) list.get(i).getMeasuredPower() - list.get(i).getRssi()) / (10 * 2));
+                        mBeaconList = new ArrayList<BeaconWithDistance>();
+                        mBeaconList.add(new BeaconWithDistance(list.get(i).getMacAddress().toString(), distance));
+                    }
                     if (mCurrentSize != mLastSize) {
                         Log.e("last", mLastSize + "");
                         String mMacIds = "";
@@ -125,35 +132,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonSearch = (ImageView) findViewById(R.id.btn_search);
         mButtonSettings = (ImageView) findViewById(R.id.btn_settings);
         recyclerShopLeft = (RecyclerView) findViewById(R.id.recycler_shop_left);
-        mButtonListLeft = (FloatingActionButton) findViewById(R.id.btn_near_shop);
+        mButtonListLeft = (ImageView) findViewById(R.id.btn_near_shop);
     }
 
     public void init() {
         //list slide left
         mShopList = new ArrayList<>();
-//        shopArrayList = FakeContainer.getListShop();
-//        adapter = new RecyclerLeftDrawerAdapter(this, mShopList);
         recyclerShopLeft.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerShopLeft.setAdapter(adapter);
-//        adapter.setOnClick(new OnLeftItemClickListener() {
-//            @Override
-//            public void onLeftItemClick(Beacon beacon, String shopName, String meter) {
-//                mDrawerLayout.closeDrawer(GravityCompat.START);
-//                Intent intent = new Intent(MainActivity.this, DetailBeaconActivity.class);
-//                intent.putExtra(SHOP_NAME, shopName);
-//                intent.putExtra(METER, meter);
-//                intent.putExtra(EXTRAS_BEACON, beacon);
-//                startActivity(intent);
-//            }
-//        });
-        mButtonListLeft.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
         mButtonListLeft.setOnClickListener(this);
         mButtonHome.setOnClickListener(this);
         mButtonListShop.setOnClickListener(this);
         mButtonSearch.setOnClickListener(this);
         mButtonSettings.setOnClickListener(this);
         mBeaconManager = new BeaconManager(this);
-
+        mDrawerLayout.setScrimColor(getResources().getColor(android.R.color.transparent));
     }
 
     @Override
@@ -251,7 +243,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 updateIconMenu(Constants.Menu.MENU_SETTING);
                 break;
             case R.id.btn_near_shop:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                if (!mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
+                    mDrawerLayout.openDrawer(GravityCompat.END);
+                } else {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                }
                 break;
         }
     }
@@ -289,10 +285,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void changeUIHomeFrag(Context context, int positionNearest) {
+        HomeFragment.mLayoutAds.setVisibility(View.VISIBLE);
+        Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage()).fitCenter().into(HomeFragment.mImageBg);
+        Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage())
+                .fitCenter().into(HomeFragment.mLogoShop);
+        HomeFragment.mTextShopName.setText(mShopList.get(positionNearest).getmShopName());
+        HomeFragment.mTextAddress.setText(mShopList.get(positionNearest).getmShopAddress());
+    }
+
     public class RequestBeaconReceiver extends BroadcastReceiver {
 
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(final Context context, Intent intent) {
             mMacIds = intent.getStringExtra(Constants.MAC_ID);
             if (mMacIds.length() != 0) {
                 mMacIds = mMacIds.substring(0, mMacIds.length() - 2);
@@ -301,9 +306,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call<List<BeaconWithShop>> call, Response<List<BeaconWithShop>> response) {
                         mShopList = response.body();
-                        Log.e("size", mShopList.size() + "");
-                        adapter = new RecyclerLeftDrawerAdapter(MainActivity.this, mShopList);
-                        recyclerShopLeft.setAdapter(adapter);
+                        if (mShopList != null || mShopList.size() != 0) {
+                            for (int i = 0; i < mShopList.size(); i++) {
+                                for (int j = 0; j < mBeaconList.size(); j++) {
+                                    if (mShopList.get(i).getmMacId().equals(mBeaconList.get(j).getmMacId())) {
+                                        mShopList.get(i).setmDistance(mBeaconList.get(j).getmDistance());
+                                    }
+                                }
+                            }
+
+                            //process layout home
+                            int positionNearest = 0;
+                            for (int i = 1; i < mShopList.size(); i++) {
+                                if (mShopList.get(i).getmDistance() < mShopList.get(i - 1).getmDistance()) {
+                                    positionNearest = i;
+                                }
+                            }
+                            changeUIHomeFrag(context, positionNearest);
+
+                            adapter = new RecyclerLeftDrawerAdapter(MainActivity.this, mShopList);
+                            recyclerShopLeft.setAdapter(adapter);
+                        } else {
+                            HomeFragment.mLogoShop.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
