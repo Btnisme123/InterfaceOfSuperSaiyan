@@ -1,5 +1,8 @@
 package vulan.com.trackingstore.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -10,7 +13,7 @@ import static vulan.com.trackingstore.util.Constants.BASE_URL;
  * Created by Thanh on 2/16/2017.
  */
 
-public class Shop implements Serializable {
+public class Shop implements Serializable,Parcelable {
     @SerializedName("ID")
     private int Id;
     @SerializedName("Logo")
@@ -28,6 +31,30 @@ public class Shop implements Serializable {
     @SerializedName("UserID")
     private int mUserId;
     private double mMeter;
+
+    protected Shop(Parcel in) {
+        Id = in.readInt();
+        mUrlLogo = in.readString();
+        mShopName = in.readString();
+        mAddress = in.readString();
+        mPhoneNum = in.readString();
+        mDescript = in.readString();
+        mEmail = in.readString();
+        mUserId = in.readInt();
+        mMeter = in.readDouble();
+    }
+
+    public static final Creator<Shop> CREATOR = new Creator<Shop>() {
+        @Override
+        public Shop createFromParcel(Parcel in) {
+            return new Shop(in);
+        }
+
+        @Override
+        public Shop[] newArray(int size) {
+            return new Shop[size];
+        }
+    };
 
     public int getId() {
         return Id;
@@ -99,5 +126,23 @@ public class Shop implements Serializable {
 
     public void setmMeter(double mMeter) {
         this.mMeter = mMeter;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(Id);
+        dest.writeString(mUrlLogo);
+        dest.writeString(mShopName);
+        dest.writeString(mAddress);
+        dest.writeString(mPhoneNum);
+        dest.writeString(mDescript);
+        dest.writeString(mEmail);
+        dest.writeInt(mUserId);
+        dest.writeDouble(mMeter);
     }
 }

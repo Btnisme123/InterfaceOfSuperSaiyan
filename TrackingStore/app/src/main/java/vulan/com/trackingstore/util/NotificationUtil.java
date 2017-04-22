@@ -21,7 +21,7 @@ public class NotificationUtil {
     public static void showNotifi(int id, String title, String content, Context context) {
         NotificationManager localNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intentOpenNotifi = new Intent(context, MainActivity.class);
-        intentOpenNotifi.putExtra("showNotification", true);
+        intentOpenNotifi.putExtra(Constants.NOTIFICATION_SHOW, true);
         PendingIntent localPendingIntent = PendingIntent.getActivity(context, 0, intentOpenNotifi, PendingIntent.FLAG_UPDATE_CURRENT);
 //        RemoteViews remoteViews = new RemoteViews(ShopPushApplication.get().getPackageName(),
 //                R.layout.layout_warning);

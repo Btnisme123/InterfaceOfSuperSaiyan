@@ -1,13 +1,20 @@
 package vulan.com.trackingstore.ui.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,17 +37,23 @@ import retrofit2.Response;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.network.ApiRequest;
+import vulan.com.trackingstore.service.LocationUpdatesService;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class HomeFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
-    private GoogleMap mMap;
+    private static GoogleMap mMap;
     private MapView mMapView;
     public static RelativeLayout mLayoutAds;
     public static ImageView mLogoShop, mImageBg;
     public static TextView mTextShopName, mTextAddress, mTextWatchMore;
+
+    private LatLng currentLocation;
+
+    private LocationReceiver locationReceiver;
+    public static final String ACTION_LOCATION_CHANGE = "vulan.com.trackingstore.ACTION_LOCATION_CHANGE";
 
     private List<CustomMarkerView> mCustomMarkerViewList = new ArrayList<>();
     private HashMap<Marker, CustomMarkerView> mMarkerPointHashMap = new HashMap<>();
@@ -69,11 +82,21 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         MapsInitializer.initialize(getActivity());
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
+        locationReceiver = new LocationReceiver();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(locationReceiver,
+                new IntentFilter(ACTION_LOCATION_CHANGE));
+        mMapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(locationReceiver);
         mMapView.onPause();
     }
 
@@ -98,11 +121,6 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMapView.onLowMemory();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
 
     @Override
     public void onDestroyView() {
@@ -117,21 +135,22 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
 
 
     private void init() {
-        LatLng tesLatLng = new LatLng(21.04613, 105.78432);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(tesLatLng)
-                .zoom(17)
-                .build();
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(tesLatLng));
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-//        mCustomMarkerViewList = getCustomMarker(getActivity());
-        getCustomMarker(getActivity());
-
         mMap.setOnMarkerClickListener(this);
         mMap.setInfoWindowAdapter(new HomeFragment.MarkerInfoAdapter());
         mMap.setOnInfoWindowClickListener(this);
         mMap.setBuildingsEnabled(true);
+    }
+
+    public void setUpMap(Location location) {
+        currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(currentLocation)
+                .zoom(17)
+                .build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        getCustomMarker(getActivity());
     }
 
     private void getCustomMarker(final Context context) {
@@ -144,7 +163,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                 for (int i = 0; i < mShopList.size(); i++) {
                     CustomMarkerView customMarkerView = new CustomMarkerView(context);
                     customMarkerView.setProperties(new LatLng(mShopList.get(i).getmLocationX(), mShopList.get(i).getmLocationY()),
-                            mShopList.get(i).getmShopId(), mShopList.get(i).getmName());
+                            mShopList.get(i).getmShopId(), mShopList.get(i).getmShopName(), mShopList.get(i).getmUrlImage());
                     mCustomMarkerViewList.add(customMarkerView);
                 }
                 for (CustomMarkerView customMarkerView : mCustomMarkerViewList) {
@@ -201,7 +220,6 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     }
 
     public class MarkerInfoAdapter implements GoogleMap.InfoWindowAdapter {
-
         @Override
         public View getInfoWindow(Marker marker) {
             return null;
@@ -211,9 +229,24 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         public View getInfoContents(Marker marker) {
             View view = getActivity().getLayoutInflater().inflate(R.layout.item_info_marker, null);
             TextView textView = (TextView) view.findViewById(R.id.text_marker);
+            ImageView imageView = (ImageView) view.findViewById(R.id.image_marker);
             CustomMarkerView customMarkerView = mMarkerPointHashMap.get(marker);
-            textView.setText(String.format("Store ID: %s", customMarkerView.getId()));
+            textView.setText(customMarkerView.getName());
+            Glide.with(getActivity()).load(customMarkerView.getmUrl()).fitCenter().into(imageView);
             return view;
+        }
+    }
+
+    public class LocationReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Location location = intent.getParcelableExtra(LocationUpdatesService.EXTRA_LOCATION);
+            Log.e("locationX", location.getLatitude() + "");
+            Log.e("locationY", location.getLongitude() + "");
+            if (location != null) {
+                setUpMap(location);
+            }
         }
     }
 }

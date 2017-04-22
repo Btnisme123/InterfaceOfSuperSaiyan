@@ -22,5 +22,6 @@
     <string name="category_title">Danh mục sản phẩm</string>
     <string name="promotion_title">Khuyến mại</string>
     <string name="title_activity_maps">Map</string>
-    <string name="map_loading">Loading map  , please wait for a couple of second</string>
+    <string name="map_loading">Đang tải dữ liệu, vui lòng chờ giây lát</string>
+    <string name="location_updated">Location Updated: %1$s</string>
 </resources>

@@ -33,6 +33,12 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".ui.activity.DetailBeaconActivity"></activity>
+        <service android:name=".service.LocationUpdatesService" />
+        <!--<receiver android:name=".ui.fragment.HomeFragment$LocationReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="vulan.com.trackingstore.service.locationupdatesforegroundservice" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

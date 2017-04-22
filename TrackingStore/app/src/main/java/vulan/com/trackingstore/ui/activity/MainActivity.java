@@ -3,12 +3,15 @@ package vulan.com.trackingstore.ui.activity;
 
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +42,7 @@ import vulan.com.trackingstore.data.model.BeaconWithDistance;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
+import vulan.com.trackingstore.service.LocationUpdatesService;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.ui.fragment.HomeFragment;
 import vulan.com.trackingstore.ui.fragment.ListShopFragment;
@@ -49,11 +53,12 @@ import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.NotificationUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String ACTION_BEACON_CHANGE = "com.ominext.shoppush.ACTION_BEACON_CHANGE";
+    public static final String ACTION_BEACON_CHANGE = "vulan.com.trackingstore.ACTION_BEACON_CHANGE";
     private RequestBeaconReceiver requestBeaconReceiver;
     private int mLastSize = 0;
     private int mCurrentSize = 0;
     private String mMacIds = "";
+    private Bundle bundle;
 
     private ImageView mButtonHome, mButtonListShop, mButtonSearch, mButtonSettings;
     private RecyclerView recyclerShopLeft;
@@ -75,7 +80,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findView();
         init();
-        replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+        bundle = new Bundle();
+        boolean isNotifi = getIntent().getBooleanExtra(Constants.NOTIFICATION_SHOW, false);
+        if (isNotifi) {
+            ListShopFragment listShopFragment = new ListShopFragment();
+            bundle.putBoolean(Constants.NOTIFICATION_SHOW, true);
+            listShopFragment.setArguments(bundle);
+            replaceFragment(listShopFragment, Constants.FragmentTag.LIST);
+            isNotifi = false;
+        } else {
+            replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+        }
         updateIconMenu(Constants.Menu.MENU_HOME);
 
 
@@ -168,12 +183,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         LocalBroadcastManager.getInstance(this).registerReceiver(requestBeaconReceiver,
                 new IntentFilter(ACTION_BEACON_CHANGE));
+        bindService(new Intent(getApplicationContext(), LocationUpdatesService.class), mServiceConnection, BIND_AUTO_CREATE);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(requestBeaconReceiver);
+        unbindService(mServiceConnection);
     }
 
     private void startScanning() {
@@ -346,6 +363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             List<Shop> shopList = response.body();
                             if (shopList.size() != 0 && shopList != null) {
                                 NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext());
+//                                bundle.putParcelable(Constants.SEARCH_KEYWORD, (Parcelable) mShopList);
                             }
                         }
 
@@ -358,4 +376,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+    // A reference to the service used to get location updates.
+    private LocationUpdatesService mService = null;
+
+    // Tracks the bound state of the service.
+    private boolean mBound = false;
+
+    // Monitors the state of the connection to the service.
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            LocationUpdatesService.LocalBinder binder = (LocationUpdatesService.LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mService = null;
+            mBound = false;
+        }
+    };
 }

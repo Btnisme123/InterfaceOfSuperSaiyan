@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -59,17 +60,24 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
 
     private void findViews(View view) {
         mRecyclerSearch = (RecyclerView) view.findViewById(R.id.recycler_search);
-//        mButtonAdd = (ImageView) view.findViewById(R.id.btn_add_tag);
+        mButtonAdd = (ImageView) view.findViewById(R.id.btn_add_tag);
         mEditTag = (EditText) view.findViewById(R.id.ed_tag);
         swSearch = (Switch) view.findViewById(R.id.sw_notify);
     }
 
     private void init() {
-//        tagSearchArrayList = new ArrayList<>();
-//        mRecyclerSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        adapter = new RecyclerTagAdapter(getActivity(), tagSearchArrayList);
-//        mRecyclerSearch.setAdapter(adapter);
+        tagSearchArrayList = new ArrayList<>();
+        mRecyclerSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new RecyclerTagAdapter(getActivity(), tagSearchArrayList);
+        mRecyclerSearch.setAdapter(adapter);
 
+        mButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagSearchArrayList.add(new TagSearch(mEditTag.getText().toString()));
+                adapter.notifyDataSetChanged();
+            }
+        });
         swSearch.setOnCheckedChangeListener(this);
         sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, Context.MODE_PRIVATE);
     }
@@ -82,7 +90,7 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, true);
             editor.commit();
-            mKeyword = mEditTag.getText().toString();
+            mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
         } else {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, false);
@@ -99,7 +107,7 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
                 .setContent(remoteViews)
                 .setAutoCancel(true);
         Intent intent = new Intent(getActivity(), ShopActivity.class);
-        intent.putExtra("shop", shop);
+//        intent.putExtra("shop", shop);
         int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff); //help intent transfer data (don't know why)
         PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), iUniqueId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notiBuilder.setContentIntent(pendingIntent);

@@ -12,6 +12,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import vulan.com.trackingstore.R;
 
+import static vulan.com.trackingstore.util.Constants.BASE_URL;
+
 /**
  * Created by vulan on 20/02/2017.
  */
@@ -23,7 +25,15 @@ public class CustomMarkerView extends FrameLayout {
     private int mType;
     private String mName;
     private RelativeLayout mMarkerBackground;
+    private String mUrl;
 
+    public String getmUrl() {
+        return mUrl;
+    }
+
+    public void setmUrl(String mUrl) {
+        this.mUrl = mUrl;
+    }
 
     public int getAvatar() {
         return mAvatar;
@@ -79,10 +89,11 @@ public class CustomMarkerView extends FrameLayout {
         return mMarkerBackground;
     }
 
-    public void setProperties(LatLng latLng, int id, String name) {
+    public void setProperties(LatLng latLng, int id, String name, String mUrl) {
         mPosition = latLng;
         mId = id;
         mName = name;
+        this.mUrl = BASE_URL + mUrl;
     }
 
     public void setMarkerBackground(RelativeLayout markerBackground) {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,27 +50,41 @@ public class ListShopFragment extends BaseFragment {
 
     private void init() {
         ApiRequest.getInstance().init();
-        ApiRequest.getInstance().getAllShop(new Callback<List<Shop>>() {
-            @Override
-            public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
-                shopArrayList = response.body();
-                adapter = new ListShopAdapter(getActivity(), shopArrayList);
-                mListShop.setAdapter(adapter);
-                mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Intent intent = new Intent(getActivity(), ShopActivity.class);
-                        intent.putExtra(Constants.ShopInfo.SHOP_MODEL, shopArrayList.get(i));
-                        startActivity(intent);
-                    }
-                });
-            }
+        if (!getArguments().getBoolean(Constants.NOTIFICATION_SHOW)) {
+            ApiRequest.getInstance().getAllShop(new Callback<List<Shop>>() {
+                @Override
+                public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
+                    shopArrayList = response.body();
+                    adapter = new ListShopAdapter(getActivity(), shopArrayList);
+                    mListShop.setAdapter(adapter);
+                    mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent = new Intent(getActivity(), ShopActivity.class);
+                            intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) shopArrayList.get(i));
+                            startActivity(intent);
+                        }
+                    });
+                }
 
-            @Override
-            public void onFailure(Call<List<Shop>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<List<Shop>> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        } else {
+            shopArrayList = getArguments().getParcelable(Constants.SEARCH_KEYWORD);
+            adapter = new ListShopAdapter(getActivity(), shopArrayList);
+            mListShop.setAdapter(adapter);
+            mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(getActivity(), ShopActivity.class);
+                    intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) shopArrayList.get(i));
+                    startActivity(intent);
+                }
+            });
+        }
 
     }
 }
