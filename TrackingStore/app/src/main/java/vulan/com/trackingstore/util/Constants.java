@@ -49,5 +49,6 @@ public class Constants {
     public static final String MAC_ID = "mac ids";
     public static final String STATUS_SEARCH = "status search";
     public static final String NOTIFICATION_SHOW = "showNotification";
+    public static final String NOTIFICATION_MAC = "macNotification";
     public static final String SEARCH_KEYWORD= "showNotification";
 }

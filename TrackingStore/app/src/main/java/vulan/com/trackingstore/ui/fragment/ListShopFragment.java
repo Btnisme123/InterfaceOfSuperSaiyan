@@ -6,7 +6,6 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.ListShopAdapter;
 import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
+import vulan.com.trackingstore.ui.activity.MainActivity;
 import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
@@ -32,6 +32,7 @@ public class ListShopFragment extends BaseFragment {
     private SearchView mSearchView;
     private ListShopAdapter adapter;
     private List<Shop> shopArrayList = new ArrayList<>();
+    private MainActivity mainActivity;
 
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
@@ -51,7 +52,8 @@ public class ListShopFragment extends BaseFragment {
 
     private void init() {
         ApiRequest.getInstance().init();
-        if (!getArguments().getBoolean(Constants.NOTIFICATION_SHOW)) {
+        mainActivity = new MainActivity();
+        if (!getArguments().getBoolean(Constants.NOTIFICATION_SHOW, false)) {
             ApiRequest.getInstance().getAllShop(new Callback<List<Shop>>() {
                 @Override
                 public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
@@ -74,18 +76,30 @@ public class ListShopFragment extends BaseFragment {
                 }
             });
         } else {
-            Toast.makeText(getActivity(),"notify",Toast.LENGTH_SHORT).show();
-//            shopArrayList = getArguments().getParcelable(Constants.SEARCH_KEYWORD);
-//            adapter = new ListShopAdapter(getActivity(), shopArrayList);
-//            mListShop.setAdapter(adapter);
-//            mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                    Intent intent = new Intent(getActivity(), ShopActivity.class);
-//                    intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) shopArrayList.get(i));
-//                    startActivity(intent);
-//                }
-//            });
+            ApiRequest.getInstance().getShopByKeyWord(SearchFragment.mKeyword, getArguments().getString(Constants.NOTIFICATION_MAC), new Callback<List<Shop>>() {
+                @Override
+                public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
+                    shopArrayList = response.body();
+                    adapter = new ListShopAdapter(getActivity(), shopArrayList);
+                    mListShop.setAdapter(adapter);
+                    mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent = new Intent(getActivity(), ShopActivity.class);
+                            intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) shopArrayList.get(i));
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onFailure(Call<List<Shop>> call, Throwable t) {
+
+                }
+            });
+//
+
         }
 
     }

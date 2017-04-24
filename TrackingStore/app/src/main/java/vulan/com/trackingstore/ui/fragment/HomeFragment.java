@@ -4,9 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -53,6 +50,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     public static TextView mTextShopName, mTextAddress, mTextWatchMore;
 
     private LatLng currentLocation;
+    private Location location;
 
     private LocationReceiver locationReceiver;
     public static final String ACTION_LOCATION_CHANGE = "vulan.com.trackingstore.ACTION_LOCATION_CHANGE";
@@ -92,6 +90,10 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         super.onResume();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(locationReceiver,
                 new IntentFilter(ACTION_LOCATION_CHANGE));
+        if (location != null) {
+            setUpMap(location);
+        }
+
         mMapView.onResume();
     }
 
@@ -246,7 +248,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Location location = intent.getParcelableExtra(LocationUpdatesService.EXTRA_LOCATION);
+            location = intent.getParcelableExtra(LocationUpdatesService.EXTRA_LOCATION);
             if (location != null) {
                 setUpMap(location);
             }

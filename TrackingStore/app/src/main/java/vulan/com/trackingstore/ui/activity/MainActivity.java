@@ -38,6 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
+import vulan.com.trackingstore.data.listener.OnNotificationSearchListener;
 import vulan.com.trackingstore.data.model.BeaconWithDistance;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.model.Shop;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final BeaconRegion ALL_ESTIMOTE_BEACONS_REGION = new BeaconRegion("ranged region",
             null, null, null);
 
+    private OnNotificationSearchListener onNotificationSearchListener;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,18 +85,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
         bundle = new Bundle();
         boolean isNotifi = getIntent().getBooleanExtra(Constants.NOTIFICATION_SHOW, false);
-        if (isNotifi) {
+
+        if (!isNotifi) {
+            replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
+        } else {
             ListShopFragment listShopFragment = new ListShopFragment();
             bundle.putBoolean(Constants.NOTIFICATION_SHOW, true);
             listShopFragment.setArguments(bundle);
             replaceFragment(listShopFragment, Constants.FragmentTag.LIST);
             updateIconMenu(Constants.Menu.MENU_LIST_SHOP);
-            isNotifi = false;
-        } else {
-            replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
         }
         updateIconMenu(Constants.Menu.MENU_HOME);
-
 
         mBeaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
@@ -252,7 +254,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }, 1000);
                 break;
             case R.id.btn_list_shop:
-                replaceFragment(new ListShopFragment(), Constants.FragmentTag.LIST);
+                ListShopFragment listShopFragment = new ListShopFragment();
+                bundle.putBoolean(Constants.NOTIFICATION_SHOW, false);
+                listShopFragment.setArguments(bundle);
+                replaceFragment(listShopFragment, Constants.FragmentTag.LIST);
                 updateIconMenu(Constants.Menu.MENU_LIST_SHOP);
                 break;
             case R.id.btn_search:
@@ -367,7 +372,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             List<Shop> shopList = response.body();
                             if (shopList.size() != 0 && shopList != null) {
                                 NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext());
-//                                bundle.putParcelable(Constants.SEARCH_KEYWORD, (Parcelable) mShopList);
                             }
                         }
 
@@ -379,6 +383,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
+    }
+
+    public void setOnNotifySearch(OnNotificationSearchListener onNotificationSearchListener) {
+        this.onNotificationSearchListener = onNotificationSearchListener;
     }
 
     // A reference to the service used to get location updates.
