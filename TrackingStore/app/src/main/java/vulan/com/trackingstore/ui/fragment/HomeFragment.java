@@ -4,10 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -147,6 +149,9 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                 .target(currentLocation)
                 .zoom(17)
                 .build();
+//        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.);
+//        mMap.addMarker(new MarkerOptions().position(currentLocation)
+//                .icon(bitmapDescriptor));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -242,8 +247,6 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         @Override
         public void onReceive(Context context, Intent intent) {
             Location location = intent.getParcelableExtra(LocationUpdatesService.EXTRA_LOCATION);
-            Log.e("locationX", location.getLatitude() + "");
-            Log.e("locationY", location.getLongitude() + "");
             if (location != null) {
                 setUpMap(location);
             }

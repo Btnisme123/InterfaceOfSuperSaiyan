@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerTagAdapter;
+import vulan.com.trackingstore.data.listener.OnTagRemoveListener;
 import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.model.TagSearch;
 import vulan.com.trackingstore.ui.activity.ShopActivity;
@@ -69,7 +70,14 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
         tagSearchArrayList = new ArrayList<>();
         mRecyclerSearch.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecyclerTagAdapter(getActivity(), tagSearchArrayList);
+        adapter.setOnTagRemoveClick(new OnTagRemoveListener() {
+            @Override
+            public void onTagRemove() {
+                adapter.notifyDataSetChanged();
+            }
+        });
         mRecyclerSearch.setAdapter(adapter);
+
 
         mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +86,7 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
                 adapter.notifyDataSetChanged();
             }
         });
+
         swSearch.setOnCheckedChangeListener(this);
         sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, Context.MODE_PRIVATE);
     }
@@ -90,7 +99,10 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, true);
             editor.commit();
-            mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
+            if (tagSearchArrayList.size() > 0) {
+                mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
+            }
+
         } else {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, false);

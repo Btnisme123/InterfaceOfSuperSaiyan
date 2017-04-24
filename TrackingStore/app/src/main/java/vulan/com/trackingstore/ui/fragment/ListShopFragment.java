@@ -6,6 +6,7 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -73,17 +74,18 @@ public class ListShopFragment extends BaseFragment {
                 }
             });
         } else {
-            shopArrayList = getArguments().getParcelable(Constants.SEARCH_KEYWORD);
-            adapter = new ListShopAdapter(getActivity(), shopArrayList);
-            mListShop.setAdapter(adapter);
-            mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(getActivity(), ShopActivity.class);
-                    intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) shopArrayList.get(i));
-                    startActivity(intent);
-                }
-            });
+            Toast.makeText(getActivity(),"notify",Toast.LENGTH_SHORT).show();
+//            shopArrayList = getArguments().getParcelable(Constants.SEARCH_KEYWORD);
+//            adapter = new ListShopAdapter(getActivity(), shopArrayList);
+//            mListShop.setAdapter(adapter);
+//            mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                    Intent intent = new Intent(getActivity(), ShopActivity.class);
+//                    intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) shopArrayList.get(i));
+//                    startActivity(intent);
+//                }
+//            });
         }
 
     }

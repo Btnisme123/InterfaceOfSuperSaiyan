@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             bundle.putBoolean(Constants.NOTIFICATION_SHOW, true);
             listShopFragment.setArguments(bundle);
             replaceFragment(listShopFragment, Constants.FragmentTag.LIST);
+            updateIconMenu(Constants.Menu.MENU_LIST_SHOP);
             isNotifi = false;
         } else {
             replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
@@ -114,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         intent.putExtra(Constants.MAC_ID, mMacIds);
                         intent.setAction(MainActivity.ACTION_BEACON_CHANGE);
                         LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged();
+                        }
                         mLastSize = mCurrentSize;
                     }
                 }

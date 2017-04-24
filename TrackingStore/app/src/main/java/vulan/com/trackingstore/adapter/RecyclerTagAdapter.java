@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.data.listener.OnTagRemoveListener;
 import vulan.com.trackingstore.data.model.TagSearch;
 
 /**
@@ -20,10 +21,15 @@ import vulan.com.trackingstore.data.model.TagSearch;
 public class RecyclerTagAdapter extends RecyclerView.Adapter<RecyclerTagAdapter.ItemHolder> {
     private ArrayList<TagSearch> tagSearchArrayList;
     private Context mContext;
+    private OnTagRemoveListener onTagRemoveListener;
 
     public RecyclerTagAdapter(Context mContext, ArrayList<TagSearch> tagSearchArrayList) {
         this.mContext = mContext;
         this.tagSearchArrayList = tagSearchArrayList;
+    }
+
+    public void setOnTagRemoveClick(OnTagRemoveListener onTagRemoveListener) {
+        this.onTagRemoveListener = onTagRemoveListener;
     }
 
     @Override
@@ -41,6 +47,8 @@ public class RecyclerTagAdapter extends RecyclerView.Adapter<RecyclerTagAdapter.
             @Override
             public void onClick(View v) {
                 //remove item
+                tagSearchArrayList.remove(position);
+                onTagRemoveListener.onTagRemove();
             }
         });
     }
