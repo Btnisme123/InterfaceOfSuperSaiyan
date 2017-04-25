@@ -98,7 +98,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             replaceFragment(listShopFragment, Constants.FragmentTag.LIST);
         }
 
+    }
 
+    protected BaseFragment getFragment() {
+        return new ShopFragment();
+    }
+
+    private void setUpBeacon() {
         mBeaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion beaconRegion, List<Beacon> list) {
@@ -147,10 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestBeaconReceiver = new RequestBeaconReceiver();
     }
 
-    protected BaseFragment getFragment() {
-        return new ShopFragment();
-    }
-
     private void findView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mButtonHome = (ImageView) findViewById(R.id.btn_home);
@@ -189,6 +191,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+
+        setUpBeacon();
         if (SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
             startScanning();
         }
