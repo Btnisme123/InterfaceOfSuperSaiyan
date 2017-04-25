@@ -102,6 +102,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBeaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion beaconRegion, List<Beacon> list) {
+                for (int i = 0; i < list.size(); i++) {
+                    Log.e("beacon", "beacon ranging" + list.get(i).getMacAddress());
+                }
+
                 if (list != null) {
                     mCurrentSize = list.size();
                     for (int i = 0; i < list.size(); i++) {
@@ -172,14 +176,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        mBeaconManager.disconnect();
+//        mBeaconManager.disconnect();
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mBeaconManager.stopRanging(ALL_ESTIMOTE_BEACONS_REGION);
+//        mBeaconManager.stopRanging(ALL_ESTIMOTE_BEACONS_REGION);
     }
 
     @Override
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(requestBeaconReceiver);
-        unbindService(mServiceConnection);
+//        unbindService(mServiceConnection);
     }
 
     private void startScanning() {
@@ -327,7 +331,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onReceive(final Context context, Intent intent) {
             mMacIds = intent.getStringExtra(Constants.MAC_ID);
             if (mMacIds.length() != 0) {
-                mMacIds = mMacIds.substring(0, mMacIds.length() - 2);
+                mMacIds = mMacIds.substring(0, mMacIds.length() - 1);
                 ApiRequest.getInstance().init();
                 ApiRequest.getInstance().getListShopBeacon(mMacIds, new Callback<List<BeaconWithShop>>() {
                     @Override
@@ -367,20 +371,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //search
                 SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
                 if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
-                    ApiRequest.getInstance().getShopByKeyWord(SearchFragment.mKeyword, mMacIds, new Callback<List<Shop>>() {
-                        @Override
-                        public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
-                            List<Shop> shopList = response.body();
-                            if (shopList.size() != 0 && shopList != null) {
-                                NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext(), shopList);
+                    sharedPreferences = MainActivity.this.getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+                    String tagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
+                    if (tagSearch != "") {
+                        Log.e("kw", tagSearch);
+                        tagSearch = tagSearch.substring(0, tagSearch.length() - 1);
+                        ApiRequest.getInstance().getShopByKeyWord(tagSearch, mMacIds, new Callback<List<Shop>>() {
+                            @Override
+                            public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
+                                List<Shop> shopList = response.body();
+                                if (shopList.size() != 0 && shopList != null) {
+                                    NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext(), shopList);
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<List<Shop>> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<List<Shop>> call, Throwable t) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
             }
         }

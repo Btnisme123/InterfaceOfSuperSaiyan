@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -57,6 +58,12 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
     @Override
     public void onResume() {
         super.onResume();
+        sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
+            swSearch.setChecked(true);
+        } else {
+            swSearch.setChecked(false);
+        }
         sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
         if (sharedPreferences != null) {
             String mTagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
@@ -71,14 +78,7 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
     @Override
     public void onPause() {
         super.onPause();
-        mTag = "";
-        for (int i = 0; i < tagSearchArrayList.size(); i++) {
-            mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";
-        }
-        sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.TAG_SEARCH, mTag);
-        editor.commit();
+
     }
 
     private void findViews(View view) {
@@ -99,8 +99,6 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             }
         });
         mRecyclerSearch.setAdapter(adapter);
-
-
         mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,14 +109,7 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
                 }
             }
         });
-
         swSearch.setOnCheckedChangeListener(this);
-        sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
-        if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
-            swSearch.setChecked(true);
-        } else {
-            swSearch.setChecked(false);
-        }
     }
 
 
@@ -126,14 +117,24 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
+            sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, true);
             editor.commit();
             if (tagSearchArrayList.size() > 0) {
-                mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
+//                mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
+                mTag = "";
+                for (int i = 0; i < tagSearchArrayList.size(); i++) {
+                    mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";
+                }
+                sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                editor1.putString(Constants.TAG_SEARCH, mTag);
+                editor.commit();
             }
 
         } else {
+            sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, false);
             editor.commit();
