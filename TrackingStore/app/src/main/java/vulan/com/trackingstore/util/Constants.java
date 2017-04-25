@@ -46,9 +46,16 @@ public class Constants {
         public static final String PRODUCT = "product";
     }
 
+    public static final class Location {
+        public static final String LOCATION_HOME = "locationHome";
+        public static final String COORDINATE = "location";
+        public static final int RESUME_MAP = 1;
+        public static final int NORMAL_MAP = 0;
+    }
+
+    public static final String TAG_SEARCH = "tag search";
     public static final String MAC_ID = "mac ids";
     public static final String STATUS_SEARCH = "status search";
     public static final String NOTIFICATION_SHOW = "showNotification";
-    public static final String NOTIFICATION_MAC = "macNotification";
-    public static final String SEARCH_KEYWORD= "showNotification";
+    public static final String NOTIFICATION_LIST = "listNotification";
 }

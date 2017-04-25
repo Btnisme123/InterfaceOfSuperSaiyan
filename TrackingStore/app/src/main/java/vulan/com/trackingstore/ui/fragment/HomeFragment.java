@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -38,16 +39,19 @@ import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.service.LocationUpdatesService;
 import vulan.com.trackingstore.ui.base.BaseFragment;
+import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
     private static GoogleMap mMap;
     private MapView mMapView;
     public static RelativeLayout mLayoutAds;
     public static ImageView mLogoShop, mImageBg;
-    public static TextView mTextShopName, mTextAddress, mTextWatchMore;
+    public static TextView mTextShopName, mTextAddress;
+    private SharedPreferences sharedPreferences;
 
     private LatLng currentLocation;
     private Location location;
@@ -62,6 +66,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findView(rootView);
         init(savedInstanceState);
+
     }
 
     @Override
@@ -90,11 +95,8 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         super.onResume();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(locationReceiver,
                 new IntentFilter(ACTION_LOCATION_CHANGE));
-        if (location != null) {
-            setUpMap(location);
-        }
-
         mMapView.onResume();
+
     }
 
     @Override
@@ -135,6 +137,12 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         init();
+        sharedPreferences = getActivity().getSharedPreferences(Constants.Location.LOCATION_HOME, MODE_PRIVATE);
+        String mCoordinate = sharedPreferences.getString(Constants.Location.COORDINATE, "");
+        if (!mCoordinate.equals("") && mMap != null) {
+            String[] mLocation = mCoordinate.split(",");
+            setUpMap(Double.parseDouble(mLocation[0]), Double.parseDouble(mLocation[1]));
+        }
     }
 
 
@@ -145,18 +153,18 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMap.setBuildingsEnabled(true);
     }
 
-    public void setUpMap(Location location) {
-        currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+    public void setUpMap(double mLatitude, double mLongtitude) {
+        currentLocation = new LatLng(mLatitude, mLongtitude);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
                 .zoom(17)
                 .build();
-//        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.);
-//        mMap.addMarker(new MarkerOptions().position(currentLocation)
-//                .icon(bitmapDescriptor));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_user);
+        mMap.addMarker(new MarkerOptions().position(currentLocation)
+                .icon(bitmapDescriptor));
         getCustomMarker(getActivity());
     }
 
@@ -250,7 +258,12 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         public void onReceive(Context context, Intent intent) {
             location = intent.getParcelableExtra(LocationUpdatesService.EXTRA_LOCATION);
             if (location != null) {
-                setUpMap(location);
+                sharedPreferences = getActivity().getSharedPreferences(Constants.Location.LOCATION_HOME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String mLocation = location.getLatitude() + "," + location.getLongitude();
+                editor.putString(Constants.Location.COORDINATE, mLocation);
+                editor.commit();
+                setUpMap(location.getLatitude(), location.getLongitude());
             }
         }
     }

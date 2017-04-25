@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.Shop;
@@ -24,9 +25,11 @@ public class ListShopAdapter extends BaseAdapter {
     private List<Shop> shopArrayList = new ArrayList<>();
     private Context mContext;
     LayoutInflater inflater;
+    private List<Shop> mSearchShopList = new ArrayList<>();
 
     public ListShopAdapter(Context context, List<Shop> shopArrayList) {
         this.shopArrayList = shopArrayList;
+        mSearchShopList.addAll(shopArrayList);
         mContext = context;
         inflater = LayoutInflater.from(this.mContext);
     }
@@ -75,5 +78,21 @@ public class ListShopAdapter extends BaseAdapter {
             mTextShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
             mTextAddress = (TextView) itemView.findViewById(R.id.tv_address);
         }
+    }
+
+    //setup for searchview
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        shopArrayList.clear();
+        if (charText.length() == 0) {
+            shopArrayList.addAll(mSearchShopList);
+        } else {
+            for (Shop shop : mSearchShopList) {
+                if (charText.length() != 0 && shop.getmShopName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    shopArrayList.add(shop);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

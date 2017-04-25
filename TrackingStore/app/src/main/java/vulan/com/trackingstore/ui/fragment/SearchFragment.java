@@ -1,10 +1,5 @@
 package vulan.com.trackingstore.ui.fragment;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -14,7 +9,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RemoteViews;
 import android.widget.Switch;
 
 import java.util.ArrayList;
@@ -22,11 +16,11 @@ import java.util.ArrayList;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerTagAdapter;
 import vulan.com.trackingstore.data.listener.OnTagRemoveListener;
-import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.model.TagSearch;
-import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Thanh on 10/27/2016.
@@ -46,6 +40,7 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
     private static final int MY_REQUEST_CODE = 100;
 
     public static String mKeyword = "";
+    private String mTag;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -57,6 +52,33 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
     @Override
     protected int getFragmentLayoutId() {
         return R.layout.fragment_search;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+        if (sharedPreferences != null) {
+            String mTagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
+            String[] mTagList = mTagSearch.split(",");
+            for (int i = 0; i < mTagList.length; i++) {
+                tagSearchArrayList.add(new TagSearch(mTagList[i]));
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mTag = "";
+        for (int i = 0; i < tagSearchArrayList.size(); i++) {
+            mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";
+        }
+        sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.TAG_SEARCH, mTag);
+        editor.commit();
     }
 
     private void findViews(View view) {
@@ -82,13 +104,21 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
         mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tagSearchArrayList.add(new TagSearch(mEditTag.getText().toString()));
-                adapter.notifyDataSetChanged();
+                String tag = mEditTag.getText().toString().trim();
+                if (!tag.equals("")) {
+                    tagSearchArrayList.add(new TagSearch(mEditTag.getText().toString()));
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
         swSearch.setOnCheckedChangeListener(this);
-        sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
+            swSearch.setChecked(true);
+        } else {
+            swSearch.setChecked(false);
+        }
     }
 
 
@@ -108,24 +138,5 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             editor.putBoolean(Constants.STATUS_SEARCH, false);
             editor.commit();
         }
-    }
-
-    private void notifySearch(Shop shop) {
-        RemoteViews remoteViews = new RemoteViews(getActivity().getPackageName(), R.layout.notification_view);
-//        remoteViews.setImageViewResource(R.id.img_notify, shop.getmImageShop());
-        remoteViews.setTextViewText(R.id.tv_notify, "Tìm được cửa hàng " + shop.getmShopName() + " phù hợp với yêu cầu");
-        notiBuilder = new NotificationCompat.Builder(getActivity())
-                .setSmallIcon(R.drawable.adidas_logo)
-                .setContent(remoteViews)
-                .setAutoCancel(true);
-        Intent intent = new Intent(getActivity(), ShopActivity.class);
-//        intent.putExtra("shop", shop);
-        int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff); //help intent transfer data (don't know why)
-        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), iUniqueId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        notiBuilder.setContentIntent(pendingIntent);
-        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Notification notification = notiBuilder.build();
-        notificationManager.notify(MY_NOTIFICATION_ID, notification);
     }
 }

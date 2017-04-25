@@ -28,7 +28,7 @@ public interface ApiPoint {
     @GET("BeaconApi/getById/")
     Call<List<BeaconWithShop>> getListShopBeacon(@Query("macid") String macIds);
 
-    @GET("ShopApi/searchByMacID/")
+    @GET("ShopApi/searchByTag/")
     Call<List<Shop>> getShopByKeyword(@Query("query") String query, @Query("macid") String macIds);
 
     @GET("ProductApi/getPromotionProduct/")

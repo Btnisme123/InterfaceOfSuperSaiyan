@@ -7,10 +7,16 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.ui.activity.MainActivity;
 
 /**
@@ -18,10 +24,11 @@ import vulan.com.trackingstore.ui.activity.MainActivity;
  */
 
 public class NotificationUtil {
-    public static void showNotifi(int id, String title, String content, Context context) {
+    public static void showNotifi(int id, String title, String content, Context context, List<Shop> shops) {
         NotificationManager localNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intentOpenNotifi = new Intent(context, MainActivity.class);
         intentOpenNotifi.putExtra(Constants.NOTIFICATION_SHOW, true);
+        intentOpenNotifi.putParcelableArrayListExtra(Constants.NOTIFICATION_LIST,(ArrayList<? extends Parcelable>) shops);
         PendingIntent localPendingIntent = PendingIntent.getActivity(context, 0, intentOpenNotifi, PendingIntent.FLAG_UPDATE_CURRENT);
 //        RemoteViews remoteViews = new RemoteViews(ShopPushApplication.get().getPackageName(),
 //                R.layout.layout_warning);
