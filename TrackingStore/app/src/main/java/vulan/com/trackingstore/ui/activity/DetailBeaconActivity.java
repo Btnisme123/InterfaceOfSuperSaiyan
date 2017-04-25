@@ -122,8 +122,8 @@ public class DetailBeaconActivity extends Activity {
 
     @Override
     protected void onStop() {
-        beaconManager.stopRanging(region);
-        beaconManager.disconnect();
+//        beaconManager.stopRanging(region);
+//        beaconManager.disconnect();
 
         super.onStop();
     }

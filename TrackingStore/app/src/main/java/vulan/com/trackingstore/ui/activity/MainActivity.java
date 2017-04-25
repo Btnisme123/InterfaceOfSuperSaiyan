@@ -108,11 +108,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBeaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
             @Override
             public void onBeaconsDiscovered(BeaconRegion beaconRegion, List<Beacon> list) {
-                for (int i = 0; i < list.size(); i++) {
-                    Log.e("beacon", "beacon ranging" + list.get(i).getMacAddress());
-                }
-
                 if (list != null) {
+                    for (int i = 0; i < list.size(); i++) {
+                        Log.e("beacon", "beacon ranging" + list.get(i).getMacAddress());
+                    }
+                    Log.e("beacon", list.size()+"");
                     mCurrentSize = list.size();
                     for (int i = 0; i < list.size(); i++) {
                         double distance = Math.pow(10d, ((double) list.get(i).getMeasuredPower() - list.get(i).getRssi()) / (10 * 2));
@@ -179,19 +179,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
 //        mBeaconManager.disconnect();
+        Log.e("main","destroy");
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.e("main","stop");
 //        mBeaconManager.stopRanging(ALL_ESTIMOTE_BEACONS_REGION);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        Log.e("main","resume");
         setUpBeacon();
         if (SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
             startScanning();
@@ -204,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
+        Log.e("main","pause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(requestBeaconReceiver);
 //        unbindService(mServiceConnection);
     }
