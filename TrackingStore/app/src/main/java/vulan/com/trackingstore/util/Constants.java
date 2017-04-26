@@ -53,6 +53,10 @@ public class Constants {
         public static final int NORMAL_MAP = 0;
     }
 
+    public static final class Settings{
+        public static final String NOTIFY_SETTING = "notify";
+    }
+
     public static final String TAG_SEARCH = "tag search";
     public static final String MAC_ID = "mac ids";
     public static final String STATUS_SEARCH = "status search";

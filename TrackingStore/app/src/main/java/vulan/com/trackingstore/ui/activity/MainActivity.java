@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (int i = 0; i < list.size(); i++) {
                         Log.e("beacon", "beacon ranging" + list.get(i).getMacAddress());
                     }
-                    Log.e("beacon", list.size()+"");
+                    Log.e("beacon", list.size() + "");
                     mCurrentSize = list.size();
                     for (int i = 0; i < list.size(); i++) {
                         double distance = Math.pow(10d, ((double) list.get(i).getMeasuredPower() - list.get(i).getRssi()) / (10 * 2));
@@ -179,21 +179,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
 //        mBeaconManager.disconnect();
-        Log.e("main","destroy");
+        Log.e("main", "destroy");
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("main","stop");
 //        mBeaconManager.stopRanging(ALL_ESTIMOTE_BEACONS_REGION);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("main","resume");
         setUpBeacon();
         if (SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
             startScanning();
@@ -206,8 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("main","pause");
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(requestBeaconReceiver);
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(requestBeaconReceiver);
 //        unbindService(mServiceConnection);
     }
 
@@ -329,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage())
                 .fitCenter().into(HomeFragment.mLogoShop);
         HomeFragment.mTextShopName.setText(mShopList.get(positionNearest).getmShopName());
-        HomeFragment.mTextAddress.setText(mShopList.get(positionNearest).getmShopAddress());
+        HomeFragment.mTextAddress.setText(mShopList.get(positionNearest).getmShopAddress().trim());
     }
 
     public class RequestBeaconReceiver extends BroadcastReceiver {
@@ -374,15 +371,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 });
-
                 //search
                 SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
                 if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
                     sharedPreferences = MainActivity.this.getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
                     String tagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
                     if (tagSearch != "") {
-                        Log.e("kw", tagSearch);
                         tagSearch = tagSearch.substring(0, tagSearch.length() - 1);
+                        Log.e("kw", tagSearch);
                         ApiRequest.getInstance().getShopByKeyWord(tagSearch, mMacIds, new Callback<List<Shop>>() {
                             @Override
                             public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {

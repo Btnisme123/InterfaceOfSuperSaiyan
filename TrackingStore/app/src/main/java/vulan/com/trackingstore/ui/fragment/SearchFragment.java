@@ -106,6 +106,17 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
                 if (!tag.equals("")) {
                     tagSearchArrayList.add(new TagSearch(mEditTag.getText().toString()));
                     adapter.notifyDataSetChanged();
+                    if (tagSearchArrayList.size() > 0) {
+//                mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
+                        mTag = "";
+                        for (int i = 0; i < tagSearchArrayList.size(); i++) {
+                            mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";
+                        }
+                        sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+                        SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                        editor1.putString(Constants.TAG_SEARCH, mTag);
+                        editor1.commit();
+                    }
                 }
             }
         });
@@ -121,18 +132,6 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, true);
             editor.commit();
-            if (tagSearchArrayList.size() > 0) {
-//                mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
-                mTag = "";
-                for (int i = 0; i < tagSearchArrayList.size(); i++) {
-                    mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";
-                }
-                sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
-                SharedPreferences.Editor editor1 = sharedPreferences.edit();
-                editor1.putString(Constants.TAG_SEARCH, mTag);
-                editor.commit();
-            }
-
         } else {
             sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -24,4 +24,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="map_loading">Đang tải dữ liệu, vui lòng chờ giây lát</string>
     <string name="location_updated">Location Updated: %1$s</string>
+    <string name="app_intro">They are essentially tiny, low power computers attached to walls or objects in the physical world. Using proximity technologies they detect human presence and behavior and trigger pre-programmed actions delivering contextual and personalized experiences.</string>
 </resources>

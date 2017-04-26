@@ -42,20 +42,12 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
                 inflate(R.layout.item_shop_left_recycler, parent, false));
     }
 
-//    public List<Beacon> getBeaconList() {
-//        return beaconList;
-////    }
-
-//    public void setBeaconList(List<Beacon> beaconList) {
-//        this.beaconList = beaconList;
-//    }
-
     @Override
     public void onBindViewHolder(final RecyclerLeftDrawerAdapter.ItemHolder holder, int position) {
         final BeaconWithShop item = mNavigationDrawerLeftItems.get(position);
         Glide.with(mContext).load(item.getmUrlImage()).fitCenter().into(holder.mImageShop);
         holder.mTextName.setText(item.getmShopName());
-        holder.mTextAddress.setText(item.getmShopAddress());
+        holder.mTextAddress.setText(item.getmShopAddress().trim());
         holder.mTextName.setSelected(true);
         holder.mTextAddress.setSelected(true);
 //        holder.mLayoutShop.setOnClickListener(new View.OnClickListener() {
