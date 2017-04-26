@@ -5,5 +5,5 @@ package vulan.com.trackingstore.data.listener;
  */
 
 public interface OnTagRemoveListener {
-    void onTagRemove();
+    void onTagRemove(int position);
 }

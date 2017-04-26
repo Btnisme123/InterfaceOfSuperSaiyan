@@ -1,7 +1,6 @@
 package vulan.com.trackingstore.ui.fragment;
 
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +11,8 @@ import android.widget.Switch;
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class SettingsFragment extends BaseFragment {
     private LinearLayout mLayoutTitleIntro, mLayoutIntro;
@@ -40,19 +41,19 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.NOTIFY_SETTING, Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.NOTIFY_SETTING, MODE_PRIVATE);
         if (sharedPreferences.getBoolean(Constants.Settings.NOTIFY_SETTING, true)) {
             mSwitchNotify.setChecked(true);
         } else {
             mSwitchNotify.setChecked(false);
         }
-        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.VIBRATE_SETTING, Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.VIBRATE_SETTING, MODE_PRIVATE);
         if (sharedPreferences.getBoolean(Constants.Settings.VIBRATE_SETTING, true)) {
             mSwitchVibrate.setChecked(true);
         } else {
             mSwitchVibrate.setChecked(false);
         }
-        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.RING_SETTING, Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.RING_SETTING, MODE_PRIVATE);
         if (sharedPreferences.getBoolean(Constants.Settings.RING_SETTING, true)) {
             mSwitchSound.setChecked(true);
         } else {
@@ -75,7 +76,7 @@ public class SettingsFragment extends BaseFragment {
         mSwitchNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.NOTIFY_SETTING, Context.MODE_PRIVATE);
+                sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.NOTIFY_SETTING, MODE_PRIVATE);
                 if (isChecked) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(Constants.Settings.NOTIFY_SETTING, true);
@@ -91,7 +92,7 @@ public class SettingsFragment extends BaseFragment {
         mSwitchVibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.VIBRATE_SETTING, Context.MODE_PRIVATE);
+                sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.VIBRATE_SETTING, MODE_PRIVATE);
                 if (isChecked) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(Constants.Settings.VIBRATE_SETTING, true);
@@ -106,7 +107,7 @@ public class SettingsFragment extends BaseFragment {
         mSwitchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.RING_SETTING, Context.MODE_PRIVATE);
+                sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.RING_SETTING, MODE_PRIVATE);
                 if (isChecked) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(Constants.Settings.RING_SETTING, true);

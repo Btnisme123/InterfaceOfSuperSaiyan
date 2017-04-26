@@ -31,12 +31,6 @@ public class Constants {
 
     }
 
-    public static final class StoreType {
-        public static final int RESTAURANT = 1;
-        public static final int MOVIE_THEATER = 2;
-        public static final int PRODUCT_TYPE = 3;
-
-    }
 
     public static final class ShopInfo {
         public static final String SHOP_MODEL = "shop";
@@ -53,12 +47,12 @@ public class Constants {
         public static final int NORMAL_MAP = 0;
     }
 
-    public static final class Settings{
+    public static final class Settings {
         public static final String NOTIFY_SETTING = "notify";
-        public static final String VIBRATE_SETTING = "notify";
-        public static final String RING_SETTING = "notify";
-    }
+        public static final String VIBRATE_SETTING = "vibrate";
+        public static final String RING_SETTING = "ring";
 
+    }
     public static final String TAG_SEARCH = "tag search";
     public static final String MAC_ID = "mac ids";
     public static final String STATUS_SEARCH = "status search";

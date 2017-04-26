@@ -1,8 +1,10 @@
 package vulan.com.trackingstore.ui.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +19,7 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerTagAdapter;
 import vulan.com.trackingstore.data.listener.OnTagRemoveListener;
 import vulan.com.trackingstore.data.model.TagSearch;
+import vulan.com.trackingstore.ui.activity.MainActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
 
@@ -97,13 +100,20 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
         adapter = new RecyclerTagAdapter(getActivity(), tagSearchArrayList);
         adapter.setOnTagRemoveClick(new OnTagRemoveListener() {
             @Override
-            public void onTagRemove() {
+            public void onTagRemove(int position) {
+                tagSearchArrayList.remove(position);
                 adapter.notifyDataSetChanged();
                 if (tagSearchArrayList.size() > 0) {
                     mTag = "";
                     for (int i = 0; i < tagSearchArrayList.size(); i++) {
                         mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";
                     }
+                    sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                    editor1.putString(Constants.TAG_SEARCH, mTag);
+                    editor1.commit();
+                } else {
+                    mTag = "";
                     sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
                     SharedPreferences.Editor editor1 = sharedPreferences.edit();
                     editor1.putString(Constants.TAG_SEARCH, mTag);
@@ -130,6 +140,7 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
                         editor1.commit();
                     }
                 }
+                mEditTag.setText("");
             }
         });
         swSearch.setOnCheckedChangeListener(this);
@@ -144,6 +155,12 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, true);
             editor.commit();
+
+            sharedPreferences = getActivity().getSharedPreferences(Constants.MAC_ID, MODE_PRIVATE);
+            Intent intent = new Intent();
+            intent.putExtra(Constants.MAC_ID, sharedPreferences.getString(Constants.MAC_ID, ""));
+            intent.setAction(MainActivity.ACTION_BEACON_CHANGE);
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
         } else {
             sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

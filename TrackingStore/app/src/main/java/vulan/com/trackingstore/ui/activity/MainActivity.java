@@ -125,6 +125,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         for (int i = 0; i < list.size(); i++) {
                             mMacIds = mMacIds + list.get(i).getMacAddress().toString() + " ";
                         }
+
+                        SharedPreferences sharedPreferences = getSharedPreferences(Constants.MAC_ID, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(Constants.MAC_ID, mMacIds);
+                        editor.commit();
+
                         Intent intent = new Intent();
                         intent.putExtra(Constants.MAC_ID, mMacIds);
                         intent.setAction(MainActivity.ACTION_BEACON_CHANGE);

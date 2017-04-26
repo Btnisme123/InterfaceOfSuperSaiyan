@@ -47,8 +47,8 @@ public class RecyclerTagAdapter extends RecyclerView.Adapter<RecyclerTagAdapter.
             @Override
             public void onClick(View v) {
                 //remove item
-                tagSearchArrayList.remove(position);
-                onTagRemoveListener.onTagRemove();
+//                tagSearchArrayList.remove(position);
+                onTagRemoveListener.onTagRemove(position);
             }
         });
     }
