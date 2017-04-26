@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -66,19 +65,23 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
         }
         sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
         if (sharedPreferences != null) {
-            String mTagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
-            String[] mTagList = mTagSearch.split(",");
-            for (int i = 0; i < mTagList.length; i++) {
-                tagSearchArrayList.add(new TagSearch(mTagList[i]));
+            if (tagSearchArrayList.size() == 0) {
+                String mTagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
+                if (!mTagSearch.equals("")) {
+                    String[] mTagList = mTagSearch.split(",");
+                    for (int i = 0; i < mTagList.length; i++) {
+                        tagSearchArrayList.add(new TagSearch(mTagList[i]));
+                    }
+                    adapter.notifyDataSetChanged();
+                }
             }
-            adapter.notifyDataSetChanged();
+
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
     }
 
     private void findViews(View view) {
@@ -96,6 +99,16 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             @Override
             public void onTagRemove() {
                 adapter.notifyDataSetChanged();
+                if (tagSearchArrayList.size() > 0) {
+                    mTag = "";
+                    for (int i = 0; i < tagSearchArrayList.size(); i++) {
+                        mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";
+                    }
+                    sharedPreferences = getActivity().getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sharedPreferences.edit();
+                    editor1.putString(Constants.TAG_SEARCH, mTag);
+                    editor1.commit();
+                }
             }
         });
         mRecyclerSearch.setAdapter(adapter);
@@ -107,7 +120,6 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
                     tagSearchArrayList.add(new TagSearch(mEditTag.getText().toString()));
                     adapter.notifyDataSetChanged();
                     if (tagSearchArrayList.size() > 0) {
-//                mKeyword = tagSearchArrayList.get(0).getTagContent().toString();
                         mTag = "";
                         for (int i = 0; i < tagSearchArrayList.size(); i++) {
                             mTag = mTag + tagSearchArrayList.get(i).getTagContent() + ",";

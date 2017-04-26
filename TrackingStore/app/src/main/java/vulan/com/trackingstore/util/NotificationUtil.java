@@ -4,10 +4,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
-import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -24,11 +24,14 @@ import vulan.com.trackingstore.ui.activity.MainActivity;
  */
 
 public class NotificationUtil {
+
+
     public static void showNotifi(int id, String title, String content, Context context, List<Shop> shops) {
+        SharedPreferences sharedPreferences;
         NotificationManager localNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intentOpenNotifi = new Intent(context, MainActivity.class);
         intentOpenNotifi.putExtra(Constants.NOTIFICATION_SHOW, true);
-        intentOpenNotifi.putParcelableArrayListExtra(Constants.NOTIFICATION_LIST,(ArrayList<? extends Parcelable>) shops);
+        intentOpenNotifi.putParcelableArrayListExtra(Constants.NOTIFICATION_LIST, (ArrayList<? extends Parcelable>) shops);
         PendingIntent localPendingIntent = PendingIntent.getActivity(context, 0, intentOpenNotifi, PendingIntent.FLAG_UPDATE_CURRENT);
 //        RemoteViews remoteViews = new RemoteViews(ShopPushApplication.get().getPackageName(),
 //                R.layout.layout_warning);
@@ -38,13 +41,24 @@ public class NotificationUtil {
                 .setContentTitle(title)
                 .setAutoCancel(true)
                 .setLights(Color.RED, 3000, 3000)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setVibrate(new long[]{100, 100})
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(content))
                 .setContentText(content)
 //                .setCustomBigContentView(remoteViews)
 //                .setContent(remoteViews)
                 ;
+        sharedPreferences = context.getSharedPreferences(Constants.Settings.VIBRATE_SETTING, Context.MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.Settings.VIBRATE_SETTING, true)) {
+            mBuilder.setVibrate(new long[]{100, 100});
+        } else {
+            mBuilder.setVibrate(null);
+        }
+        sharedPreferences = context.getSharedPreferences(Constants.Settings.RING_SETTING, Context.MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.Settings.RING_SETTING, true)) {
+            mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        } else {
+            mBuilder.setSound(null);
+        }
+
         mBuilder.setContentIntent(localPendingIntent);
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(context, MainActivity.class);

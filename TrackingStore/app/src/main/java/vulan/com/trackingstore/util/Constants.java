@@ -55,6 +55,8 @@ public class Constants {
 
     public static final class Settings{
         public static final String NOTIFY_SETTING = "notify";
+        public static final String VIBRATE_SETTING = "notify";
+        public static final String RING_SETTING = "notify";
     }
 
     public static final String TAG_SEARCH = "tag search";

@@ -378,13 +378,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String tagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
                     if (tagSearch != "") {
                         tagSearch = tagSearch.substring(0, tagSearch.length() - 1);
-                        Log.e("kw", tagSearch);
+                        Log.e("kw", tagSearch + "," + mMacIds);
                         ApiRequest.getInstance().getShopByKeyWord(tagSearch, mMacIds, new Callback<List<Shop>>() {
                             @Override
                             public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
                                 List<Shop> shopList = response.body();
+                                Log.e("requested", shopList.size() + "");
                                 if (shopList.size() != 0 && shopList != null) {
-                                    NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext(), shopList);
+                                    SharedPreferences sharedPreferences = getSharedPreferences(Constants.Settings.NOTIFY_SETTING, MODE_PRIVATE);
+                                    if (sharedPreferences.getBoolean(Constants.Settings.NOTIFY_SETTING, true)) {
+                                        NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext(), shopList);
+                                        Log.e("notify", "search found");
+                                    } else {
+                                        Log.e("notify", "search found but not notify");
+                                    }
                                 }
                             }
 
