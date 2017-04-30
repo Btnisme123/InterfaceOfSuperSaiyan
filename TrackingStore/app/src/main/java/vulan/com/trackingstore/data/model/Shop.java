@@ -13,7 +13,7 @@ import static vulan.com.trackingstore.util.Constants.BASE_URL;
  * Created by Thanh on 2/16/2017.
  */
 
-public class Shop implements Serializable,Parcelable {
+public class Shop implements Serializable, Parcelable {
     @SerializedName("ID")
     private int Id;
     @SerializedName("Logo")
@@ -28,9 +28,17 @@ public class Shop implements Serializable,Parcelable {
     private String mDescript;
     @SerializedName("Email")
     private String mEmail;
-    @SerializedName("UserID")
-    private int mUserId;
     private double mMeter;
+
+    public Shop(int id, String mUrlLogo, String mShopName, String mAddress, String mPhoneNum, String mDescript, String mEmail) {
+        this.Id = id;
+        this.mUrlLogo = mUrlLogo;
+        this.mShopName = mShopName;
+        this.mAddress = mAddress;
+        this.mPhoneNum = mPhoneNum;
+        this.mDescript = mDescript;
+        this.mEmail = mEmail;
+    }
 
     protected Shop(Parcel in) {
         Id = in.readInt();
@@ -40,7 +48,6 @@ public class Shop implements Serializable,Parcelable {
         mPhoneNum = in.readString();
         mDescript = in.readString();
         mEmail = in.readString();
-        mUserId = in.readInt();
         mMeter = in.readDouble();
     }
 
@@ -112,14 +119,6 @@ public class Shop implements Serializable,Parcelable {
         this.mEmail = mEmail;
     }
 
-    public int getmUserId() {
-        return mUserId;
-    }
-
-    public void setmUserId(int mUserId) {
-        this.mUserId = mUserId;
-    }
-
     public double getmMeter() {
         return mMeter;
     }
@@ -142,7 +141,6 @@ public class Shop implements Serializable,Parcelable {
         dest.writeString(mPhoneNum);
         dest.writeString(mDescript);
         dest.writeString(mEmail);
-        dest.writeInt(mUserId);
         dest.writeDouble(mMeter);
     }
 }

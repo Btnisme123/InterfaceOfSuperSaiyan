@@ -8,56 +8,62 @@
     android:background="@drawable/border_tag"
     android:padding="@dimen/common_size_10">
 
+    <RelativeLayout
+        android:id="@+id/layout_shop_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_shop_menu"
-        android:layout_width="@dimen/common_size_60"
-        android:layout_height="@dimen/common_size_60"
-        android:src="@drawable/blues_logo" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_shop_menu"
+            android:layout_width="@dimen/common_size_60"
+            android:layout_height="@dimen/common_size_60"
+            android:src="@drawable/blues_logo" />
 
-    <LinearLayout
-        android:id="@+id/layout_info"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/common_size_60"
-        android:layout_toRightOf="@id/img_shop_menu"
-        android:gravity="bottom"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_name_menu"
+        <LinearLayout
+            android:id="@+id/layout_info"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_30"
-            android:ellipsize="marquee"
-            android:gravity="center_vertical"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:paddingLeft="@dimen/common_size_10"
-            android:singleLine="true"
-            android:text="The Blues ExChange"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/common_text_size_17"
-            android:textStyle="bold" />
+            android:layout_height="@dimen/common_size_60"
+            android:layout_toRightOf="@id/img_shop_menu"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_distance_menu"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/common_size_30"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingLeft="@dimen/common_size_10"-->
-        <!--android:text="Distance: 50m"-->
-        <!--android:textColor="@color/colorPrimary"-->
-        <!--android:textSize="@dimen/common_text_size_15" />-->
-        <TextView
-            android:id="@+id/tv_address_menu"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_30"
-            android:ellipsize="marquee"
-            android:gravity="center_vertical"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:paddingLeft="@dimen/common_size_10"
-            android:paddingRight="@dimen/common_size_10"
-            android:singleLine="true"
-            android:text="Số 123,Đặng Thùy Trâm,Q.Cầu Giấy,Hà Nộiaaaaaaaaaaaaaaaaaaaaaaaaa"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/common_text_size_15" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_name_menu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_30"
+                android:ellipsize="marquee"
+                android:gravity="center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="@dimen/common_size_10"
+                android:singleLine="true"
+                android:text="The Blues ExChange"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/common_text_size_17"
+                android:textStyle="bold" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_distance_menu"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/common_size_30"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="@dimen/common_size_10"-->
+            <!--android:text="Distance: 50m"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:textSize="@dimen/common_text_size_15" />-->
+            <TextView
+                android:id="@+id/tv_address_menu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_size_30"
+                android:ellipsize="marquee"
+                android:gravity="center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="@dimen/common_size_10"
+                android:paddingRight="@dimen/common_size_10"
+                android:singleLine="true"
+                android:text="Số 123,Đặng Thùy Trâm,Q.Cầu Giấy,Hà Nộiaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/common_text_size_15" />
+        </LinearLayout>
+
+    </RelativeLayout>
 </RelativeLayout>

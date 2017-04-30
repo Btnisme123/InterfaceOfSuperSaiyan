@@ -30,6 +30,9 @@ import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
 import com.estimote.coresdk.recognition.packets.Beacon;
 import com.estimote.coresdk.service.BeaconManager;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,7 @@ import vulan.com.trackingstore.ui.fragment.SettingsFragment;
 import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
 import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.NotificationUtil;
+import vulan.com.trackingstore.util.SortUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String ACTION_BEACON_CHANGE = "vulan.com.trackingstore.ACTION_BEACON_CHANGE";
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int mCurrentSize = 0;
     private String mMacIds = "";
     private Bundle bundle;
+    private SortUtil sortUtil;
 
     private ImageView mButtonHome, mButtonListShop, mButtonSearch, mButtonSettings;
     private RecyclerView recyclerShopLeft;
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findView();
         init();
         bundle = new Bundle();
+        sortUtil = new SortUtil();
         boolean isNotifi = getIntent().getBooleanExtra(Constants.NOTIFICATION_SHOW, false);
 
         if (!isNotifi) {
@@ -327,12 +333,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void changeUIHomeFrag(Context context, int positionNearest) {
-        HomeFragment.mLayoutAds.setVisibility(View.VISIBLE);
-        Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage()).fitCenter().into(HomeFragment.mImageBg);
-        Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage())
-                .fitCenter().into(HomeFragment.mLogoShop);
-        HomeFragment.mTextShopName.setText(mShopList.get(positionNearest).getmShopName());
-        HomeFragment.mTextAddress.setText(mShopList.get(positionNearest).getmShopAddress().trim());
+        if (mShopList != null && mShopList.size() != 0) {
+            HomeFragment.mLayoutAds.setVisibility(View.VISIBLE);
+            Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage()).fitCenter().into(HomeFragment.mImageBg);
+            Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage())
+                    .fitCenter().into(HomeFragment.mLogoShop);
+            HomeFragment.mTextShopName.setText(mShopList.get(positionNearest).getmShopName());
+            HomeFragment.mTextAddress.setText(mShopList.get(positionNearest).getmShopAddress().trim());
+            // setup map
+            LatLng currentLocation = new LatLng(mShopList.get(positionNearest).getmLocationX(), mShopList.get(positionNearest).getmLocationY());
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(currentLocation)
+                    .zoom(17)
+                    .build();
+            HomeFragment.mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            HomeFragment.mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        }
     }
 
     public class RequestBeaconReceiver extends BroadcastReceiver {
@@ -347,28 +364,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(Call<List<BeaconWithShop>> call, Response<List<BeaconWithShop>> response) {
                         mShopList = response.body();
-                        if (mShopList != null || mShopList.size() != 0) {
-                            for (int i = 0; i < mShopList.size(); i++) {
-                                for (int j = 0; j < mBeaconList.size(); j++) {
-                                    if (mShopList.get(i).getmMacId().equals(mBeaconList.get(j).getmMacId())) {
-                                        mShopList.get(i).setmDistance(mBeaconList.get(j).getmDistance());
+                        if (mShopList != null || mShopList.size() != 0) { // check null list shop
+                            if (mBeaconList != null && mBeaconList.size() != 0) {// check null list beacon
+                                for (int i = 0; i < mShopList.size(); i++) {
+                                    for (int j = 0; j < mBeaconList.size(); j++) {
+                                        if (mShopList.get(i).getmMacId().equals(mBeaconList.get(j).getmMacId())) {// check mac id
+                                            mShopList.get(i).setmDistance(mBeaconList.get(j).getmDistance());
+                                        }
                                     }
                                 }
                             }
-
                             //process layout home
-                            int positionNearest = 0;
-                            for (int i = 1; i < mShopList.size(); i++) {
-                                if (mShopList.get(i).getmDistance() < mShopList.get(i - 1).getmDistance()) {
-                                    positionNearest = i;
-                                }
+                            if (mShopList.size() > 1) {
+                                sortUtil.bubbleSort(mShopList);
                             }
-                            changeUIHomeFrag(context, positionNearest);
+                            changeUIHomeFrag(context, 0);
 
                             adapter = new RecyclerLeftDrawerAdapter(MainActivity.this, mShopList);
                             recyclerShopLeft.setAdapter(adapter);
                         } else {
-                            HomeFragment.mLogoShop.setVisibility(View.GONE);
+                            HomeFragment.mLayoutAds.setVisibility(View.GONE);
+
                         }
                     }
 
@@ -377,6 +393,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 });
+
                 //search
                 SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
                 if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {

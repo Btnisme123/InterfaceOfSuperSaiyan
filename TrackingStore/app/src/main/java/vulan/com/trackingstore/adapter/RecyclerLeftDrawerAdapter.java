@@ -1,6 +1,7 @@
 package vulan.com.trackingstore.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.List;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.listener.OnLeftItemClickListener;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
+import vulan.com.trackingstore.data.model.Shop;
+import vulan.com.trackingstore.ui.activity.ShopActivity;
+import vulan.com.trackingstore.util.Constants;
 
 /**
  * Created by VULAN on 10/21/2016.
@@ -45,20 +50,21 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
     @Override
     public void onBindViewHolder(final RecyclerLeftDrawerAdapter.ItemHolder holder, int position) {
         final BeaconWithShop item = mNavigationDrawerLeftItems.get(position);
+        final Shop shop = new Shop(item.getmShopId(), item.getmUrlImageWithoutBase(), item.getmShopName(), item.getmShopAddress()
+                , item.getmShopPhone(), item.getmShopDescipt(), item.getmShopEmail());
         Glide.with(mContext).load(item.getmUrlImage()).fitCenter().into(holder.mImageShop);
         holder.mTextName.setText(item.getmShopName());
         holder.mTextAddress.setText(item.getmShopAddress().trim());
         holder.mTextName.setSelected(true);
         holder.mTextAddress.setSelected(true);
-//        holder.mLayoutShop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mOnRecyclerItemInteractListener.onLeftItemClick(
-//                        beaconList.get(holder.getAdapterPosition()),
-//                        item.getmShopName(),
-//                        beaconList.get(holder.getAdapterPosition()).getMacAddress().toString());
-//            }
-//        });
+        holder.mLayoutShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ShopActivity.class);
+                intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) shop);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
 
@@ -74,7 +80,7 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
 
         public ItemHolder(View itemView) {
             super(itemView);
-//            mLayoutShop = (RelativeLayout) itemView.findViewById(R.id.layout_shop_menu);
+            mLayoutShop = (RelativeLayout) itemView.findViewById(R.id.layout_shop_menu);
             mImageShop = (ImageView) itemView.findViewById(R.id.img_shop_menu);
             mTextName = (TextView) itemView.findViewById(R.id.tv_name_menu);
             mTextAddress = (TextView) itemView.findViewById(R.id.tv_address_menu);

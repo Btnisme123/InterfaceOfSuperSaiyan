@@ -27,6 +27,37 @@ public class BeaconWithShop {
     private String mShopAddress;
     @SerializedName("Logo")
     private String mUrlImage;
+    @SerializedName("PhoneNumber")
+    private String mShopPhone;
+    @SerializedName("Description")
+    private String mShopDescipt;
+    @SerializedName("Email")
+    private String mShopEmail;
+
+    public String getmShopEmail() {
+        return mShopEmail;
+    }
+
+    public void setmShopEmail(String mShopEmail) {
+        this.mShopEmail = mShopEmail;
+    }
+
+    public String getmShopPhone() {
+        return mShopPhone;
+    }
+
+    public void setmShopPhone(String mShopPhone) {
+        this.mShopPhone = mShopPhone;
+    }
+
+    public String getmShopDescipt() {
+        return mShopDescipt;
+    }
+
+    public void setmShopDescipt(String mShopDescipt) {
+        this.mShopDescipt = mShopDescipt;
+    }
+
     private double mDistance;
 
     public double getmDistance() {
@@ -39,6 +70,10 @@ public class BeaconWithShop {
 
     public String getmUrlImage() {
         return BASE_URL + mUrlImage;
+    }
+
+    public String getmUrlImageWithoutBase() {
+        return mUrlImage;
     }
 
     public void setmUrlImage(String mUrlImage) {
@@ -107,5 +142,20 @@ public class BeaconWithShop {
 
     public void setmShopAddress(String mShopAddress) {
         this.mShopAddress = mShopAddress;
+    }
+
+    public void swap(BeaconWithShop beaconWithShop) {
+        mMacId = beaconWithShop.getmMacId();
+        mLocationX = beaconWithShop.getmLocationX();
+        mLocationY = beaconWithShop.getmLocationY();
+        mShopId = beaconWithShop.getmShopId();
+        mInfoShop = beaconWithShop.getmInfoShop();
+        mName = beaconWithShop.getmName();
+        mShopName = beaconWithShop.getmShopName();
+        mShopAddress = beaconWithShop.getmShopAddress();
+        mUrlImage = beaconWithShop.getmUrlImageWithoutBase();
+        mShopPhone = beaconWithShop.getmShopPhone();
+        mShopDescipt = beaconWithShop.getmShopDescipt();
+        mShopEmail = beaconWithShop.getmShopEmail();
     }
 }

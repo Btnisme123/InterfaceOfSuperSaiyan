@@ -46,7 +46,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
-    private static GoogleMap mMap;
+    public static GoogleMap mMap;
     private MapView mMapView;
     public static RelativeLayout mLayoutAds;
     public static ImageView mLogoShop, mImageBg;
@@ -162,9 +162,9 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_user);
-        mMap.addMarker(new MarkerOptions().position(currentLocation)
-                .icon(bitmapDescriptor));
+//        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_user);
+//        mMap.addMarker(new MarkerOptions().position(currentLocation)
+//                .icon(bitmapDescriptor));
         getCustomMarker(getActivity());
     }
 
@@ -178,7 +178,8 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                 for (int i = 0; i < mShopList.size(); i++) {
                     CustomMarkerView customMarkerView = new CustomMarkerView(context);
                     customMarkerView.setProperties(new LatLng(mShopList.get(i).getmLocationX(), mShopList.get(i).getmLocationY()),
-                            mShopList.get(i).getmShopId(), mShopList.get(i).getmShopName(), mShopList.get(i).getmUrlImage());
+                            mShopList.get(i).getmShopId(), mShopList.get(i).getmShopName(),
+                            mShopList.get(i).getmUrlImage(), mShopList.get(i).getmShopAddress());
                     mCustomMarkerViewList.add(customMarkerView);
                 }
                 for (CustomMarkerView customMarkerView : mCustomMarkerViewList) {
@@ -210,19 +211,6 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMarkerPointHashMap.put(marker, customMarkerView);
     }
 
-//    private Bitmap createBitmapFromView(View view) {
-//        DisplayMetrics displayMetrics = new DisplayMetrics();
-//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        view.setLayoutParams(new DrawerLayout.LayoutParams
-//                (ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        view.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
-//        view.buildDrawingCache();
-//        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-//        Canvas canvas = new Canvas(bitmap);
-//        view.draw(canvas);
-//        return bitmap;
-//    }
-
     @Override
     public boolean onMarkerClick(Marker marker) {
         marker.showInfoWindow();
@@ -244,16 +232,21 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         public View getInfoContents(Marker marker) {
             View view = getActivity().getLayoutInflater().inflate(R.layout.item_info_marker, null);
             TextView textView = (TextView) view.findViewById(R.id.text_marker);
+            TextView textAddress = (TextView) view.findViewById(R.id.text_address);
             ImageView imageView = (ImageView) view.findViewById(R.id.image_marker);
             CustomMarkerView customMarkerView = mMarkerPointHashMap.get(marker);
-            textView.setText(customMarkerView.getName());
-            Glide.with(getActivity()).load(customMarkerView.getmUrl()).fitCenter().into(imageView);
+            if (customMarkerView != null) {
+                if (customMarkerView.getName() != null && customMarkerView.getmUrl() != null) {
+                    textView.setText(customMarkerView.getName());
+                    textAddress.setText(customMarkerView.getmAddress().trim());
+                    Glide.with(getActivity()).load(customMarkerView.getmUrl()).fitCenter().into(imageView);
+                }
+            }
             return view;
         }
     }
 
     public class LocationReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             location = intent.getParcelableExtra(LocationUpdatesService.EXTRA_LOCATION);
@@ -263,7 +256,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                 String mLocation = location.getLatitude() + "," + location.getLongitude();
                 editor.putString(Constants.Location.COORDINATE, mLocation);
                 editor.commit();
-                setUpMap(location.getLatitude(), location.getLongitude());
+//                setUpMap(location.getLatitude(), location.getLongitude());
             }
         }
     }
