@@ -307,6 +307,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mButtonSearch.setImageResource(R.drawable.ic_search_transparent);
                 mButtonSettings.setImageResource(R.drawable.ic_setting_transparent);
                 mButtonListLeft.setVisibility(View.VISIBLE);
+
+                SharedPreferences sharedPreferences = getSharedPreferences(Constants.MAC_ID, MODE_PRIVATE);
+                Intent intent = new Intent();
+                intent.putExtra(Constants.MAC_ID, sharedPreferences.getString(Constants.MAC_ID, ""));
+                intent.setAction(MainActivity.ACTION_BEACON_CHANGE);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
                 break;
             case Constants.Menu.MENU_LIST_SHOP:
                 mButtonHome.setImageResource(R.drawable.ic_home_transparent);

@@ -201,10 +201,10 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         LatLng latLng = new LatLng(customMarkerView.getPosition().latitude
                 , customMarkerView.getPosition().longitude);
         BitmapDescriptor bitmapDescriptor;
-        switch (customMarkerView.getType()) {
-            default:
-                bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker);
-        }
+//        switch (customMarkerView.getType()) {
+//            default:
+        bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker);
+//        }
 
         Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
                 .icon(bitmapDescriptor));

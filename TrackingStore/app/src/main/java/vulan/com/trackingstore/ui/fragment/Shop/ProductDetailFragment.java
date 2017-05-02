@@ -22,6 +22,7 @@ import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
+import vulan.com.trackingstore.util.DialogUtil;
 
 /**
  * Created by Ominext on 4/18/2017.
@@ -30,7 +31,7 @@ import vulan.com.trackingstore.util.Constants;
 public class ProductDetailFragment extends BaseFragment {
     private Product product;
     private Shop mShop;
-    private TextView mTextDescript, mTextPrice, mTextNameProduct, mTextNameShop;
+    private TextView mTextDescript, mTextPrice, mTextNameProduct, mTextNameShop, mTextCompare;
     private ImageView mImageProductSmall, mImageProduct, mImageShop;
     private RecyclerView mRecyclerProduct;
     private List<Product> mProductList;
@@ -56,6 +57,7 @@ public class ProductDetailFragment extends BaseFragment {
         mImageProduct = (ImageView) rootView.findViewById(R.id.img_product_dt);
         mImageShop = (ImageView) rootView.findViewById(R.id.img_shop_dt);
         mRecyclerProduct = (RecyclerView) rootView.findViewById(R.id.recycler_product_dt);
+        mTextCompare = (TextView) rootView.findViewById(R.id.tv_compare);
     }
 
     private void init() {
@@ -71,13 +73,37 @@ public class ProductDetailFragment extends BaseFragment {
         Glide.with(getActivity()).load(mShop.getmUrlLogo()).fitCenter().into(mImageShop);
 
         ApiRequest.getInstance().init();
+        ApiRequest.getInstance().getListProductByName(product.getmName() + "", new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                final List<Product> productList = response.body();
+                if (productList != null) {
+                    mTextCompare.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DialogUtil dialogUtil = new DialogUtil(getActivity(), productList, mShop);
+                            dialogUtil.show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
+            }
+        });
+
+
         ApiRequest.getInstance().getListProduct(product.getmCategoryId(), new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 mProductList = response.body();
-                mRecyclerProduct.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-                mAdapter = new RecyclerProductDetailAdapter(getActivity(), mProductList, mShop);
-                mRecyclerProduct.setAdapter(mAdapter);
+                if (mProductList != null) {
+                    mRecyclerProduct.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+                    mAdapter = new RecyclerProductDetailAdapter(getActivity(), mProductList, mShop);
+                    mRecyclerProduct.setAdapter(mAdapter);
+                }
             }
 
             @Override

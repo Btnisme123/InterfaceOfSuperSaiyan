@@ -103,6 +103,18 @@
                         android:text="111300.000 VND"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/common_text_size_15" />
+                    <TextView
+                        android:id="@+id/tv_compare"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_30"
+                        android:text="So sánh"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/common_text_size_15"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/common_size_5"
+                        android:padding="@dimen/common_size_5"
+                        android:background="@drawable/border_text"
+                        android:drawableLeft="@drawable/ic_compare"/>
                 </LinearLayout>
 
             </LinearLayout>

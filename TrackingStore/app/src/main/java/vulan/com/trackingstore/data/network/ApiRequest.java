@@ -100,4 +100,8 @@ public class ApiRequest {
     public void getAllBeacon(Callback<List<BeaconWithShop>> callback) {
         mApi.getAllBeacon().enqueue(callback);
     }
+
+    public void getListProductByName(String name, Callback<List<Product>> callback) {
+        mApi.getListProductByName(name).enqueue(callback);
+    }
 }
