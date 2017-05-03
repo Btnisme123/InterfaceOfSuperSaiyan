@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     private MapView mMapView;
     public static RelativeLayout mLayoutAds;
     public static ImageView mLogoShop, mImageBg;
-    public static TextView mTextShopName, mTextAddress;
+    public static TextView mTextShopName, mTextAddress, mTextNotifi;
     private SharedPreferences sharedPreferences;
 
     private LatLng currentLocation;
@@ -81,6 +81,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mTextShopName = (TextView) rootView.findViewById(R.id.tv_shop_name_home);
         mLogoShop = (ImageView) rootView.findViewById(R.id.img_logo_home);
         mImageBg = (ImageView) rootView.findViewById(R.id.img_background);
+        mTextNotifi = (TextView) rootView.findViewById(R.id.tv_notify_shop);
     }
 
     private void init(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
         locationReceiver = new LocationReceiver();
+        mTextNotifi.setSelected(true);
     }
 
     @Override

@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
+import vulan.com.trackingstore.data.model.NotificationShop;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.data.model.Shop;
@@ -39,6 +40,9 @@ public interface ApiPoint {
 
     @GET("ProductApi/getInforByName/")
     Call<List<Product>> getListProductByName(@Query("name") String name);
+
+    @GET("NotificationApi/getNotificationByShop/")
+    Call<List<NotificationShop>> getListNotificationShop(@Query("shopid") int shopId);
 }
 
 

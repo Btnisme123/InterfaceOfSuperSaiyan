@@ -12,6 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
+import vulan.com.trackingstore.data.model.NotificationShop;
 import vulan.com.trackingstore.data.model.Product;
 import vulan.com.trackingstore.data.model.ProductCategory;
 import vulan.com.trackingstore.data.model.Shop;
@@ -103,5 +104,9 @@ public class ApiRequest {
 
     public void getListProductByName(String name, Callback<List<Product>> callback) {
         mApi.getListProductByName(name).enqueue(callback);
+    }
+
+    public void getListNotificationShop(int shopId, Callback<List<NotificationShop>> callback) {
+        mApi.getListNotificationShop(shopId).enqueue(callback);
     }
 }

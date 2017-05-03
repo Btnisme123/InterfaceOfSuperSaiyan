@@ -44,6 +44,7 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.adapter.RecyclerLeftDrawerAdapter;
 import vulan.com.trackingstore.data.model.BeaconWithDistance;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
+import vulan.com.trackingstore.data.model.NotificationShop;
 import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.service.LocationUpdatesService;
@@ -79,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String METER = "meter";
     public static final BeaconRegion ALL_ESTIMOTE_BEACONS_REGION = new BeaconRegion("ranged region",
             null, null, null);
+
+    private Handler notifiHandler;
+    private Runnable notifiRunable;
+    private int currentNoti = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -191,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
 //        mBeaconManager.disconnect();
-        Log.e("main", "destroy");
         super.onDestroy();
     }
 
@@ -208,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
             startScanning();
         }
+        notifiHandler = new Handler();
         LocalBroadcastManager.getInstance(this).registerReceiver(requestBeaconReceiver,
                 new IntentFilter(ACTION_BEACON_CHANGE));
         bindService(new Intent(getApplicationContext(), LocationUpdatesService.class), mServiceConnection, BIND_AUTO_CREATE);
@@ -338,8 +343,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void changeUIHomeFrag(Context context, int positionNearest) {
+    private void changeUIHomeFrag(final Context context, int positionNearest) {
         if (mShopList != null && mShopList.size() != 0) {
+            ApiRequest.getInstance().init();
+            ApiRequest.getInstance().getListNotificationShop(mShopList.get(positionNearest).getmShopId(), new Callback<List<NotificationShop>>() {
+                @Override
+                public void onResponse(Call<List<NotificationShop>> call, Response<List<NotificationShop>> response) {
+                    final List<NotificationShop> notificationShopList = response.body();
+                    if (notificationShopList.size() > 0) {
+                        HomeFragment.mTextNotifi.setVisibility(View.VISIBLE);
+                        HomeFragment.mTextNotifi.setText(notificationShopList.get(0).getmName() + ": " + notificationShopList.get(0).getmContent());
+                        currentNoti = 0;
+                        notifiRunable = new Runnable() {
+                            @Override
+                            public void run() {
+                                if (currentNoti < notificationShopList.size() - 1) {
+                                    currentNoti = currentNoti + 1;
+                                } else {
+                                    currentNoti = 0;
+                                }
+                                HomeFragment.mTextNotifi.setText(notificationShopList.get(currentNoti).getmName() + ": " + notificationShopList.get(currentNoti).getmContent());
+                                notifiHandler.postDelayed(notifiRunable, 10 * 1000);
+                            }
+                        };
+                        notifiHandler.postDelayed(notifiRunable, 10 * 1000);
+                    } else {
+                        HomeFragment.mTextNotifi.setVisibility(View.GONE);
+                        if (notifiHandler != null) {
+                            notifiHandler.removeCallbacks(notifiRunable);
+                        }
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<List<NotificationShop>> call, Throwable t) {
+
+                }
+            });
             HomeFragment.mLayoutAds.setVisibility(View.VISIBLE);
             Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage()).fitCenter().into(HomeFragment.mImageBg);
             Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage())
@@ -359,7 +401,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public class RequestBeaconReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(final Context context, Intent intent) {
             mMacIds = intent.getStringExtra(Constants.MAC_ID);

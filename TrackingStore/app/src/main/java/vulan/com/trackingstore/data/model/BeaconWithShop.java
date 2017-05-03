@@ -34,6 +34,16 @@ public class BeaconWithShop {
     @SerializedName("Email")
     private String mShopEmail;
 
+    private String mNotificationShop;
+
+    public String getmNotificationShop() {
+        return mNotificationShop;
+    }
+
+    public void setmNotificationShop(String mNotificationShop) {
+        this.mNotificationShop = mNotificationShop;
+    }
+
     public String getmShopEmail() {
         return mShopEmail;
     }
