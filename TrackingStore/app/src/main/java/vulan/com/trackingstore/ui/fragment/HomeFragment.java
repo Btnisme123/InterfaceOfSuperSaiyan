@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,6 +157,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     }
 
     public void setUpMap(double mLatitude, double mLongtitude) {
+        mMap.clear();
         currentLocation = new LatLng(mLatitude, mLongtitude);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
@@ -164,9 +166,9 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-//        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_user);
-//        mMap.addMarker(new MarkerOptions().position(currentLocation)
-//                .icon(bitmapDescriptor));
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location);
+        mMap.addMarker(new MarkerOptions().position(currentLocation)
+                .icon(bitmapDescriptor));
         getCustomMarker(getActivity());
     }
 
@@ -202,14 +204,24 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         markerView.setBackground(getResources().getDrawable(R.drawable.background_profile));
         LatLng latLng = new LatLng(customMarkerView.getPosition().latitude
                 , customMarkerView.getPosition().longitude);
-        BitmapDescriptor bitmapDescriptor;
-//        switch (customMarkerView.getType()) {
-//            default:
-        bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker);
-//        }
+//        BitmapDescriptor bitmapDescriptor;
+//        bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker);
+//
+//        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
+//                .icon(bitmapDescriptor));
+//        marker.showInfoWindow();
+//        mMarkerPointHashMap.put(marker, customMarkerView);
+        IconGenerator iconFactory = new IconGenerator(getActivity());
+        addIcon(iconFactory, customMarkerView.getName(), latLng, customMarkerView);
+    }
 
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
-                .icon(bitmapDescriptor));
+    private void addIcon(IconGenerator iconFactory, CharSequence text, LatLng position, CustomMarkerView customMarkerView) {
+        MarkerOptions markerOptions = new MarkerOptions().
+                icon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(text))).
+                position(position).
+                anchor(iconFactory.getAnchorU(), iconFactory.getAnchorV());
+
+        Marker marker = mMap.addMarker(markerOptions);
         mMarkerPointHashMap.put(marker, customMarkerView);
     }
 
@@ -258,7 +270,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                 String mLocation = location.getLatitude() + "," + location.getLongitude();
                 editor.putString(Constants.Location.COORDINATE, mLocation);
                 editor.commit();
-//                setUpMap(location.getLatitude(), location.getLongitude());
+                setUpMap(location.getLatitude(), location.getLongitude());
             }
         }
     }
