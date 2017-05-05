@@ -449,7 +449,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                             //process layout home
                             if (mShopList.size() > 1) {
-                                sortUtil.bubbleSort(mShopList);
+                                sortUtil.sortListBeacon(mShopList);
                             }
                             if (notifiHandler != null) {
                                 notifiHandler.removeCallbacks(notifiRunable);

@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.Shop;
+import vulan.com.trackingstore.util.SortUtil;
 
 /**
  * Created by Thanh on 2/16/2017.
@@ -94,5 +95,12 @@ public class ListShopAdapter extends BaseAdapter {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public void sortByDistance(){
+        SortUtil sortUtil = new SortUtil();
+        if (shopArrayList!=null){
+            sortUtil.sortListShop(shopArrayList);
+        }
     }
 }

@@ -40,6 +40,10 @@ public class Shop implements Serializable, Parcelable {
         this.mEmail = mEmail;
     }
 
+    public Shop() {
+
+    }
+
     protected Shop(Parcel in) {
         Id = in.readInt();
         mUrlLogo = in.readString();
@@ -142,5 +146,16 @@ public class Shop implements Serializable, Parcelable {
         dest.writeString(mDescript);
         dest.writeString(mEmail);
         dest.writeDouble(mMeter);
+    }
+
+    public void swap(Shop shop) {
+        Id = shop.getId();
+        mUrlLogo = shop.getmUrlLogo();
+        mAddress = shop.getmAddress();
+        mPhoneNum = shop.getmPhoneNum();
+        mDescript = shop.getmDescript();
+        mEmail = shop.getmEmail();
+        mShopName = shop.getmShopName();
+        mMeter = shop.getmMeter();
     }
 }
