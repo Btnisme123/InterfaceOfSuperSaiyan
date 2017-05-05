@@ -56,6 +56,8 @@ public class Constants {
     public static final String TAG_SEARCH = "tag search";
     public static final String MAC_ID = "mac ids";
     public static final String STATUS_SEARCH = "status search";
+    public static final String STATUS_MACID = "status macid";
+    public static final String MAC_ID_SEARCH = "macid search";
     public static final String NOTIFICATION_SHOW = "showNotification";
     public static final String NOTIFICATION_LIST = "listNotification";
 }

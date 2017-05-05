@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -57,6 +58,8 @@ import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
 import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.NotificationUtil;
 import vulan.com.trackingstore.util.SortUtil;
+
+import static vulan.com.trackingstore.service.LocationUpdatesService.EXTRA_LOCATION;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String ACTION_BEACON_CHANGE = "vulan.com.trackingstore.ACTION_BEACON_CHANGE";
@@ -84,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Handler notifiHandler;
     private Runnable notifiRunable;
     private int currentNoti = 0;
+    private String mMacIdSearch = "";
+
+    public static int haveBeacon = 0;
+    private boolean isNotifi;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         init();
         bundle = new Bundle();
         sortUtil = new SortUtil();
-        boolean isNotifi = getIntent().getBooleanExtra(Constants.NOTIFICATION_SHOW, false);
+        isNotifi = getIntent().getBooleanExtra(Constants.NOTIFICATION_SHOW, false);
 
         if (!isNotifi) {
             replaceFragment(new HomeFragment(), Constants.FragmentTag.HOME);
@@ -107,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             listShopFragment.setArguments(bundle);
             updateIconMenu(Constants.Menu.MENU_LIST_SHOP);
             replaceFragment(listShopFragment, Constants.FragmentTag.LIST);
+
         }
 
     }
@@ -124,6 +132,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e("beacon", "beacon ranging" + list.get(i).getMacAddress());
                     }
                     Log.e("beacon", list.size() + "");
+                    if (list.size() > 0) {
+                        haveBeacon = 1;
+                    } else {
+                        haveBeacon = 0;
+                    }
                     mCurrentSize = list.size();
                     for (int i = 0; i < list.size(); i++) {
                         double distance = Math.pow(10d, ((double) list.get(i).getMeasuredPower() - list.get(i).getRssi()) / (10 * 2));
@@ -131,21 +144,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mBeaconList.add(new BeaconWithDistance(list.get(i).getMacAddress().toString(), distance));
                     }
                     if (mCurrentSize != mLastSize) {
+                        Log.e("current", mCurrentSize + "");
                         Log.e("last", mLastSize + "");
                         String mMacIds = "";
                         for (int i = 0; i < list.size(); i++) {
                             mMacIds = mMacIds + list.get(i).getMacAddress().toString() + " ";
                         }
-
+                        Log.e("macid", mMacIds + "");
                         SharedPreferences sharedPreferences = getSharedPreferences(Constants.MAC_ID, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(Constants.MAC_ID, mMacIds);
                         editor.commit();
 
-                        Intent intent = new Intent();
-                        intent.putExtra(Constants.MAC_ID, mMacIds);
-                        intent.setAction(MainActivity.ACTION_BEACON_CHANGE);
-                        LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
+                        if (!isNotifi) {
+                            Intent intent = new Intent();
+                            intent.putExtra(Constants.MAC_ID, mMacIds);
+                            intent.setAction(MainActivity.ACTION_BEACON_CHANGE);
+                            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
+                        } else {
+                            isNotifi = false;
+                        }
                         if (adapter != null) {
                             adapter.notifyDataSetChanged();
                         }
@@ -351,6 +369,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onResponse(Call<List<NotificationShop>> call, Response<List<NotificationShop>> response) {
                     final List<NotificationShop> notificationShopList = response.body();
                     if (notificationShopList.size() > 0) {
+                        HomeFragment.mTextNotifi.setSelected(true);
                         HomeFragment.mTextNotifi.setVisibility(View.VISIBLE);
                         HomeFragment.mTextNotifi.setText(notificationShopList.get(0).getmName() + ": " + notificationShopList.get(0).getmContent());
                         currentNoti = 0;
@@ -394,14 +413,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .build();
             HomeFragment.mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
             HomeFragment.mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
+            SharedPreferences sharedPreferences = this.getSharedPreferences(Constants.Location.LOCATION_HOME, MODE_PRIVATE);
+            String mLocation = sharedPreferences.getString(Constants.Location.COORDINATE, "");
+            if (mLocation != null && mLocation != "") {
+                Intent intent = new Intent(getApplicationContext(), HomeFragment.LocationReceiver.class);
+                intent.putExtra(EXTRA_LOCATION, mLocation);
+                intent.setAction(HomeFragment.ACTION_LOCATION_CHANGE);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            }
         }
     }
 
     public class RequestBeaconReceiver extends BroadcastReceiver {
+
         @Override
         public void onReceive(final Context context, Intent intent) {
             mMacIds = intent.getStringExtra(Constants.MAC_ID);
+
             if (mMacIds.length() != 0) {
                 mMacIds = mMacIds.substring(0, mMacIds.length() - 1);
                 ApiRequest.getInstance().init();
@@ -423,7 +451,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (mShopList.size() > 1) {
                                 sortUtil.bubbleSort(mShopList);
                             }
-                            changeUIHomeFrag(context, 0);
+                            if (notifiHandler != null) {
+                                notifiHandler.removeCallbacks(notifiRunable);
+                                changeUIHomeFrag(context, 0);
+                            } else {
+                                changeUIHomeFrag(context, 0);
+                            }
 
                             adapter = new RecyclerLeftDrawerAdapter(MainActivity.this, mShopList);
                             recyclerShopLeft.setAdapter(adapter);
@@ -441,33 +474,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //search
                 SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
-                if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
-                    sharedPreferences = MainActivity.this.getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
-                    String tagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
-                    if (tagSearch != "") {
-                        tagSearch = tagSearch.substring(0, tagSearch.length() - 1);
-                        Log.e("kw", tagSearch + "," + mMacIds);
-                        ApiRequest.getInstance().getShopByKeyWord(tagSearch, mMacIds, new Callback<List<Shop>>() {
-                            @Override
-                            public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
-                                List<Shop> shopList = response.body();
-                                Log.e("requested", shopList.size() + "");
-                                if (shopList.size() != 0 && shopList != null) {
-                                    SharedPreferences sharedPreferences = getSharedPreferences(Constants.Settings.NOTIFY_SETTING, MODE_PRIVATE);
-                                    if (sharedPreferences.getBoolean(Constants.Settings.NOTIFY_SETTING, true)) {
-                                        NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext(), shopList);
-                                        Log.e("notify", "search found");
-                                    } else {
-                                        Log.e("notify", "search found but not notify");
+
+                if (sharedPreferences.getBoolean(Constants.STATUS_MACID, false)) {
+                    mMacIdSearch = sharedPreferences.getString(Constants.MAC_ID_SEARCH, "");
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(Constants.STATUS_MACID, false);
+                    editor.commit();
+                }
+//                Log.e("macidSEARCH1", mMacIdSearch+"                 a");
+//                Log.e("macidssss", mMacIds);
+
+                String[] mMacSearch = mMacIdSearch.split(" ");
+                String[] mMacId = mMacIds.split(" ");
+                boolean checkMacId = true;
+                //compare if current list beacon
+                for (int i = 0; i < mMacId.length; i++) {
+                    if (!Arrays.asList(mMacSearch).contains(mMacId[i])) {
+                        mMacIdSearch = mMacIdSearch + mMacId[i] + " ";
+                        checkMacId = false;
+                    }
+                }
+//                Log.e("macidSEARCH2", mMacIdSearch);
+
+
+                if (!checkMacId) { //check change of list beacon
+                    Log.e("checkMACID", "list thay doi");
+                    if (sharedPreferences.getBoolean(Constants.STATUS_SEARCH, false)) {
+                        sharedPreferences = MainActivity.this.getSharedPreferences(Constants.TAG_SEARCH, MODE_PRIVATE);
+                        String tagSearch = sharedPreferences.getString(Constants.TAG_SEARCH, "");
+                        if (tagSearch != "") {
+                            tagSearch = tagSearch.substring(0, tagSearch.length() - 1);
+                            ApiRequest.getInstance().getShopByKeyWord(tagSearch, mMacIds, new Callback<List<Shop>>() {
+                                @Override
+                                public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
+                                    List<Shop> shopList = response.body();
+                                    Log.e("requested", shopList.size() + "");
+                                    if (shopList.size() != 0 && shopList != null) {
+                                        SharedPreferences sharedPreferences = getSharedPreferences(Constants.Settings.NOTIFY_SETTING, MODE_PRIVATE);
+                                        if (sharedPreferences.getBoolean(Constants.Settings.NOTIFY_SETTING, true)) {
+                                            NotificationUtil.showNotifi(1, "TIFO", "Xung quanh có cửa hàng phù hợp với yêu cầu", getApplicationContext(), shopList);
+                                            Log.e("notify", "search found");
+                                        } else {
+                                            Log.e("notify", "search found but not notify");
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<List<Shop>> call, Throwable t) {
+                                @Override
+                                public void onFailure(Call<List<Shop>> call, Throwable t) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
                 }
             }

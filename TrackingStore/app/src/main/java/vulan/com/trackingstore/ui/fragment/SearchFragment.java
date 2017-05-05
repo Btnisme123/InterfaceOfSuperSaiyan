@@ -7,6 +7,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -154,8 +155,11 @@ public class SearchFragment extends BaseFragment implements CompoundButton.OnChe
             sharedPreferences = getActivity().getSharedPreferences(Constants.STATUS_SEARCH, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(Constants.STATUS_SEARCH, true);
+            editor.putBoolean(Constants.STATUS_MACID,true);
+            editor.putString(Constants.MAC_ID_SEARCH, "");
             editor.commit();
 
+            Log.e("test share",sharedPreferences.getBoolean(Constants.STATUS_MACID,false)+"");
             sharedPreferences = getActivity().getSharedPreferences(Constants.MAC_ID, MODE_PRIVATE);
             Intent intent = new Intent();
             intent.putExtra(Constants.MAC_ID, sharedPreferences.getString(Constants.MAC_ID, ""));

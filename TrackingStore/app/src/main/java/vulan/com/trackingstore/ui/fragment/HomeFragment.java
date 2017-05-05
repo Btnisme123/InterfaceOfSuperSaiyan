@@ -39,6 +39,7 @@ import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
 import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.service.LocationUpdatesService;
+import vulan.com.trackingstore.ui.activity.MainActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
@@ -144,7 +145,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         String mCoordinate = sharedPreferences.getString(Constants.Location.COORDINATE, "");
         if (!mCoordinate.equals("") && mMap != null) {
             String[] mLocation = mCoordinate.split(",");
-            setUpMap(Double.parseDouble(mLocation[0]), Double.parseDouble(mLocation[1]));
+            setUpMap(Double.parseDouble(mLocation[0]), Double.parseDouble(mLocation[1]), 0);
         }
     }
 
@@ -156,15 +157,17 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mMap.setBuildingsEnabled(true);
     }
 
-    public void setUpMap(double mLatitude, double mLongtitude) {
+    public void setUpMap(double mLatitude, double mLongtitude, int type) {
         mMap.clear();
         currentLocation = new LatLng(mLatitude, mLongtitude);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(currentLocation)
-                .zoom(17)
-                .build();
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        if (type == 0) {
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(currentLocation)
+                    .zoom(17)
+                    .build();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
 
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location);
         mMap.addMarker(new MarkerOptions().position(currentLocation)
@@ -270,7 +273,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                 String mLocation = location.getLatitude() + "," + location.getLongitude();
                 editor.putString(Constants.Location.COORDINATE, mLocation);
                 editor.commit();
-                setUpMap(location.getLatitude(), location.getLongitude());
+                setUpMap(location.getLatitude(), location.getLongitude(), MainActivity.haveBeacon);
             }
         }
     }
