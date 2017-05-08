@@ -1,6 +1,7 @@
 package vulan.com.trackingstore.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,10 @@ import java.util.Locale;
 
 import vulan.com.trackingstore.R;
 import vulan.com.trackingstore.data.model.Shop;
+import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.SortUtil;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Thanh on 2/16/2017.
@@ -65,19 +69,36 @@ public class ListShopAdapter extends BaseAdapter {
         Glide.with(mContext).load(shop.getmUrlLogo())
                 .fitCenter()
                 .into(holder.mImageShop);
-        holder.mTextAddress.setText(shop.getmAddress());
+        if (shop.getmAddress() != null) {
+            holder.mTextAddress.setText(shop.getmAddress().trim());
+        }
+        holder.mTextAddress.setSelected(true);
         holder.mTextShopName.setText(shop.getmShopName());
+
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(Constants.Settings.LIST_SETTING, MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.Settings.LIST_SETTING, false)) {
+            holder.mTextDistance.setVisibility(View.VISIBLE);
+            if (shop.getmMeter() < 1000) {
+                holder.mTextDistance.setText(Math.round(shop.getmMeter() * 100.0) / 100.0 + " m");
+            } else {
+                holder.mTextDistance.setText(Math.round((shop.getmMeter() / 1000) * 100.0) / 100.0 + " km");
+            }
+        } else {
+            holder.mTextDistance.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
 
     private class MyViewHolder {
         private ImageView mImageShop;
-        private TextView mTextShopName, mTextAddress;
+        private TextView mTextShopName, mTextAddress, mTextDistance;
 
         public MyViewHolder(View itemView) {
             mImageShop = (ImageView) itemView.findViewById(R.id.img_shop);
             mTextShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
             mTextAddress = (TextView) itemView.findViewById(R.id.tv_address);
+            mTextDistance = (TextView) itemView.findViewById(R.id.tv_distance);
         }
     }
 
@@ -97,9 +118,9 @@ public class ListShopAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void sortByDistance(){
+    public void sortByDistance() {
         SortUtil sortUtil = new SortUtil();
-        if (shopArrayList!=null){
+        if (shopArrayList != null) {
             sortUtil.sortListShop(shopArrayList);
         }
     }

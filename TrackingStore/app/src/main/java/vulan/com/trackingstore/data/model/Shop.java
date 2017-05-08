@@ -28,9 +28,13 @@ public class Shop implements Serializable, Parcelable {
     private String mDescript;
     @SerializedName("Email")
     private String mEmail;
+    @SerializedName("LocationX")
+    private double mLatitude;
+    @SerializedName("LocationY")
+    private double mLongtitude;
     private double mMeter;
 
-    public Shop(int id, String mUrlLogo, String mShopName, String mAddress, String mPhoneNum, String mDescript, String mEmail) {
+    public Shop(int id, String mUrlLogo, String mShopName, String mAddress, String mPhoneNum, String mDescript, String mEmail, Double mLatitude, Double mLongtitude) {
         this.Id = id;
         this.mUrlLogo = mUrlLogo;
         this.mShopName = mShopName;
@@ -38,6 +42,8 @@ public class Shop implements Serializable, Parcelable {
         this.mPhoneNum = mPhoneNum;
         this.mDescript = mDescript;
         this.mEmail = mEmail;
+        this.mLatitude = mLatitude;
+        this.mLongtitude = mLongtitude;
     }
 
     public Shop() {
@@ -52,6 +58,8 @@ public class Shop implements Serializable, Parcelable {
         mPhoneNum = in.readString();
         mDescript = in.readString();
         mEmail = in.readString();
+        mLatitude = in.readDouble();
+        mLongtitude = in.readDouble();
         mMeter = in.readDouble();
     }
 
@@ -66,6 +74,22 @@ public class Shop implements Serializable, Parcelable {
             return new Shop[size];
         }
     };
+
+    public double getmLatitude() {
+        return mLatitude;
+    }
+
+    public void setmLatitude(double mLatitude) {
+        this.mLatitude = mLatitude;
+    }
+
+    public double getmLongtitude() {
+        return mLongtitude;
+    }
+
+    public void setmLongtitude(double mLongtitude) {
+        this.mLongtitude = mLongtitude;
+    }
 
     public int getId() {
         return Id;
@@ -146,6 +170,8 @@ public class Shop implements Serializable, Parcelable {
         dest.writeString(mDescript);
         dest.writeString(mEmail);
         dest.writeDouble(mMeter);
+        dest.writeDouble(mLatitude);
+        dest.writeDouble(mLongtitude);
     }
 
     public void swap(Shop shop) {
@@ -157,5 +183,7 @@ public class Shop implements Serializable, Parcelable {
         mEmail = shop.getmEmail();
         mShopName = shop.getmShopName();
         mMeter = shop.getmMeter();
+        mLatitude = shop.getmLatitude();
+        mLongtitude = shop.getmLongtitude();
     }
 }

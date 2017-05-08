@@ -25,7 +25,8 @@ public class SortUtil {
         }
         return beaconWithShops;
     }
-    public List<Shop> sortListShop(List<Shop> shopList){
+
+    public List<Shop> sortListShop(List<Shop> shopList) {
         int sizeOfList = shopList.size();
         int counter, position;
         Shop temp = new Shop();

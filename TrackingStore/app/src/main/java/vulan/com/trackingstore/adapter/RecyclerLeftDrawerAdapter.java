@@ -51,7 +51,7 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
     public void onBindViewHolder(final RecyclerLeftDrawerAdapter.ItemHolder holder, int position) {
         final BeaconWithShop item = mNavigationDrawerLeftItems.get(position);
         final Shop shop = new Shop(item.getmShopId(), item.getmUrlImageWithoutBase(), item.getmShopName(), item.getmShopAddress()
-                , item.getmShopPhone(), item.getmShopDescipt(), item.getmShopEmail());
+                , item.getmShopPhone(), item.getmShopDescipt(), item.getmShopEmail(), item.getmLocationX(), item.getmLocationY());
         Glide.with(mContext).load(item.getmUrlImage()).fitCenter().into(holder.mImageShop);
         holder.mTextName.setText(item.getmShopName());
         holder.mTextAddress.setText(item.getmShopAddress().trim());

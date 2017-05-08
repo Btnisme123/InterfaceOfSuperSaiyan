@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +38,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vulan.com.trackingstore.R;
+import vulan.com.trackingstore.adapter.ListShopAdapter;
 import vulan.com.trackingstore.data.model.BeaconWithShop;
+import vulan.com.trackingstore.data.model.Shop;
 import vulan.com.trackingstore.data.network.ApiRequest;
 import vulan.com.trackingstore.service.LocationUpdatesService;
 import vulan.com.trackingstore.ui.activity.MainActivity;
+import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
+import vulan.com.trackingstore.util.SortUtil;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -270,10 +276,56 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
             if (location != null) {
                 sharedPreferences = getActivity().getSharedPreferences(Constants.Location.LOCATION_HOME, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                String mLocation = location.getLatitude() + "," + location.getLongitude();
+                final String mLocation = location.getLatitude() + "," + location.getLongitude();
                 editor.putString(Constants.Location.COORDINATE, mLocation);
                 editor.commit();
                 setUpMap(location.getLatitude(), location.getLongitude(), MainActivity.haveBeacon);
+
+                //set up list when location change
+                if (ListShopFragment.shopArrayList != null) {
+                    if (ListShopFragment.mListShop != null) {
+                        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.LIST_SETTING, MODE_PRIVATE);
+                        ApiRequest.getInstance().getAllShop(new Callback<List<Shop>>() {
+                            @Override
+                            public void onResponse(Call<List<Shop>> call, Response<List<Shop>> response) {
+                                ListShopFragment.shopArrayList = response.body();
+                                if (sharedPreferences.getBoolean(Constants.Settings.LIST_SETTING, false)) {
+                                    ListShopFragment.mDistanceShop = new float[1];
+//                                sharedPreferences = getActivity().getSharedPreferences(Constants.Location.LOCATION_HOME, MODE_PRIVATE);
+//                                String mLocation = sharedPreferences.getString(Constants.Location.COORDINATE, "");
+                                    if (mLocation != null && !mLocation.equals("")) {
+                                        String[] mCoordinate = mLocation.split(",");
+                                        for (int i = 0; i < ListShopFragment.shopArrayList.size(); i++) {
+                                            Location.distanceBetween(ListShopFragment.shopArrayList.get(i).getmLatitude(), ListShopFragment.shopArrayList.get(i).getmLongtitude()
+                                                    , Double.parseDouble(mCoordinate[0])
+                                                    , Double.parseDouble(mCoordinate[1])
+                                                    , ListShopFragment.mDistanceShop);
+                                            ListShopFragment.shopArrayList.get(i).setmMeter(ListShopFragment.mDistanceShop[0]);
+                                        }
+                                        ListShopFragment.sortUtil = new SortUtil();
+                                        ListShopFragment.sortUtil.sortListShop(ListShopFragment.shopArrayList);
+                                    }
+                                }
+                                ListShopFragment.adapter = new ListShopAdapter(getActivity(), ListShopFragment.shopArrayList);
+                                ListShopFragment.mListShop.setAdapter(ListShopFragment.adapter);
+                                ListShopFragment.mListShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        Intent intent = new Intent(getActivity(), ShopActivity.class);
+                                        intent.putExtra(Constants.ShopInfo.SHOP_MODEL, (Serializable) ListShopFragment.shopArrayList.get(i));
+                                        startActivity(intent);
+                                    }
+                                });
+                                ListShopFragment.adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Shop>> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                }
             }
         }
     }

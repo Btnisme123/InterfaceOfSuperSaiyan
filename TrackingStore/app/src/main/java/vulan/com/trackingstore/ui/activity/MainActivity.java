@@ -482,8 +482,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     editor.putBoolean(Constants.STATUS_MACID, false);
                     editor.commit();
                 }
-//                Log.e("macidSEARCH1", mMacIdSearch+"                 a");
-//                Log.e("macidssss", mMacIds);
 
                 String[] mMacSearch = mMacIdSearch.split(" ");
                 String[] mMacId = mMacIds.split(" ");
@@ -495,8 +493,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         checkMacId = false;
                     }
                 }
-//                Log.e("macidSEARCH2", mMacIdSearch);
-
 
                 if (!checkMacId) { //check change of list beacon
                     Log.e("checkMACID", "list thay doi");

@@ -23,39 +23,60 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_size_60"
         android:layout_marginLeft="@dimen/common_size_5"
+        android:layout_marginRight="@dimen/common_size_5"
         android:layout_toRightOf="@+id/img_shop"
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_shop_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_25"
-            android:gravity="center_vertical"
-            android:text="The Blues"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/common_text_size_15"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_shop_name"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/common_size_25"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="The Blues"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/common_text_size_15"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/common_size_25"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="999 km"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/common_text_size_15" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_size_25"
-            android:ellipsize="end"
+            android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:textSize="@dimen/common_text_size_15"
             android:text="136 Hoàng Quốc Việt,Cầu Giấy,Hà Nội"
-            android:textColor="@color/colorSecondaryText" />
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/common_text_size_15" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_size_1"
-        android:background="@color/colorViewLine"
-        android:layout_toRightOf="@id/img_shop"
+        android:layout_below="@id/layout_info"
         android:layout_marginLeft="@dimen/common_size_5"
         android:layout_marginRight="@dimen/common_size_5"
-        android:layout_below="@id/layout_info"/>
+        android:layout_toRightOf="@id/img_shop"
+        android:background="@color/colorViewLine" />
 </RelativeLayout>

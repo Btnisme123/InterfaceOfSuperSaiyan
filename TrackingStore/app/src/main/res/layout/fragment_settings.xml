@@ -17,245 +17,327 @@
         android:textSize="@dimen/common_text_size_17"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/layout_noti"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/common_size_30">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_40"
-                android:gravity="center_vertical"
-                android:text="Thông báo"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/common_text_size_15" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_1"
-            android:layout_marginLeft="@dimen/common_size_30"
-            android:background="@color/colorViewSetting" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_50"
-            android:layout_below="@id/tv_setting"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/common_size_30"
-            android:paddingRight="@dimen/common_size_10">
 
             <LinearLayout
-                android:id="@+id/layout_notify1"
-                android:layout_width="@dimen/common_size_250"
-                android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="@dimen/common_size_50"
-                    android:layout_height="@dimen/common_size_50"
-                    android:padding="@dimen/common_size_12"
-                    android:src="@drawable/ic_sms" />
+                <LinearLayout
+                    android:id="@+id/layout_noti"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/common_size_30">
 
-                <TextView
-                    android:layout_width="@dimen/common_size_250"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_40"
+                        android:gravity="center_vertical"
+                        android:text="Thông báo"
+                        android:textColor="@color/colorTransparentPrimary"
+                        android:textSize="@dimen/common_text_size_15" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_1"
+                    android:layout_marginLeft="@dimen/common_size_30"
+                    android:background="@color/colorViewSetting" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/common_size_50"
+                    android:layout_below="@id/tv_setting"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:text="Bật/Tắt thông báo"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/common_text_size_15" />
+                    android:paddingLeft="@dimen/common_size_30"
+                    android:paddingRight="@dimen/common_size_10">
+
+                    <LinearLayout
+                        android:id="@+id/layout_notify1"
+                        android:layout_width="@dimen/common_size_250"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="@dimen/common_size_50"
+                            android:layout_height="@dimen/common_size_50"
+                            android:padding="@dimen/common_size_12"
+                            android:src="@drawable/ic_sms" />
+
+                        <TextView
+                            android:layout_width="@dimen/common_size_250"
+                            android:layout_height="@dimen/common_size_50"
+                            android:gravity="center_vertical"
+                            android:text="Bật/Tắt thông báo"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/common_text_size_15" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/sw_notify"
+                        android:layout_width="@dimen/common_size_100"
+                        android:layout_height="@dimen/common_size_50"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/layout_notify1"
+                        android:gravity="center"
+                        android:thumb="@drawable/custom_switch_selector"
+                        android:track="@drawable/custom_switch_track" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_1"
+                    android:layout_marginLeft="@dimen/common_size_80"
+                    android:background="@color/colorViewSetting" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_noti2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_50"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/common_size_30"
+                    android:paddingRight="@dimen/common_size_10">
+
+                    <LinearLayout
+                        android:id="@+id/layout_notify2"
+                        android:layout_width="@dimen/common_size_250"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="@dimen/common_size_50"
+                            android:layout_height="@dimen/common_size_50"
+                            android:padding="@dimen/common_size_12"
+                            android:src="@drawable/ic_vibration" />
+
+                        <TextView
+                            android:id="@+id/tv_notify2"
+                            android:layout_width="@dimen/common_size_250"
+                            android:layout_height="@dimen/common_size_50"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:gravity="center_vertical"
+                            android:text="Rung"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/common_text_size_15" />
+
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/sw_vibrate"
+                        android:layout_width="@dimen/common_size_100"
+                        android:layout_height="@dimen/common_size_50"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/layout_notify2"
+                        android:gravity="center"
+                        android:thumb="@drawable/custom_switch_selector"
+                        android:track="@drawable/custom_switch_track" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_1"
+                    android:layout_marginLeft="@dimen/common_size_80"
+                    android:background="@color/colorViewSetting" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_50"
+                    android:layout_below="@id/layout_noti2"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/common_size_30"
+                    android:paddingRight="@dimen/common_size_10">
+
+                    <LinearLayout
+                        android:id="@+id/layout_notify3"
+                        android:layout_width="@dimen/common_size_250"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="@dimen/common_size_50"
+                            android:layout_height="@dimen/common_size_50"
+                            android:padding="@dimen/common_size_12"
+                            android:src="@drawable/ic_notifications" />
+
+                        <TextView
+                            android:id="@+id/tv_notify3"
+                            android:layout_width="@dimen/common_size_250"
+                            android:layout_height="@dimen/common_size_50"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:gravity="center_vertical"
+                            android:text="Chuông"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/common_text_size_15" />
+                    </LinearLayout>
+
+
+                    <Switch
+                        android:id="@+id/sw_sound"
+                        android:layout_width="@dimen/common_size_100"
+                        android:layout_height="@dimen/common_size_50"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/layout_notify3"
+                        android:gravity="center"
+                        android:thumb="@drawable/custom_switch_selector"
+                        android:track="@drawable/custom_switch_track" />
+                </RelativeLayout>
             </LinearLayout>
-
-            <Switch
-                android:id="@+id/sw_notify"
-                android:layout_width="@dimen/common_size_100"
-                android:layout_height="@dimen/common_size_50"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/layout_notify1"
-                android:gravity="center"
-                android:thumb="@drawable/custom_switch_selector"
-                android:track="@drawable/custom_switch_track" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_1"
-            android:layout_marginLeft="@dimen/common_size_80"
-            android:background="@color/colorViewSetting" />
-
-        <RelativeLayout
-            android:id="@+id/layout_noti2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_50"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/common_size_30"
-            android:paddingRight="@dimen/common_size_10">
 
             <LinearLayout
-                android:id="@+id/layout_notify2"
-                android:layout_width="@dimen/common_size_250"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="@dimen/common_size_50"
-                    android:layout_height="@dimen/common_size_50"
-                    android:padding="@dimen/common_size_12"
-                    android:src="@drawable/ic_vibration" />
-
-                <TextView
-                    android:id="@+id/tv_notify2"
-                    android:layout_width="@dimen/common_size_250"
-                    android:layout_height="@dimen/common_size_50"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:gravity="center_vertical"
-                    android:text="Rung"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/common_text_size_15" />
-
-            </LinearLayout>
-
-            <Switch
-                android:id="@+id/sw_vibrate"
-                android:layout_width="@dimen/common_size_100"
-                android:layout_height="@dimen/common_size_50"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/layout_notify2"
-                android:gravity="center"
-                android:thumb="@drawable/custom_switch_selector"
-                android:track="@drawable/custom_switch_track" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_1"
-            android:layout_marginLeft="@dimen/common_size_80"
-            android:background="@color/colorViewSetting" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_50"
-            android:layout_below="@id/layout_noti2"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/common_size_30"
-            android:paddingRight="@dimen/common_size_10">
-
-            <LinearLayout
-                android:id="@+id/layout_notify3"
-                android:layout_width="@dimen/common_size_250"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="@dimen/common_size_50"
-                    android:layout_height="@dimen/common_size_50"
-                    android:padding="@dimen/common_size_12"
-                    android:src="@drawable/ic_notifications" />
-
-                <TextView
-                    android:id="@+id/tv_notify3"
-                    android:layout_width="@dimen/common_size_250"
-                    android:layout_height="@dimen/common_size_50"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:gravity="center_vertical"
-                    android:text="Chuông"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/common_text_size_15" />
-            </LinearLayout>
-
-
-            <Switch
-                android:id="@+id/sw_sound"
-                android:layout_width="@dimen/common_size_100"
-                android:layout_height="@dimen/common_size_50"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/layout_notify3"
-                android:gravity="center"
-                android:thumb="@drawable/custom_switch_selector"
-                android:track="@drawable/custom_switch_track" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_noti2"
-        android:layout_marginTop="@dimen/common_size_10"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/layout_title_intro"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/common_size_50"
-            android:paddingLeft="@dimen/common_size_30"
-            android:paddingRight="@dimen/common_size_10">
-
-            <ImageView
-                android:layout_width="@dimen/common_size_50"
-                android:layout_height="@dimen/common_size_50"
-                android:padding="@dimen/common_size_12"
-                android:src="@drawable/ic_info" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_50"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:gravity="center_vertical"
-                android:text="Giới thiệu"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/common_text_size_15" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_intro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_1"
-                android:layout_marginLeft="@dimen/common_size_80"
-                android:layout_marginRight="@dimen/common_size_80"
-                android:background="@color/colorViewSetting" />
-
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_size_10"
                 android:background="@color/white"
-                android:gravity="center"
-                android:paddingLeft="@dimen/common_size_30"
-                android:paddingRight="@dimen/common_size_30"
-                android:text="@string/app_intro"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/common_text_size_15" />
+                android:orientation="vertical">
 
-            <TextView
+                <LinearLayout
+                    android:id="@+id/layout_list_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/common_size_30">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_40"
+                        android:gravity="center_vertical"
+                        android:text="Hiển thị"
+                        android:textColor="@color/colorTransparentPrimary"
+                        android:textSize="@dimen/common_text_size_15" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_1"
+                    android:layout_marginLeft="@dimen/common_size_30"
+                    android:background="@color/colorViewSetting" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_50"
+                    android:layout_below="@id/tv_setting"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/common_size_30"
+                    android:paddingRight="@dimen/common_size_10">
+
+                    <LinearLayout
+                        android:id="@+id/layout_list"
+                        android:layout_width="@dimen/common_size_250"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="@dimen/common_size_50"
+                            android:layout_height="@dimen/common_size_50"
+                            android:padding="@dimen/common_size_12"
+                            android:src="@drawable/ic_format_list" />
+
+                        <TextView
+                            android:layout_width="@dimen/common_size_250"
+                            android:layout_height="@dimen/common_size_50"
+                            android:gravity="center_vertical"
+                            android:text="Hiển thị theo khoảng cách"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/common_text_size_15" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/sw_list"
+                        android:layout_width="@dimen/common_size_100"
+                        android:layout_height="@dimen/common_size_50"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/layout_list"
+                        android:gravity="center"
+                        android:thumb="@drawable/custom_switch_selector"
+                        android:track="@drawable/custom_switch_track" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_size_30"
-                android:gravity="center"
-                android:text="- TIFO -"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/common_text_size_15" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_noti2"
+                android:layout_marginTop="@dimen/common_size_10"
+                android:background="@color/white"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_title_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_size_50"
+                    android:paddingLeft="@dimen/common_size_30"
+                    android:paddingRight="@dimen/common_size_10">
+
+                    <ImageView
+                        android:layout_width="@dimen/common_size_50"
+                        android:layout_height="@dimen/common_size_50"
+                        android:padding="@dimen/common_size_12"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_50"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center_vertical"
+                        android:text="Giới thiệu"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/common_text_size_15" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_1"
+                        android:layout_marginLeft="@dimen/common_size_80"
+                        android:layout_marginRight="@dimen/common_size_80"
+                        android:background="@color/colorViewSetting" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/common_size_10"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/common_size_30"
+                        android:paddingRight="@dimen/common_size_30"
+                        android:text="@string/app_intro"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/common_text_size_15" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_size_30"
+                        android:gravity="center"
+                        android:text="- TIFO -"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/common_text_size_15" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -16,7 +16,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SettingsFragment extends BaseFragment {
     private LinearLayout mLayoutTitleIntro, mLayoutIntro;
-    private Switch mSwitchNotify, mSwitchVibrate, mSwitchSound;
+    private Switch mSwitchNotify, mSwitchVibrate, mSwitchSound, mSwitchList;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -36,6 +36,7 @@ public class SettingsFragment extends BaseFragment {
         mSwitchNotify = (Switch) rootView.findViewById(R.id.sw_notify);
         mSwitchVibrate = (Switch) rootView.findViewById(R.id.sw_vibrate);
         mSwitchSound = (Switch) rootView.findViewById(R.id.sw_sound);
+        mSwitchList = (Switch) rootView.findViewById(R.id.sw_list);
     }
 
     @Override
@@ -58,6 +59,12 @@ public class SettingsFragment extends BaseFragment {
             mSwitchSound.setChecked(true);
         } else {
             mSwitchSound.setChecked(false);
+        }
+        sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.LIST_SETTING, MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.Settings.LIST_SETTING, false)) {
+            mSwitchList.setChecked(true);
+        } else {
+            mSwitchList.setChecked(false);
         }
     }
 
@@ -115,6 +122,21 @@ public class SettingsFragment extends BaseFragment {
                 } else {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(Constants.Settings.RING_SETTING, false);
+                    editor.commit();
+                }
+            }
+        });
+        mSwitchList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                sharedPreferences = getActivity().getSharedPreferences(Constants.Settings.LIST_SETTING, MODE_PRIVATE);
+                if (isChecked) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(Constants.Settings.LIST_SETTING, true);
+                    editor.commit();
+                } else {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(Constants.Settings.LIST_SETTING, false);
                     editor.commit();
                 }
             }

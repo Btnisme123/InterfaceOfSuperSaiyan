@@ -51,6 +51,7 @@ public class Constants {
         public static final String NOTIFY_SETTING = "notify";
         public static final String VIBRATE_SETTING = "vibrate";
         public static final String RING_SETTING = "ring";
+        public static final String LIST_SETTING = "list";
 
     }
     public static final String TAG_SEARCH = "tag search";
