@@ -103,6 +103,10 @@ public class Shop implements Serializable, Parcelable {
         return BASE_URL + mUrlLogo;
     }
 
+    public String getmUrlLogoWithoutBaseUrl() {
+        return mUrlLogo;
+    }
+
     public void setmUrlLogo(String mUrlLogo) {
         this.mUrlLogo = mUrlLogo;
     }
@@ -176,7 +180,7 @@ public class Shop implements Serializable, Parcelable {
 
     public void swap(Shop shop) {
         Id = shop.getId();
-        mUrlLogo = shop.getmUrlLogo();
+        mUrlLogo = shop.getmUrlLogoWithoutBaseUrl();
         mAddress = shop.getmAddress();
         mPhoneNum = shop.getmPhoneNum();
         mDescript = shop.getmDescript();

@@ -29,10 +29,11 @@ public class SortUtil {
     public List<Shop> sortListShop(List<Shop> shopList) {
         int sizeOfList = shopList.size();
         int counter, position;
-        Shop temp = new Shop();
+        Shop temp;
         for (counter = 0; counter < sizeOfList - 1; counter++) {
             for (position = 0; position < sizeOfList - 1 - counter; position++) {
                 if (shopList.get(position).getmMeter() > shopList.get(position + 1).getmMeter()) {
+                    temp = new Shop();
                     temp.swap(shopList.get(position));
                     shopList.get(position).swap(shopList.get(position + 1));
                     shopList.get(position + 1).swap(temp);
