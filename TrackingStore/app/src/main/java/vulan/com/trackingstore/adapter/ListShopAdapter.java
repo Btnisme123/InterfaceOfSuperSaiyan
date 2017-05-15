@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -86,7 +88,7 @@ public class ListShopAdapter extends BaseAdapter {
         } else {
             holder.mTextDistance.setVisibility(View.GONE);
         }
-
+        setAnimation(convertView, position);
         return convertView;
     }
 
@@ -122,6 +124,17 @@ public class ListShopAdapter extends BaseAdapter {
         SortUtil sortUtil = new SortUtil();
         if (shopArrayList != null) {
             sortUtil.sortListShop(shopArrayList);
+        }
+    }
+
+    private int lastPosition = -1;
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
         }
     }
 }
