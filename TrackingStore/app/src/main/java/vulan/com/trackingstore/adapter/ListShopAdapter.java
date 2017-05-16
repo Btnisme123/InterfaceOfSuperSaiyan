@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.podcopic.animationlib.library.AnimationType;
+import com.podcopic.animationlib.library.StartSmartAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +90,8 @@ public class ListShopAdapter extends BaseAdapter {
         } else {
             holder.mTextDistance.setVisibility(View.GONE);
         }
-        setAnimation(convertView, position);
+//        setAnimation(convertView, position);
+//        StartSmartAnimation.startAnimation(convertView, AnimationType.FadeInUp, 1000, 0, true);
         return convertView;
     }
 

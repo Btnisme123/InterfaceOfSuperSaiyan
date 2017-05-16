@@ -87,7 +87,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mLayoutAds = (RelativeLayout) rootView.findViewById(R.id.layout_ads);
         mTextAddress = (TextView) rootView.findViewById(R.id.tv_address_home);
         mTextShopName = (TextView) rootView.findViewById(R.id.tv_shop_name_home);
-        mLogoShop = (ImageView) rootView.findViewById(R.id.img_logo_home);
+        mLogoShop = (ImageView) rootView.findViewById (R.id.img_logo_home);
         mImageBg = (ImageView) rootView.findViewById(R.id.img_background);
         mTextNotifi = (TextView) rootView.findViewById(R.id.tv_notify_shop);
     }

@@ -24,7 +24,16 @@
         android:layout_marginTop="@dimen/common_size_7"
         android:searchIcon="@color/colorAccent">
     </android.support.v7.widget.SearchView>
-    <ListView
+    <!--<ListView-->
+        <!--android:id="@+id/list_shop"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginRight="@dimen/common_size_7"-->
+        <!--android:layout_marginLeft="@dimen/common_size_7"-->
+        <!--android:layout_marginBottom="@dimen/common_size_7"-->
+        <!--android:divider="@null"-->
+        <!--android:scrollbars="none"></ListView>-->
+    <com.twotoasters.jazzylistview.JazzyListView
         android:id="@+id/list_shop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,5 +41,5 @@
         android:layout_marginLeft="@dimen/common_size_7"
         android:layout_marginBottom="@dimen/common_size_7"
         android:divider="@null"
-        android:scrollbars="none"></ListView>
+        android:scrollbars="none"></com.twotoasters.jazzylistview.JazzyListView>
 </LinearLayout>

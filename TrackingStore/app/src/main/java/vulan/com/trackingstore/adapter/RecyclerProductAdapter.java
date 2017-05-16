@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.podcopic.animationlib.library.AnimationType;
+import com.podcopic.animationlib.library.StartSmartAnimation;
 
 import java.text.DecimalFormat;
 import java.util.List;
