@@ -47,5 +47,6 @@ dependencies {
     compile 'com.twotoasters.jazzylistview:library:1.2.1'
     compile 'com.twotoasters.jazzylistview:library-recyclerview:1.2.1'
     compile 'com.github.ratty3697:android-smart-animation-library:1.6'
+    compile 'com.github.aarsy.googlemapsanimations:googlemapsanimations:1.0.5'
     testCompile 'junit:junit:4.12'
 }

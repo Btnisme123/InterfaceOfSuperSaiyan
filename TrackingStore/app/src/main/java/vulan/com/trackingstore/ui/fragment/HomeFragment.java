@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.arsy.maps_library.MapRadar;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -70,6 +72,9 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     private List<CustomMarkerView> mCustomMarkerViewList = new ArrayList<>();
     private HashMap<Marker, CustomMarkerView> mMarkerPointHashMap = new HashMap<>();
 
+
+    private MapRadar mapRadar;
+
     @Override
     protected void onCreateContentView(View rootView, Bundle savedInstanceState) {
         findView(rootView);
@@ -87,7 +92,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         mLayoutAds = (RelativeLayout) rootView.findViewById(R.id.layout_ads);
         mTextAddress = (TextView) rootView.findViewById(R.id.tv_address_home);
         mTextShopName = (TextView) rootView.findViewById(R.id.tv_shop_name_home);
-        mLogoShop = (ImageView) rootView.findViewById (R.id.img_logo_home);
+        mLogoShop = (ImageView) rootView.findViewById(R.id.img_logo_home);
         mImageBg = (ImageView) rootView.findViewById(R.id.img_background);
         mTextNotifi = (TextView) rootView.findViewById(R.id.tv_notify_shop);
     }
@@ -106,7 +111,9 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(locationReceiver,
                 new IntentFilter(ACTION_LOCATION_CHANGE));
         mMapView.onResume();
-
+        if (!mapRadar.isAnimationRunning() && mapRadar != null) {
+            mapRadar.startRadarAnimation();
+        }
     }
 
     @Override
@@ -114,6 +121,9 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         super.onPause();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(locationReceiver);
         mMapView.onPause();
+        if (mapRadar.isAnimationRunning() && mapRadar != null) {
+            mapRadar.stopRadarAnimation();
+        }
     }
 
     @Override
@@ -144,6 +154,12 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         init();
@@ -153,6 +169,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
             String[] mLocation = mCoordinate.split(",");
             setUpMap(Double.parseDouble(mLocation[0]), Double.parseDouble(mLocation[1]), 0);
         }
+
     }
 
 
@@ -178,6 +195,13 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location);
         mMap.addMarker(new MarkerOptions().position(currentLocation)
                 .icon(bitmapDescriptor));
+
+        //animation map
+        mapRadar = new MapRadar(mMap, currentLocation, getActivity());
+        mapRadar.withDistance(50);
+        mapRadar.withOuterCircleStrokeColor(Color.parseColor("#49b90d"));
+        mapRadar.withRadarColors(Color.parseColor("#0049b90d"), Color.parseColor("#ff49b90d"));
+        mapRadar.startRadarAnimation();
         getCustomMarker(getActivity());
     }
 
