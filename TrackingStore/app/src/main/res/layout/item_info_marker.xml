@@ -10,21 +10,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_marker"
-            android:layout_width="@dimen/common_size_30"
-            android:layout_height="@dimen/common_size_30"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:src="@drawable/blues_logo" />
-
         <TextView
             android:id="@+id/text_marker"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/common_size_30"
             android:layout_marginLeft="@dimen/common_size_5"
             android:gravity="center"
-            android:text="The blues exchange"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/common_text_size_15"
             android:textStyle="bold" />
@@ -37,7 +28,6 @@
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
-        android:text="74 Hoang quoc viet cau giay ha noi"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/common_text_size_15" />
 

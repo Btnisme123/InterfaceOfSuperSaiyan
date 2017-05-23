@@ -58,6 +58,7 @@ import vulan.com.trackingstore.ui.fragment.Shop.ShopFragment;
 import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.NotificationUtil;
 import vulan.com.trackingstore.util.SortUtil;
+import vulan.com.trackingstore.util.ToastUtil;
 
 import static vulan.com.trackingstore.service.LocationUpdatesService.EXTRA_LOCATION;
 
@@ -253,12 +254,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
-
-
     public void addFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, getFragment()).commit();
@@ -396,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onFailure(Call<List<NotificationShop>> call, Throwable t) {
-
+                    ToastUtil.makeToast(context, getResources().getString(R.string.network_error));
                 }
             });
             HomeFragment.mLayoutAds.setVisibility(View.VISIBLE);
@@ -404,7 +399,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Glide.with(context).load(mShopList.get(positionNearest).getmUrlImage())
                     .fitCenter().into(HomeFragment.mLogoShop);
             HomeFragment.mTextShopName.setText(mShopList.get(positionNearest).getmShopName());
-            HomeFragment.mTextAddress.setText(mShopList.get(positionNearest).getmShopAddress().trim());
+            if (mShopList.get(positionNearest).getmShopAddress() != null && !mShopList.get(positionNearest).getmShopAddress().equals("")) {
+                HomeFragment.mTextAddress.setText(mShopList.get(positionNearest).getmShopAddress().trim());
+            }
             // setup map
             LatLng currentLocation = new LatLng(mShopList.get(positionNearest).getmLocationX(), mShopList.get(positionNearest).getmLocationY());
             CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -429,6 +426,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onReceive(final Context context, Intent intent) {
             mMacIds = intent.getStringExtra(Constants.MAC_ID);
+//            new AsyncTask() {
+//
+//                @Override
+//                protected Object doInBackground(Object[] params) {
 
             if (mMacIds.length() != 0) {
                 mMacIds = mMacIds.substring(0, mMacIds.length() - 1);
@@ -468,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onFailure(Call<List<BeaconWithShop>> call, Throwable t) {
-
+                        ToastUtil.makeToast(context, getResources().getString(R.string.network_error));
                     }
                 });
 
@@ -519,13 +520,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 @Override
                                 public void onFailure(Call<List<Shop>> call, Throwable t) {
-
+                                    ToastUtil.makeToast(context, getResources().getString(R.string.network_error));
                                 }
                             });
                         }
                     }
                 }
             }
+//                    return true;
+//                }
+//            }.execute(null, null, null);
         }
     }
 

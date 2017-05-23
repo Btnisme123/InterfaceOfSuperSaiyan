@@ -54,7 +54,9 @@ public class RecyclerLeftDrawerAdapter extends RecyclerView.Adapter<RecyclerLeft
                 , item.getmShopPhone(), item.getmShopDescipt(), item.getmShopEmail(), item.getmLocationX(), item.getmLocationY());
         Glide.with(mContext).load(item.getmUrlImage()).fitCenter().into(holder.mImageShop);
         holder.mTextName.setText(item.getmShopName());
-        holder.mTextAddress.setText(item.getmShopAddress().trim());
+        if (item.getmShopAddress() != null) {
+            holder.mTextAddress.setText(item.getmShopAddress().trim());
+        }
         holder.mTextName.setSelected(true);
         holder.mTextAddress.setSelected(true);
         holder.mLayoutShop.setOnClickListener(new View.OnClickListener() {

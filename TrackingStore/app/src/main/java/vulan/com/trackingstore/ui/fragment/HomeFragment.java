@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.arsy.maps_library.MapRadar;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -50,6 +49,7 @@ import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.SortUtil;
+import vulan.com.trackingstore.util.ToastUtil;
 import vulan.com.trackingstore.util.customview.CustomMarkerView;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -111,9 +111,11 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(locationReceiver,
                 new IntentFilter(ACTION_LOCATION_CHANGE));
         mMapView.onResume();
-        if (!mapRadar.isAnimationRunning() && mapRadar != null) {
-            mapRadar.startRadarAnimation();
-        }
+//        if (mapRadar != null) {
+//            if (!mapRadar.isAnimationRunning()) {
+//                mapRadar.startRadarAnimation();
+//            }
+//        }
     }
 
     @Override
@@ -121,9 +123,16 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         super.onPause();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(locationReceiver);
         mMapView.onPause();
-        if (mapRadar.isAnimationRunning() && mapRadar != null) {
-            mapRadar.stopRadarAnimation();
-        }
+//        if (mapRadar != null) {
+//            if (mapRadar.isAnimationRunning()) {
+//                try {
+//                    mapRadar.stopRadarAnimation();
+//                } catch (NullPointerException e) {
+//
+//                }
+//
+//            }
+//        }
     }
 
     @Override
@@ -195,13 +204,13 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
         BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.ic_current_location);
         mMap.addMarker(new MarkerOptions().position(currentLocation)
                 .icon(bitmapDescriptor));
-
+        mMap.getUiSettings().setZoomControlsEnabled(true);
         //animation map
-        mapRadar = new MapRadar(mMap, currentLocation, getActivity());
-        mapRadar.withDistance(50);
-        mapRadar.withOuterCircleStrokeColor(Color.parseColor("#49b90d"));
-        mapRadar.withRadarColors(Color.parseColor("#0049b90d"), Color.parseColor("#ff49b90d"));
-        mapRadar.startRadarAnimation();
+//        mapRadar = new MapRadar(mMap, currentLocation, getActivity());
+//        mapRadar.withDistance(50);
+//        mapRadar.withOuterCircleStrokeColor(Color.parseColor("#49b90d"));
+//        mapRadar.withRadarColors(Color.parseColor("#0049b90d"), Color.parseColor("#ff49b90d"));
+//        mapRadar.startRadarAnimation();
         getCustomMarker(getActivity());
     }
 
@@ -217,6 +226,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
                     customMarkerView.setProperties(new LatLng(mShopList.get(i).getmLocationX(), mShopList.get(i).getmLocationY()),
                             mShopList.get(i).getmShopId(), mShopList.get(i).getmShopName(),
                             mShopList.get(i).getmUrlImage(), mShopList.get(i).getmShopAddress());
+                    Log.e("url",mShopList.get(i).getmUrlImage());
                     mCustomMarkerViewList.add(customMarkerView);
                 }
                 for (CustomMarkerView customMarkerView : mCustomMarkerViewList) {
@@ -226,7 +236,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
 
             @Override
             public void onFailure(Call<List<BeaconWithShop>> call, Throwable t) {
-
+                ToastUtil.makeToast(getActivity(), getResources().getString(R.string.network_error));
             }
         });
     }
@@ -280,13 +290,15 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
             View view = getActivity().getLayoutInflater().inflate(R.layout.item_info_marker, null);
             TextView textView = (TextView) view.findViewById(R.id.text_marker);
             TextView textAddress = (TextView) view.findViewById(R.id.text_address);
-            ImageView imageView = (ImageView) view.findViewById(R.id.image_marker);
+//            ImageView imageView = (ImageView) view.findViewById(R.id.image_marker);
             CustomMarkerView customMarkerView = mMarkerPointHashMap.get(marker);
             if (customMarkerView != null) {
                 if (customMarkerView.getName() != null && customMarkerView.getmUrl() != null) {
                     textView.setText(customMarkerView.getName());
-                    textAddress.setText(customMarkerView.getmAddress().trim());
-                    Glide.with(getActivity()).load(customMarkerView.getmUrl()).fitCenter().into(imageView);
+                    if (customMarkerView.getmAddress() != null && !customMarkerView.getmAddress().equals("")) {
+                        textAddress.setText(customMarkerView.getmAddress().trim());
+                    }
+//                    Glide.with(getActivity()).load(customMarkerView.getmUrl()).fitCenter().into(imageView);
                 }
             }
             return view;
@@ -345,7 +357,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback, Go
 
                             @Override
                             public void onFailure(Call<List<Shop>> call, Throwable t) {
-
+                                ToastUtil.makeToast(getActivity(), getResources().getString(R.string.network_error));
                             }
                         });
                     }

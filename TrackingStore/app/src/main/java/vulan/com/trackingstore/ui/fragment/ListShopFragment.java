@@ -6,24 +6,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.twotoasters.jazzylistview.JazzyHelper;
 import com.twotoasters.jazzylistview.JazzyListView;
-import com.twotoasters.jazzylistview.effects.CurlEffect;
-import com.twotoasters.jazzylistview.effects.FanEffect;
-import com.twotoasters.jazzylistview.effects.FlipEffect;
-import com.twotoasters.jazzylistview.effects.FlyEffect;
 import com.twotoasters.jazzylistview.effects.GrowEffect;
-import com.twotoasters.jazzylistview.effects.HelixEffect;
-import com.twotoasters.jazzylistview.effects.ReverseFlyEffect;
-import com.twotoasters.jazzylistview.effects.SlideInEffect;
-import com.twotoasters.jazzylistview.effects.StandardEffect;
-import com.twotoasters.jazzylistview.effects.TiltEffect;
-import com.twotoasters.jazzylistview.effects.ZipperEffect;
-import com.twotoasters.jazzylistview.recyclerview.JazzyRecyclerViewScrollListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,6 +26,7 @@ import vulan.com.trackingstore.ui.activity.ShopActivity;
 import vulan.com.trackingstore.ui.base.BaseFragment;
 import vulan.com.trackingstore.util.Constants;
 import vulan.com.trackingstore.util.SortUtil;
+import vulan.com.trackingstore.util.ToastUtil;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -48,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class ListShopFragment extends BaseFragment {
-//    public static ListView mListShop;
+    //    public static ListView mListShop;
     public static JazzyListView mListShop;
     private SearchView mSearchView;
     public static ListShopAdapter adapter;
@@ -138,7 +125,7 @@ public class ListShopFragment extends BaseFragment {
 
                 @Override
                 public void onFailure(Call<List<Shop>> call, Throwable t) {
-
+                    ToastUtil.makeToast(getActivity(), getResources().getString(R.string.network_error));
                 }
             });
         } else {
